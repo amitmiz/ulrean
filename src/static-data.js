@@ -30,7 +30,7 @@ export const currentUser = {
     photo: './amit.jpg',
     type: "student",
     corusePath: {
-        // path: [...staticCoureses],
+        path: [...staticCoureses],
 
     }
 

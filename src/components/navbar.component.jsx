@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem, IconButton, Badge } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { currentUser } from '../static-data';
 import { UserAvatar } from './avatar/avater.component';
+import NotificationsIcon from '@material-ui/icons/Notifications'
 
 
-const drawerWidth = 200
 
 
 const styles = theme => ({
@@ -23,9 +23,9 @@ const styles = theme => ({
     appBar: {
         zIndex: theme.zIndex.drawer + 1
     },
-    logo : {
-        width : '50px',
-        padding : '8px'
+    logo: {
+        width: '50px',
+        padding: '8px'
     }
 });
 
@@ -67,10 +67,16 @@ class NavBar extends Component {
                             ULEARN
                      </Typography> */}
                         <div className={classes.grow}>
-                            <img className={classes.logo} src="/logo.png"></img>
+                            <img alt="ulrean" className={classes.logo} src="/logo.png"></img>
                         </div>
 
                         <Typography variant="button" color="inherit" >{currentUser.type}</Typography>
+
+                        <IconButton color="inherit">
+                            <Badge badgeContent={17} color="secondary">
+                                <NotificationsIcon />
+                            </Badge>
+                        </IconButton>
 
                         <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={currentUser} />
 
