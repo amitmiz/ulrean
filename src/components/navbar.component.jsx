@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import { currentUser } from '../static-data';
 import { UserAvatar } from './avatar/avater.component';
 import NotificationsIcon from '@material-ui/icons/Notifications'
+import { Link } from "react-router-dom";
 
 
 
@@ -93,8 +94,7 @@ class NavBar extends Component {
                     open={!!this.state.menuAnchor}
                     onClose={this.handleMenuClose}
                 >
-                    <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                    <MenuItem component={Link} to="/user" onClick={this.handleMenuClose}>My account</MenuItem>
                     <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
                 </Menu>
             </div>

@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { CoursersCatalog } from "./components/coursers-catalog/coursers-catalog";
 import NavBar from "./components/navbar.component";
 import { SideMenu } from "./components/side-menu";
+import { QAPage } from "./components/qa/qa-page.component";
+import { UserInfo } from "./components/user-info.component";
+import { InCourse } from "./components/in-course.component";
 
 
 const style = theme => ({
@@ -35,6 +38,9 @@ const App = ({ classes }) => (
         <div className={classes.content} >
 
           <Route path="/catalog" component={CoursersCatalog} />
+          <Route path="/qa" component={QAPage} />
+          <Route path="/user" component={UserInfo} />
+          <Route path="/course" component={InCourse} />
         </div>
 
 

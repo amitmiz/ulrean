@@ -9,6 +9,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
 import LibraryBooks from '@material-ui/icons/LibraryBooksRounded';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -135,6 +136,12 @@ class SideMenuComponent extends Component {
                             <DashboardRoundedIcon />
                         </ListItemIcon>
                         <ListItemText primary="Dashbaord" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/qa" >
+                        <ListItemIcon>
+                            <QuestionAnswerIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="QA" />
                     </ListItem>
 
 
