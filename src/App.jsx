@@ -1,13 +1,14 @@
 import { withStyles } from "@material-ui/core";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { CoursersCatalog } from "./components/coursers-catalog/coursers-catalog";
-import NavBar from "./components/navbar.component";
-import { SideMenu } from "./components/side-menu";
-import { QAPage } from "./components/qa/qa-page.component";
-import { UserInfo } from "./components/user-info.component";
 import { InCourse } from "./components/in-course.component";
+import { LoginScreen } from "./components/login-screen.component";
+import NavBar from "./components/navbar.component";
+import { QAPage } from "./components/qa/qa-page.component";
+import { SideMenu } from "./components/side-menu";
+import { UserInfo } from "./components/user-info.component";
 
 
 const style = theme => ({
@@ -15,20 +16,30 @@ const style = theme => ({
   content: {
     padding: '0 100px 0 100px',
     margin: "30px 0",
-    display : "flex",
-    'min-height' : '400px'
+    display: "flex",
+    'min-height': '400px'
   }
 })
 
 
+class App extends Component {
 
-const App = ({ classes }) => (
 
-  <React.Fragment>
-    <CssBaseline />
+  WhenNotLogged = () => {
+    return (
+      <React.Fragment>
+        <Route path="/login" component={LoginScreen} />
+        <Redirect to="/login"></Redirect>
+      </React.Fragment>
 
-    <Router>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+    )
+  }
+
+  WhenLogged = () => {
+    const { classes } = this.props;
+
+    return (
+      <React.Fragment>
         <NavBar />
 
         <SideMenu />
@@ -42,14 +53,32 @@ const App = ({ classes }) => (
           <Route path="/user" component={UserInfo} />
           <Route path="/course" component={InCourse} />
         </div>
+      </React.Fragment>
+    );
+  }
 
 
 
-      </div>
-    </Router>
-  </React.Fragment >
+  render() {
+    return (
+      <React.Fragment>
+        <CssBaseline />
 
-);
+        <Router>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {false ? this.WhenLogged() : this.WhenNotLogged()}
+          </div>
+        </Router>
+      </React.Fragment >
+
+    );
+
+  }
+
+}
+
+
+
 
 
 export default withStyles(style)(App);

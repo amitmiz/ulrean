@@ -128,7 +128,7 @@ class SideMenuComponent extends Component {
                         <ListItemIcon>
                             <LibraryBooks />
                         </ListItemIcon>
-                        <ListItemText primary="Course Path" />
+                        <ListItemText  primary="Course Path" />
                     </ListItem>
 
                     <ListItem button component={Link} to="/catalog" >
