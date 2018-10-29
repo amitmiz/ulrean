@@ -1,6 +1,7 @@
 import { Paper, TextField, Grid, withStyles, Button, Typography, Avatar } from '@material-ui/core';
 import React, { Component } from 'react';
 import LockIcon from '@material-ui/icons/Lock'
+import {inject, observer} from 'mobx-react'
 
 const style = {
     root: {
@@ -23,6 +24,8 @@ const style = {
     }
 }
 
+@inject('authStore')
+@observer
 class LoginScreen extends Component {
 
     constructor(props) {
@@ -31,6 +34,8 @@ class LoginScreen extends Component {
             user: '',
             password: ''
         }
+
+        this.handleOnSubmit = this.handleOnSubmit.bind(this)
     }
 
 
@@ -38,6 +43,10 @@ class LoginScreen extends Component {
         this.setState({
             [name]: event.target.value,
         });
+    }
+
+    handleOnSubmit() {
+        this.props.authStore.login()
     }
 
 
@@ -62,7 +71,7 @@ class LoginScreen extends Component {
 
                         <Typography variant="h5">Login</Typography>
 
-                        <form>
+                        <form onSubmit={this.handleOnSubmit}>
 
 
                             <TextField fullWidth={true}
@@ -85,7 +94,7 @@ class LoginScreen extends Component {
 
                             />
 
-                            <Button className={classes.loginButton} color="primary" variant="raised" fullWidth>
+                            <Button type="submit" className={classes.loginButton} color="primary" variant="raised" fullWidth>
                                 Login
                             </Button>
                         </form>
