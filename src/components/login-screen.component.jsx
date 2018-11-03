@@ -14,7 +14,7 @@ const style = {
 
     },
     loginForm: {
-        width: "40%",
+        width: "20%",
         height: "300px",
         marginTop: "40px",
         padding: '20px'

@@ -1,6 +1,6 @@
 import { withStyles } from "@material-ui/core";
 import React, { Component } from "react";
-import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route ,Switch} from "react-router-dom";
 import { CoursersCatalog } from "./components/coursers-catalog/coursers-catalog";
 import { InCourse } from "./components/in-course.component";
 import { LoginScreen } from "./components/login-screen.component";
@@ -9,6 +9,7 @@ import { QAPage } from "./components/qa/qa-page.component";
 import { SideMenu } from "./components/side-menu";
 import { UserInfo } from "./components/user-info.component";
 import { inject, observer } from "mobx-react";
+import { PathCreation } from "./components/path-creation";
 
 
 const style = theme => ({
@@ -49,12 +50,14 @@ class App extends Component {
         <div className={classes.appBarSpacer} ></div>
 
         <div className={classes.content} >
-
-          <Route path="/catalog" component={CoursersCatalog} />
-          <Route path="/qa" component={QAPage} />
-          <Route path="/user" component={UserInfo} />
-          <Route path="/course" component={InCourse} />
-          <Redirect to="/" />
+          <Switch>
+            <Route path="/catalog" component={CoursersCatalog} />
+            <Route path="/qa" component={QAPage} />
+            <Route path="/user" component={UserInfo} />
+            <Route path="/course" component={InCourse} />
+            <Route path="/path-creation" component={PathCreation} />
+            <Redirect to="/" />
+          </Switch>
         </div>
       </React.Fragment>
     );
@@ -71,8 +74,11 @@ class App extends Component {
 
         <Router>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            {authStore.isLoggedIn ? this.WhenLogged() : this.WhenNotLogged()}
+            {/* {authStore.isLoggedIn ? this.WhenLogged() : this.WhenNotLogged()} */}
+     {this.WhenLogged()} }
+            
           </div>
+
         </Router>
       </React.Fragment >
 
