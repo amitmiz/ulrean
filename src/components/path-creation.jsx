@@ -3,7 +3,7 @@ import { Grid, Card, withStyles, Typography, CardHeader, CardContent, List, List
 import AddIcon from '@material-ui/icons/Add'
 import PropTypes from 'prop-types';
 import InfoIcon from '@material-ui/icons/Info'
-import { staticCoureses, predefinedPaths } from '../static-data';
+import { staticCoureses, predefinedPaths, currentUser } from '../static-data';
 
 
 
@@ -76,6 +76,7 @@ class PathCreation extends React.Component {
 
         this.handleOpenModal = this.handleOpenModal.bind(this)
         this.handleClose = this.handleClose.bind(this)
+        this.savePath = this.savePath.bind(this)
     }
 
     handleOpenModal() {
@@ -157,6 +158,10 @@ class PathCreation extends React.Component {
         this.setState({ currentPath: [...predefiend.path] })
     }
 
+    savePath() {
+        currentUser.corusePath.path = this.state.currentPath
+    }
+
     render() {
         return (
             <Grid container direction="column" spacing={24}>
@@ -187,7 +192,7 @@ class PathCreation extends React.Component {
                                     <this.PathPreview />
                                 </CardContent>
                                 <CardActions>
-                                    <Button variant="contained" >Create</Button>
+                                    <Button variant="contained" onClick={this.savePath} >Create</Button>
                                     <Button variant="contained" >Save as Predifiend Path</Button>
                                 </CardActions>
 

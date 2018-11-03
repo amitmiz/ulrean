@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { currentUser } from '../../static-data';
 
 
 const styles = theme => ({
@@ -27,32 +28,26 @@ const styles = theme => ({
     },
 });
 
-function getSteps() {
-    return ['Web Tech', 'Database', 'Full Web App', 'Final Projet'];
-}
 
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            return `For each ad campaign that you create, you can control how much
-              you're willing to spend on clicks and conversions, which networks
-              and geographical locations you want your ads to show on, and more.`;
-        case 1:
-            return 'An ad group contains one or more ads which target a shared set of keywords.';
-        case 2:
-            return `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`;
-        default:
-            return 'Unknown step';
-    }
-}
+
 
 class VerticalLinearStepper extends React.Component {
-    state = {
-        activeStep: 0,
-    };
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            activeStep: 0,
+        };
+
+
+        this.generateStep = this.generateStep.bind(this)
+    }
+
+
+    getSteps() {
+        return this.props.courses
+    }
 
     handleNext = () => {
         this.setState(state => ({
@@ -76,17 +71,17 @@ class VerticalLinearStepper extends React.Component {
         });
     };
 
-    generateStep(label, index) {
+    generateStep(course) {
         const { classes, courses } = this.props;
-        const steps = getSteps();
+        const steps = this.getSteps();
         const { activeStep } = this.state;
 
 
         return (
-            <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+            <Step key={course._id}>
+                <StepLabel>{course.header}</StepLabel>
                 <StepContent>
-                    <Typography>{getStepContent(index)}</Typography>
+                    <Typography>{course.subheader}</Typography>
 
 
 
@@ -119,7 +114,7 @@ class VerticalLinearStepper extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const steps = getSteps();
+        const steps = this.getSteps();
         const { activeStep } = this.state;
 
         return (
@@ -136,7 +131,8 @@ class VerticalLinearStepper extends React.Component {
 
 VerticalLinearStepper.propTypes = {
     classes: PropTypes.object,
-    onStepChanged: PropTypes.func
+    onStepChanged: PropTypes.func,
+    courses: PropTypes.array
 };
 
 const CoursePath = withStyles(styles)(VerticalLinearStepper)

@@ -22,17 +22,16 @@ export class CourseTasks extends Component {
     }
 
 
-    createTaskView(task, index) {
+    createTaskView({ name, _id }, index) {
 
-        return (<ListItem key={index}>
+        return (<ListItem key={_id}>
             <ListItemAvatar>
                 <Avatar>
                     {++index}
                 </Avatar>
             </ListItemAvatar>
             <ListItemText
-                primary="Single-line item"
-                secondary={'Secondary text'}
+                primary={name}
             />
             <ListItemSecondaryAction>
                 <IconButton aria-label="Delete">
