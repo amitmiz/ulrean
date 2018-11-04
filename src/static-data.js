@@ -52,7 +52,7 @@ export const stats = {
     currentStage: "Web"
 }
 
-export const currentUser = {
+export const users = [{
     name: "amit",
     lastname: "mizrahi",
     photo: './amit.jpg',
@@ -62,4 +62,18 @@ export const currentUser = {
 
     }
 
-}
+},
+{
+    name: "amir",
+    lastname: "east",
+    photo: './amit.jpg',
+    type: "student",
+    corusePath: {
+        path: null
+
+    }
+
+}];
+
+export const currentUser = users[0];
+

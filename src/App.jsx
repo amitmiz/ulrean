@@ -10,6 +10,7 @@ import { SideMenu } from "./components/side-menu";
 import { UserInfo } from "./components/user-info.component";
 import { inject, observer } from "mobx-react";
 import { PathCreation } from "./components/path-creation";
+import { PathLessStudents } from "./components/pathless-students.component";
 
 
 const style = theme => ({
@@ -55,7 +56,9 @@ class App extends Component {
             <Route path="/qa" component={QAPage} />
             <Route path="/user" component={UserInfo} />
             <Route path="/course" component={InCourse} />
+            <Route path="/pathless" component={PathLessStudents} />
             <Route path="/path-creation" component={PathCreation} />
+
             <Redirect to="/" />
           </Switch>
         </div>

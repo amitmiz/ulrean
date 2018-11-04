@@ -1,7 +1,7 @@
 import { Grid, Typography, withStyles } from '@material-ui/core';
 import React from 'react';
 import { currentUser } from '../../static-data';
-import { UserAvatar } from '../avatar/avater.component';
+import { UserAvatar } from '../avater.component';
 
 
 

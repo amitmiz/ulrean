@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Paper, TextField, withStyles, Card, CardContent, Typography, CardActions, Button, CardHeader } from '@material-ui/core';
-import { UserAvatar } from './avatar/avater.component';
+import { UserAvatar } from './avater.component';
 import { currentUser } from '../static-data';
 
 

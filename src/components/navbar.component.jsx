@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { currentUser } from '../static-data';
-import { UserAvatar } from './avatar/avater.component';
+import { UserAvatar } from './avater.component';
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import { Link } from "react-router-dom";
 
