@@ -11,6 +11,7 @@ import { UserInfo } from "./components/user-info.component";
 import { inject, observer } from "mobx-react";
 import { PathCreation } from "./components/path-creation";
 import { PathLessStudents } from "./components/pathless-students.component";
+import { TeacherDashbaord } from "./components/teacher-dashbaord.component";
 
 
 const style = theme => ({
@@ -57,7 +58,8 @@ class App extends Component {
             <Route path="/user" component={UserInfo} />
             <Route path="/course" component={InCourse} />
             <Route path="/pathless" component={PathLessStudents} />
-            <Route path="/path-creation" component={PathCreation} />
+            <Route path="/path-creation/:id" component={PathCreation} />
+            <Route path="/tdashboard" component={TeacherDashbaord} />
 
             <Redirect to="/" />
           </Switch>

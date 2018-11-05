@@ -35,10 +35,12 @@ export const staticCoureses = [{
 export const predefinedPaths = [
 
     {
+        _id : 12363412312,
         name: "frontend",
         path: [staticCoureses[0], staticCoureses[2]]
     },
     {
+        _id : 52342363412312,
         name: "backend",
         path: [staticCoureses[1], staticCoureses[2]]
     }
@@ -53,27 +55,25 @@ export const stats = {
 }
 
 export const users = [{
+    _id: 123123434,
     name: "amit",
     lastname: "mizrahi",
     photo: './amit.jpg',
     type: "student",
-    corusePath: {
-        path: null
-
-    }
+    path: null
 
 },
 {
+    _id: 12312312312,
     name: "amir",
     lastname: "east",
     photo: './amit.jpg',
     type: "student",
-    corusePath: {
-        path: null
-
-    }
+    path: null
 
 }];
+
+
 
 export const currentUser = users[0];
 

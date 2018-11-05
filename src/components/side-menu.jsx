@@ -13,7 +13,7 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const drawerWidth = 200
 
@@ -124,20 +124,26 @@ class SideMenuComponent extends Component {
 
 
 
-                    <ListItem button component={Link} to="/catalog" >
+                    <ListItem button component={NavLink} to="/catalog" >
                         <ListItemIcon>
                             <LibraryBooks />
                         </ListItemIcon>
-                        <ListItemText  primary="Course Path" />
+                        <ListItemText primary="Course Path" />
                     </ListItem>
 
-                    <ListItem button component={Link} to="/catalog" >
+                    <ListItem button component={NavLink} to="/catalog" >
                         <ListItemIcon>
                             <DashboardRoundedIcon />
                         </ListItemIcon>
                         <ListItemText primary="Dashbaord" />
                     </ListItem>
-                    <ListItem button component={Link} to="/qa" >
+                    <ListItem button component={NavLink} to="/pathless" >
+                        <ListItemIcon>
+                            <DashboardRoundedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Pathless" />
+                    </ListItem>
+                    <ListItem button component={NavLink} to="/qa" >
                         <ListItemIcon>
                             <QuestionAnswerIcon />
                         </ListItemIcon>

@@ -1,7 +1,8 @@
 import React from "react";
 import { withStyles, Card, CardHeader, Typography, CardContent, List, ListItemText, ListItemSecondaryAction, Button, ListItemAvatar, ListItem, Avatar, Divider } from "@material-ui/core";
 import { UserAvatar } from "./avater.component";
-import { currentUser, users } from "../static-data";
+import { Link } from 'react-router-dom'
+import { ApiClient } from "../api-client";
 
 const styles = {
     root: {
@@ -13,7 +14,9 @@ const styles = {
 class PathLessStudents extends React.Component {
 
     getPathlessStudents() {
-        return users.filter(user => !user.path)
+        const a = ApiClient.getAllUsers();
+        debugger;
+        return ApiClient.getAllUsers().filter(user => !user.path)
     }
 
 
@@ -31,38 +34,45 @@ class PathLessStudents extends React.Component {
 
 
                 </Typography>
-                <Card>
-                    <CardHeader title="pathless students" />
-                    <Divider />
-                    <CardContent>
-
-                        <List>
-
-                            {this.getPathlessStudents().map(user => (
-                                <ListItem>
-                                    <UserAvatar user={user} />
-
-                                    <ListItemText>
-                                        {user.name}
-                                    </ListItemText>
-                                    <ListItemSecondaryAction>
-                                        <Button variant="raised" color="primary">create</Button>
-
-                                    </ListItemSecondaryAction>
-
-                                </ListItem>
 
 
-                            ))}
+                {this.getPathlessStudents().length == 0 ? "No" :
+                    <Card>
+                        <CardHeader title="pathless students" />
+                        <Divider />
+                        <CardContent>
+
+                            <List>
+
+                                {this.getPathlessStudents().map(user => (
+                                    <ListItem>
+                                        <UserAvatar user={user} />
+
+                                        <ListItemText>
+                                            {user.name}
+                                        </ListItemText>
+                                        <ListItemSecondaryAction>
 
 
-                        </List>
+                                            <Button to={`/path-creation/${user._id}`} component={Link} variant="contained" color="primary">create</Button>
+
+                                        </ListItemSecondaryAction>
+
+                                    </ListItem>
 
 
-                    </CardContent>
+                                ))}
 
 
-                </Card>
+                            </List>
+
+
+                        </CardContent>
+
+
+                    </Card>}
+
+
 
 
             </div>

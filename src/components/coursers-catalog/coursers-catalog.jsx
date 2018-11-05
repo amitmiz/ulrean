@@ -8,6 +8,7 @@ import { CourseCard } from '../course-card/course-card.jsx';
 import { CourseTasks } from './course-tasks.jsx';
 import { CoursePath } from './courses-path.jsx';
 import { PathStat } from './path-stat.jsx';
+import { inject, observer } from 'mobx-react';
 
 
 
@@ -22,6 +23,8 @@ const styles = {
     }
 }
 
+@inject('userStore')
+@observer
 class CoursersCatalog extends React.Component {
 
     constructor(props) {
@@ -94,8 +97,10 @@ class CoursersCatalog extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
-        const currentCoursePath = currentUser.corusePath.path;
+        const { classes, userStore } = this.props;
+
+
+        const currentCoursePath = userStore.currentUser.path;
 
 
         return (

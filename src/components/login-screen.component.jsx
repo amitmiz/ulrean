@@ -94,7 +94,7 @@ class LoginScreen extends Component {
 
                             />
 
-                            <Button type="submit" className={classes.loginButton} color="primary" variant="raised" fullWidth>
+                            <Button type="submit" className={classes.loginButton} color="primary" variant="contained" fullWidth>
                                 Login
                             </Button>
                         </form>

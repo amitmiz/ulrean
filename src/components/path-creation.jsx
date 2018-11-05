@@ -1,9 +1,10 @@
-import React from 'react';
-import { Grid, Card, withStyles, Typography, CardHeader, CardContent, List, ListItem, ListItemText, Divider, ListItemSecondaryAction, Button, CardActions, IconButton, Modal, Paper, ListItemAvatar, Dialog, DialogTitle, Avatar } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add'
+import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogTitle, Divider, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography, withStyles } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import InfoIcon from '@material-ui/icons/Info';
+import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
-import InfoIcon from '@material-ui/icons/Info'
-import { staticCoureses, predefinedPaths, currentUser } from '../static-data';
+import React from 'react';
+import { ApiClient } from '../api-client';
 
 
 
@@ -61,7 +62,8 @@ const styles = theme => ({
 
 
 
-
+@inject('userStore')
+@observer
 class PathCreation extends React.Component {
 
 
@@ -71,13 +73,20 @@ class PathCreation extends React.Component {
         this.state = {
             modalOpened: false,
             selectedValue: null,
-            currentPath: []
+            currentPath: [],
         }
+
+
+        this.state.currentUserId = this.props.match.params.id;
+
 
         this.handleOpenModal = this.handleOpenModal.bind(this)
         this.handleClose = this.handleClose.bind(this)
         this.savePath = this.savePath.bind(this)
+
     }
+
+
 
     handleOpenModal() {
         this.setState({ modalOpened: true })
@@ -138,11 +147,11 @@ class PathCreation extends React.Component {
         return (
             <List>
 
-                {predefinedPaths.map((predefiend) => (
-                    <ListItem>
+                {ApiClient.getPredefiendPaths().map((predefiend) => (
+                    <ListItem key={predefiend._id}>
                         <ListItemText primary={predefiend.name} secondary="" />
                         <ListItemSecondaryAction>
-                            <Button onClick={() => this.fillPath(predefiend)} variant="raised">Use</Button>
+                            <Button onClick={() => this.fillPath(predefiend)} variant="contained">Use</Button>
 
                         </ListItemSecondaryAction>
                     </ListItem>
@@ -159,7 +168,8 @@ class PathCreation extends React.Component {
     }
 
     savePath() {
-        currentUser.corusePath.path = this.state.currentPath
+        ApiClient.updateUsersPath(this.state.currentUserId, this.state.currentPath)
+
     }
 
     render() {
@@ -233,11 +243,11 @@ class SimpleDialog extends React.Component {
     render() {
         const { classes, onClose, selectedValue, ...other } = this.props;
 
-        const availableCourses = staticCoureses.filter((staticCourse) => {
+        const availableCourses = ApiClient.getAllCourses().filter((course) => {
 
 
 
-            const isFound = this.props.currentPath.find((course) => course._id === staticCourse._id)
+            const isFound = this.props.currentPath.find((usedCourse) => usedCourse._id === course._id)
             return isFound == undefined;
         })
         const isCoursesLeft = availableCourses.length > 0
@@ -274,4 +284,4 @@ const SimpleDialogWrapped = withStyles(dialogStyles)(SimpleDialog);
 
 const styled = withStyles(styles, { withTheme: true })(PathCreation)
 
-export { styled as PathCreation }
+export { styled as PathCreation };
