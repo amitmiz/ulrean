@@ -9,6 +9,7 @@ import { CourseTasks } from './course-tasks.jsx';
 import { CoursePath } from './courses-path.jsx';
 import { PathStat } from './path-stat.jsx';
 import { inject, observer } from 'mobx-react';
+import { ApiClient } from '../../api-client.js';
 
 
 
@@ -100,7 +101,7 @@ class CoursersCatalog extends React.Component {
         const { classes, userStore } = this.props;
 
 
-        const currentCoursePath = userStore.currentUser.path;
+        const currentCoursePath = ApiClient.getUserPath(userStore.currentUser._id);
 
 
         return (

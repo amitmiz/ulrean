@@ -5,12 +5,18 @@ import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { ApiClient } from '../api-client';
-
+import SaveIcon from '@material-ui/icons/Save';
 
 
 const styles = theme => ({
     root: {
         flex: 1
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit,
     },
     pathPreviewRoot: {
         display: "flex",
@@ -18,7 +24,7 @@ const styles = theme => ({
         position: "relative"
     },
     pathPreviewCircleRoot: {
-        color: "black",
+        color: "white",
         display: "inline-block",
         position: "relative",
         zIndex: 10,
@@ -46,11 +52,14 @@ const styles = theme => ({
         color: "white",
         display: "inline-flex",
         alignItems: "center",
+        textAlign: "center",
         justifyContent: "center",
-        height: "90px",
+        height: "150px",
         margin: "20px",
         padding: "20px",
-        width: "90px"
+        width: "150px",
+        boxShadow: '2px 2px 20px 4px #00000091'
+
 
 
     },
@@ -112,7 +121,11 @@ class PathCreation extends React.Component {
 
             <div className={classes.pathPreviewRoot} >
 
-                {this.state.currentPath.map((course) => <this.PathCircle>{course.header}</this.PathCircle>)}
+                {this.state.currentPath.map((course) => <this.PathCircle>
+                    <Typography variant="button" style={{ color: "white" }}>
+                        {course.header}
+                    </Typography>
+                </this.PathCircle>)}
 
                 <this.PathCircle>
                     <IconButton onClick={this.handleOpenModal}><AddIcon /></IconButton>
@@ -151,7 +164,7 @@ class PathCreation extends React.Component {
                     <ListItem key={predefiend._id}>
                         <ListItemText primary={predefiend.name} secondary="" />
                         <ListItemSecondaryAction>
-                            <Button onClick={() => this.fillPath(predefiend)} variant="contained">Use</Button>
+                            <Button onClick={() => this.fillPath(predefiend)} variant="outlined" color="primary">Use</Button>
 
                         </ListItemSecondaryAction>
                     </ListItem>
@@ -173,6 +186,8 @@ class PathCreation extends React.Component {
     }
 
     render() {
+        const { classes } = this.props;
+
         return (
             <Grid container direction="column" spacing={24}>
 
@@ -202,8 +217,11 @@ class PathCreation extends React.Component {
                                     <this.PathPreview />
                                 </CardContent>
                                 <CardActions>
-                                    <Button variant="contained" onClick={this.savePath} >Create</Button>
-                                    <Button variant="contained" >Save as Predifiend Path</Button>
+                                    <Button variant="outlined" color="primary" onClick={this.savePath} >
+                                        <SaveIcon className={classes.leftIcon} />
+                                        Save
+                                    </Button>
+                                    <Button variant="outlined" color="primary" >Save as Predifiend Path</Button>
                                 </CardActions>
 
 

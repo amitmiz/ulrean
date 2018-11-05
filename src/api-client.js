@@ -19,14 +19,18 @@ export class ApiClient {
     }
 
     static getUserPath(id) {
-        return this.getUserById(id).path
+        return ApiClient.getUserById(id).path
     }
 
     // should be in a store
     static updateUsersPath(userId, path) {
-        this.getUserById(userId).path = path;
+        ApiClient.getUserById(userId).path = path;
 
 
+    }
+
+    static getPathlessStudents() {
+        return ApiClient.getAllUsers().filter(user => !user.path)
     }
 
     static getPredefiendPaths() {

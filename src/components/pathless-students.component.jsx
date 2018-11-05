@@ -13,13 +13,6 @@ const styles = {
 
 class PathLessStudents extends React.Component {
 
-    getPathlessStudents() {
-        const a = ApiClient.getAllUsers();
-        debugger;
-        return ApiClient.getAllUsers().filter(user => !user.path)
-    }
-
-
     render() {
         const { classes } = this.props;
 
@@ -36,7 +29,7 @@ class PathLessStudents extends React.Component {
                 </Typography>
 
 
-                {this.getPathlessStudents().length == 0 ? "No" :
+                {ApiClient.getPathlessStudents().length == 0 ? "No" :
                     <Card>
                         <CardHeader title="pathless students" />
                         <Divider />
@@ -44,7 +37,7 @@ class PathLessStudents extends React.Component {
 
                             <List>
 
-                                {this.getPathlessStudents().map(user => (
+                                {ApiClient.getPathlessStudents().map(user => (
                                     <ListItem>
                                         <UserAvatar user={user} />
 
@@ -54,7 +47,7 @@ class PathLessStudents extends React.Component {
                                         <ListItemSecondaryAction>
 
 
-                                            <Button to={`/path-creation/${user._id}`} component={Link} variant="contained" color="primary">create</Button>
+                                            <Button to={`/path-creation/${user._id}`} component={Link} variant="outlined" color="primary">create</Button>
 
                                         </ListItemSecondaryAction>
 

@@ -1,14 +1,14 @@
-import { Menu, MenuItem, IconButton, Badge } from '@material-ui/core';
+import { Badge, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { currentUser } from '../static-data';
-import { UserAvatar } from './avater.component';
-import NotificationsIcon from '@material-ui/icons/Notifications'
 import { Link } from "react-router-dom";
+import { UserAvatar } from './avater.component';
 
 
 
@@ -31,6 +31,8 @@ const styles = theme => ({
 });
 
 
+@inject('userStore')
+@observer
 class NavBar extends Component {
 
     constructor(props) {
@@ -59,7 +61,8 @@ class NavBar extends Component {
 
 
     render() {
-        const { classes, theme } = this.props;
+        const { classes, userStore } = this.props;
+        const { currentUser } = userStore;
         return (
             <div className={classes.root}>
                 <AppBar className={classes.appBar} position="fixed">
