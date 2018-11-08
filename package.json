@@ -1,6 +1,6 @@
 {
   "name": "ulearn_frontend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.0",
@@ -64,7 +64,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-	"release": "standard-version"
+    "release": "standard-version"
   },
   "eslintConfig": {
     "extends": "react-app"
