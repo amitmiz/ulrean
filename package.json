@@ -63,7 +63,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+	"release": "standard-version"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -75,7 +76,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.1.2"
+    "@babel/plugin-proposal-decorators": "^7.1.2",
+    "standard-version": "^4.4.0"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -118,8 +120,7 @@
       [
         "@babel/plugin-proposal-decorators",
         {
-        
-          "legacy" : true
+          "legacy": true
         }
       ]
     ],
@@ -128,4 +129,3 @@
     ]
   }
 }
-
