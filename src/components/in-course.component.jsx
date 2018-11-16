@@ -1,4 +1,4 @@
-import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Grid, Typography, withStyles, Card, CardHeader, CardContent, CardActions, Button, Divider, Paper } from '@material-ui/core';
+import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Grid, Typography, withStyles, Card, CardHeader, CardContent, CardActions, Button, Divider, Paper, AppBar, Toolbar } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
@@ -13,8 +13,22 @@ const requireConfig = {
 
 const styles = {
     root: {
-        flex: 1
+        flex: 1,
+        overflow: 'hidden',
+    },
+    appBar: {
+        top: 'auto',
+        bottom: 0,
+        zIndex: 2000
+    },
+    toolbar: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    stageNumber: {
+        margin: '20px'
     }
+
 }
 
 class InCourse extends Component {
@@ -38,78 +52,42 @@ class InCourse extends Component {
 
 
 
-                <Grid container direction={"row"} spacing={24}>
+                <Grid container direction={"row"} spacing={8}>
 
                     <Grid item xs={4}>
-                        <ExpansionPanel defaultExpanded>
-                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography className={classes.heading}>Expansion Panel 1</Typography>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Typography>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                                    sit amet blandit leo lobortis eget.
-                                </Typography>
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
-                        <ExpansionPanel defaultExpanded>
-                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography className={classes.heading}>Expansion Panel 2</Typography>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Typography>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                                    sit amet blandit leo lobortis eget.
-                                 </Typography>
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
-                        <ExpansionPanel defaultExpanded>
-                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography className={classes.heading}>Disabled Expansion Panel</Typography>
-                            </ExpansionPanelSummary>
-                        </ExpansionPanel>
 
+                        <CourseInstructions />
                     </Grid>
+
+
+                    <Grid item xs={4}>
+                        <Editor />
+                    </Grid>
+
 
 
                     <Grid item xs={4}>
                         <Card>
-                            <CardHeader title="editor"></CardHeader>
-                            <CardContent>
-                                <MonacoEditor
-                                    // width="800"
-                                    height="600"
-                                    language="javascript"
-                                    value="// type your code..."
-                                    requireConfig={requireConfig}
-                                />
-
-
-                            </CardContent>
-                            <Divider></Divider>
-                            <CardActions>
-
-                                <Button color={"primary"} variant={"outlined"}>Run</Button>
-                                <Button color={"warn"} variant={"outlined"}>Reset</Button>
-
-
-                            </CardActions>
+                            <CardHeader title="preview"></CardHeader>
+                           <CardContent>preview</CardContent>
                         </Card>
-                    </Grid>
-
-
-
-                    <Grid item xs={4}>
-                        <Paper>
-                            RESULT
-                        </Paper>
                     </Grid>
 
 
                 </Grid>
 
 
+                <AppBar position="fixed" color="primary" className={classes.appBar}>
+                    <Toolbar className={classes.toolbar}>
 
+
+                        <Button variant="outlined">prev</Button>
+                        <div className={classes.stageNumber} >7/16</div>
+                        <Button variant="outlined">next</Button>
+
+
+                    </Toolbar>
+                </AppBar>
 
 
             </div>
@@ -123,6 +101,66 @@ class InCourse extends Component {
 InCourse.propTypes = {
 
 };
+
+function CourseInstructions() {
+    let classes = {}
+
+    return (<React.Fragment>
+        <ExpansionPanel defaultExpanded>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography className={classes.heading}>Expansion Panel 1</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+                <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                    sit amet blandit leo lobortis eget.
+        </Typography>
+            </ExpansionPanelDetails>
+        </ExpansionPanel>
+        <ExpansionPanel defaultExpanded>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography className={classes.heading}>Expansion Panel 2</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+                <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                    sit amet blandit leo lobortis eget.
+         </Typography>
+            </ExpansionPanelDetails>
+        </ExpansionPanel>
+        <ExpansionPanel defaultExpanded>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography className={classes.heading}>Disabled Expansion Panel</Typography>
+            </ExpansionPanelSummary>
+        </ExpansionPanel>
+    </React.Fragment>
+    )
+}
+
+function Editor() {
+    return (<Card>
+        <CardHeader title="editor"></CardHeader>
+        <CardContent>
+            <MonacoEditor
+                // width="800"
+                height="65vh"
+                language="javascript"
+                value="// type your code..."
+                requireConfig={requireConfig}
+            />
+
+
+        </CardContent>
+        <Divider></Divider>
+        <CardActions>
+
+            <Button color={"primary"} variant={"outlined"}>Run</Button>
+            <Button color={"warn"} variant={"outlined"}>Reset</Button>
+
+
+        </CardActions>
+    </Card>)
+}
 
 const WithStyles = withStyles(styles)(InCourse)
 

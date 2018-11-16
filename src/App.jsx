@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core";
 import React, { Component } from "react";
-import { BrowserRouter as Router, Redirect, Route ,Switch} from "react-router-dom";
-import { CoursersCatalog } from "./components/coursers-catalog/coursers-catalog";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { CoursersCatalog } from "./components/coursers-path/coursers-path";
 import { InCourse } from "./components/in-course.component";
 import { LoginScreen } from "./components/login-screen.component";
 import NavBar from "./components/navbar.component";
@@ -12,6 +12,8 @@ import { inject, observer } from "mobx-react";
 import { PathCreation } from "./components/path-creation";
 import { PathLessStudents } from "./components/pathless-students.component";
 import { TeacherDashbaord } from "./components/teacher-dashbaord.component";
+import { TeacherContactList } from "./components/teachers-contactlist.component";
+import CourseNavBar from './components/incourser-navbar.component.'
 
 
 const style = theme => ({
@@ -20,7 +22,15 @@ const style = theme => ({
     padding: '0 100px 0 100px',
     margin: "30px 0",
     display: "flex",
-    'min-height': '400px'
+    'min-height': '400px',
+    margin: "0 auto",
+    marginTop: '20px',
+
+    [theme.breakpoints.up('lg')]: {
+
+      width: "80%"
+    },
+
   }
 })
 
@@ -45,29 +55,67 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <NavBar />
 
-        <SideMenu />
+        <Switch>
+          <Route path="/incourse" component={this.CourseLayout.bind(this)} >
 
-        <div className={classes.appBarSpacer} ></div>
 
-        <div className={classes.content} >
-          <Switch>
-            <Route path="/catalog" component={CoursersCatalog} />
-            <Route path="/qa" component={QAPage} />
-            <Route path="/user" component={UserInfo} />
-            <Route path="/course" component={InCourse} />
-            <Route path="/pathless" component={PathLessStudents} />
-            <Route path="/path-creation/:id" component={PathCreation} />
-            <Route path="/tdashboard" component={TeacherDashbaord} />
 
-            <Redirect to="/" />
-          </Switch>
-        </div>
+          </Route>
+
+          <Route path="/" component={this.MainLayout.bind(this)}>
+
+
+
+
+          </Route>
+
+
+          <Redirect to="/" />
+        </Switch>
+
       </React.Fragment>
     );
   }
 
+  MainLayout = () => {
+    let { classes } = this.props;
+
+    return (<React.Fragment>
+
+      <div className={classes.appBarSpacer} ></div>
+      <NavBar />
+      <SideMenu />
+      <div className={classes.content} >
+
+        <Route path="/path" component={CoursersCatalog} />
+        <Route path="/qa" component={QAPage} />
+        <Route path="/user" component={UserInfo} />
+        <Route path="/course" component={InCourse} />
+        <Route path="/pathless" component={PathLessStudents} />
+        <Route path="/path-creation/:id" component={PathCreation} />
+        <Route path="/tdashboard" component={TeacherDashbaord} />
+        <Route path="/teacher-contact" component={TeacherContactList} />
+      </div>
+
+
+    </React.Fragment>
+
+
+    )
+  }
+
+  CourseLayout = () => {
+    let { classes } = this.props;
+    return (
+
+      <React.Fragment>
+        <CourseNavBar />
+        <div className={classes.appBarSpacer} ></div>
+        <Route path="/incourse" component={InCourse} />
+      </React.Fragment>
+    )
+  }
 
 
   render() {
@@ -80,8 +128,8 @@ class App extends Component {
         <Router>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {/* {authStore.isLoggedIn ? this.WhenLogged() : this.WhenNotLogged()} */}
-     {this.WhenLogged()} }
-            
+            {this.WhenLogged()}
+
           </div>
 
         </Router>

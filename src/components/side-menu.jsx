@@ -7,13 +7,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ContactsIcon from "@material-ui/icons/Contacts";
 import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
 import LibraryBooks from '@material-ui/icons/LibraryBooksRounded';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
+import NewReleaseIcon from '@material-ui/icons/NewReleases';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const drawerWidth = 200
 
@@ -61,7 +63,7 @@ class SideMenuComponent extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { open: false }
+        this.state = { open: true }
 
         this.handleDrawerClose = this.handleDrawerClose.bind(this)
         this.handleDrawerOpen = this.handleDrawerOpen.bind(this)
@@ -124,14 +126,14 @@ class SideMenuComponent extends Component {
 
 
 
-                    <ListItem button component={NavLink} to="/catalog" >
+                    <ListItem button component={NavLink} to="/path" >
                         <ListItemIcon>
                             <LibraryBooks />
                         </ListItemIcon>
                         <ListItemText primary="Course Path" />
                     </ListItem>
 
-                    <ListItem button component={NavLink} to="/catalog" >
+                    <ListItem button component={NavLink} to="/tdashboard" >
                         <ListItemIcon>
                             <DashboardRoundedIcon />
                         </ListItemIcon>
@@ -139,7 +141,7 @@ class SideMenuComponent extends Component {
                     </ListItem>
                     <ListItem button component={NavLink} to="/pathless" >
                         <ListItemIcon>
-                            <DashboardRoundedIcon />
+                            <NewReleaseIcon />
                         </ListItemIcon>
                         <ListItemText primary="Pathless" />
                     </ListItem>
@@ -148,6 +150,18 @@ class SideMenuComponent extends Component {
                             <QuestionAnswerIcon />
                         </ListItemIcon>
                         <ListItemText primary="QA" />
+                    </ListItem>
+                    <ListItem button component={NavLink} to="/teacher-contact" >
+                        <ListItemIcon>
+                            <ContactsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Teachers" />
+                    </ListItem>
+                    <ListItem button component={NavLink} to="/incourse" >
+                        <ListItemIcon>
+                            <ContactsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="InCourse" />
                     </ListItem>
 
 
@@ -168,4 +182,8 @@ SideMenuComponent.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export const SideMenu = withStyles(styles, { withTheme: true })(SideMenuComponent);
+
+
+const SideMenu = withStyles(styles, { withTheme: true })(SideMenuComponent);
+SideMenu.displayName = "StyledSideMenu";
+export { SideMenu }

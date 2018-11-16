@@ -9,7 +9,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { currentUser } from '../../static-data';
 
 
 const styles = theme => ({
@@ -42,6 +41,21 @@ class VerticalLinearStepper extends React.Component {
 
 
         this.generateStep = this.generateStep.bind(this)
+    }
+
+    render() {
+        const { classes } = this.props;
+        const steps = this.getSteps();
+        const { activeStep } = this.state;
+
+        return (
+            <div className={classes.root}>
+                <Stepper activeStep={activeStep} orientation="vertical">
+                    {steps.map(this.generateStep.bind(this))}
+                </Stepper>
+                {activeStep === steps.length && this.generateFinishSection(classes)}
+            </div>
+        );
     }
 
 
@@ -112,20 +126,7 @@ class VerticalLinearStepper extends React.Component {
             </Paper>);
     }
 
-    render() {
-        const { classes } = this.props;
-        const steps = this.getSteps();
-        const { activeStep } = this.state;
 
-        return (
-            <div className={classes.root}>
-                <Stepper activeStep={activeStep} orientation="vertical">
-                    {steps.map(this.generateStep.bind(this))}
-                </Stepper>
-                {activeStep === steps.length && this.generateFinishSection(classes)}
-            </div>
-        );
-    }
 
 }
 
@@ -135,6 +136,6 @@ VerticalLinearStepper.propTypes = {
     courses: PropTypes.array
 };
 
-const CoursePath = withStyles(styles)(VerticalLinearStepper)
+const PathStepper = withStyles(styles)(VerticalLinearStepper)
 
-export { CoursePath };
+export { PathStepper };

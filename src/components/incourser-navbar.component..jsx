@@ -17,8 +17,9 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
     },
-    grow: {
+    courseName: {
         flexGrow: 1,
+        textAlign: 'center'
     },
 
     appBar: {
@@ -33,7 +34,7 @@ const styles = theme => ({
 
 @inject('userStore')
 @observer
-class NavBar extends Component {
+class CourseNavBar extends Component {
 
     constructor(props) {
         super(props)
@@ -65,27 +66,22 @@ class NavBar extends Component {
         const { currentUser } = userStore;
         return (
             <div className={classes.root}>
-                <AppBar className={classes.appBar} position="fixed">
+                <AppBar elevation={0} className={classes.appBar} position="fixed">
                     <Toolbar>
-                        {/* <Typography variant="h5" color="inherit" >
-                            ULEARN
-                     </Typography> */}
-                        <div className={classes.grow}>
+
+                        <div >
                             <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link>
                         </div>
+                        <div className={classes.courseName}>CSS Course</div>
 
                         <Typography variant="button" color="inherit" >{currentUser.type}</Typography>
 
-                        <IconButton color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+
 
                         <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={currentUser} />
 
 
-                        {/* <Button variant="outlined" color="inherit">Login</Button> */}
+
 
 
                     </Toolbar>
@@ -105,8 +101,8 @@ class NavBar extends Component {
     }
 }
 
-NavBar.propTypes = {
+CourseNavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(NavBar);
+export default withStyles(styles, { withTheme: true })(CourseNavBar);

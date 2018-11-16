@@ -10,6 +10,9 @@ import { ApiClient } from '../api-client';
 const styles = theme => ({
     root: {
         flexGrow: 1,
+    },
+    dashboardCard: {
+        textAlign: 'center'
     }
 });
 
@@ -18,16 +21,7 @@ class TeacherDashbaord extends React.Component {
 
     constructor(props) {
         super(props)
-
-
-
-
-
-
     }
-
-
-
 
 
     render() {
@@ -36,16 +30,11 @@ class TeacherDashbaord extends React.Component {
             <div className={classes.root} >
                 <Grid container>
 
-                    <Grid item xs={1}>
-                        <Card>
-                            <CardHeader title="students waiting for path" />
-                            <Divider />
+                    <Grid item lg={2} xs={12}>
 
-                            <CardContent>
-                                <Typography variant="h3">{ApiClient.getPathlessStudents().length}</Typography>
-                            </CardContent>
-
-                        </Card>
+                        <this.DashboardCard title="students waiting for path" >
+                            <Typography variant="h3">{ApiClient.getPathlessStudents().length}</Typography>
+                        </this.DashboardCard>
 
 
                     </Grid>
@@ -56,6 +45,24 @@ class TeacherDashbaord extends React.Component {
             </div>
 
         );
+    }
+
+    DashboardCard = (props) => {
+        const { classes, theme } = this.props;
+        return (
+            <div className={classes.dashboardCard}>
+                <Card >
+                    <CardHeader title={props.title}  titleTypographyProps={{variant : "button"}}/>
+                    <Divider />
+
+                    <CardContent>
+                        {props.children}
+                    </CardContent>
+
+                </Card>
+            </div>
+
+        )
     }
 }
 

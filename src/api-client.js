@@ -1,10 +1,12 @@
-import { users, staticCoureses, predefinedPaths } from "./static-data";
+import { users, staticCoureses, predefinedPaths, teachers, questions } from "./static-data";
 
 export class ApiClient {
 
     static getAllUsers() {
         return users;
     }
+
+
 
     static getAllCourses() {
         return staticCoureses;
@@ -30,11 +32,23 @@ export class ApiClient {
     }
 
     static getPathlessStudents() {
-        return ApiClient.getAllUsers().filter(user => !user.path)
+        return ApiClient.getStudents().filter(user => !user.path)
     }
 
     static getPredefiendPaths() {
         return predefinedPaths;
+    }
+
+    static getTeachers() {
+        return ApiClient.getAllUsers().filter(user => user.type === "teacher")
+    }
+
+    static getStudents() {
+        return ApiClient.getAllUsers().filter(user => user.type === "student")
+    }
+
+    static getRecentQuestions() {
+        return questions;
     }
 }
 

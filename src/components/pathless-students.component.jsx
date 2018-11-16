@@ -7,6 +7,10 @@ import { ApiClient } from "../api-client";
 const styles = {
     root: {
         flex: 1
+    },
+    header: {
+        marginBottom: '20px',
+        textAlign: 'center'
     }
 };
 
@@ -21,12 +25,12 @@ class PathLessStudents extends React.Component {
 
             <div className={classes.root} >
 
-                <Typography variant="h5" >
+                <div className={classes.header} >
 
-                    Choose A student to create a course path
-
-
-                </Typography>
+                    <Typography variant="h5" >
+                        Choose A student to create a course path
+                    </Typography>
+                </div>
 
 
                 {ApiClient.getPathlessStudents().length == 0 ? "No" :
@@ -40,32 +44,17 @@ class PathLessStudents extends React.Component {
                                 {ApiClient.getPathlessStudents().map(user => (
                                     <ListItem>
                                         <UserAvatar user={user} />
-
                                         <ListItemText>
                                             {user.name}
                                         </ListItemText>
                                         <ListItemSecondaryAction>
-
-
                                             <Button to={`/path-creation/${user._id}`} component={Link} variant="outlined" color="primary">create</Button>
-
                                         </ListItemSecondaryAction>
-
                                     </ListItem>
-
-
                                 ))}
-
-
                             </List>
-
-
                         </CardContent>
-
-
                     </Card>}
-
-
 
 
             </div>

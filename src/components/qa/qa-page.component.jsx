@@ -1,21 +1,26 @@
-import { Grid, InputBase, Paper, withStyles, Button, FormHelperText, Tabs, Tab } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { Button, Paper, Tab, Tabs, withStyles, Divider, List, ListItem } from '@material-ui/core';
 import { Component, default as React } from 'react';
+import { users } from '../../static-data';
 import { SearchInput } from '../search.component';
+import { Container, Item } from '../utils';
+import { Question } from './qa-question-card';
+import { PropTypes } from 'mobx-react';
+import { ApiClient } from '../../api-client';
 
 
 
 const styles = theme => ({
     root: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1
+        flex: 1,
     },
 
     searchContainer: {
         display: 'flex',
         height: '100px',
         padding: '20px'
+    },
+    question: {
+
     }
 });
 
@@ -43,44 +48,38 @@ class QAPage extends Component {
 
         return (
             <div className={classes.root}>
-                <Grid container spacing={24} direction="column">
+                <Container spacing={24} direction="column">
 
-                    <Grid item>
-
-
+                    <Item>
                         <Paper className={classes.searchContainer}>
-                            <Grid container spacing={24} direction="row" alignItems="center" justify="center">
-                                <Grid item>
-                                    <SearchInput />
-                                </Grid>
-                                <Grid item>
-                                    <Button variant="outlined" color="primary" >Search</Button>
-                                </Grid>
-                            </Grid>
+                            <Container spacing={24} direction="row" alignItems="center" justify="center">
+                                <Item> <SearchInput /></Item>
+                                <Item><Button variant="outlined" color="primary" >Search</Button>  </Item>
+                            </Container>
                         </Paper>
-                    </Grid>
+                    </Item>
 
 
-                    <Grid item>
-
+                    <Item>
                         <Paper>
-                            <Tabs
-                                value={this.state.tab}
-                                onChange={this.handleChange}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                centered
-                            >
+                            <Tabs value={this.state.tab} onChange={this.handleChange} indicatorColor="primary" textColor="primary" centered>
                                 <Tab label="Recent" />
                                 <Tab label="Popular" />
                                 <Tab label="Not Answered" />
                             </Tabs>
 
+                            <List dense>
+                                {ApiClient.getRecentQuestions().map((question) => <ListItem dense button divider><Question question={question} /> </ListItem>)}
+
+                            </List>
+
+
+
+
 
                         </Paper>
-                    </Grid>
-
-                </Grid>
+                    </Item>
+                </Container>
 
 
 

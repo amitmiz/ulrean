@@ -1,11 +1,10 @@
-import { Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogTitle, Divider, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography, withStyles } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography, withStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import InfoIcon from '@material-ui/icons/Info';
-import { observer, inject } from 'mobx-react';
-import PropTypes from 'prop-types';
+import SaveIcon from '@material-ui/icons/Save';
+import { inject, observer } from 'mobx-react';
 import React from 'react';
 import { ApiClient } from '../api-client';
-import SaveIcon from '@material-ui/icons/Save';
+import { CourseSelectionDialog } from './path-creation-dialog.component';
 
 
 const styles = theme => ({
@@ -64,6 +63,11 @@ const styles = theme => ({
 
     },
 
+    headerCard: {
+        padding: "20px",
+        textAlign: 'center'
+    }
+
 
 
 })
@@ -97,13 +101,64 @@ class PathCreation extends React.Component {
 
 
 
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <Grid container direction="column" spacing={24}>
+
+                <Grid item>
+                    <div className={classes.headerCard}>
+                        <Typography variant="h4">Create Path to Amit Mizrahi</Typography>
+                    </div>
+                </Grid>
+
+                <Grid item>
+                    <Grid container direction="row" spacing={24}>
+
+                        <Grid item xs={12} lg={4}>
+                            <Card>
+                                <CardHeader title="Predefiend paths" titleTypographyProps={{ variant: "h6" }} />
+                                <Divider />
+                                <CardContent>
+                                    {this.generatePredefiendList()}
+
+                                </CardContent>
+                            </Card>
+                        </Grid>
+
+                        <Grid item xs={12} lg={8}>
+                            <Card>
+                                <CardHeader title="Course Path Preview" titleTypographyProps={{ variant: "h6" }} />
+                                <Divider />
+                                <CardContent>
+                                    <this.PathPreview />
+                                </CardContent>
+                                <CardActions>
+                                    <Button variant="outlined" color="primary" onClick={this.savePath} >
+                                        <SaveIcon className={classes.leftIcon} />
+                                        Save
+                                    </Button>
+                                    <Button variant="outlined" color="primary" >Save as Predifiend Path</Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        )
+
+    }
+
+
     handleOpenModal() {
         this.setState({ modalOpened: true })
     }
 
     handleClose(selectedValue) {
 
-        if (selectedValue && selectedValue != this.state.selectedValue) {
+        if (selectedValue && selectedValue !== this.state.selectedValue) {
             this.setState({ currentPath: [...this.state.currentPath, selectedValue] })
         }
 
@@ -115,12 +170,7 @@ class PathCreation extends React.Component {
         const { classes } = this.props;
 
         return (
-
-
-
-
             <div className={classes.pathPreviewRoot} >
-
                 {this.state.currentPath.map((course) => <this.PathCircle>
                     <Typography variant="button" style={{ color: "white" }}>
                         {course.header}
@@ -131,16 +181,13 @@ class PathCreation extends React.Component {
                     <IconButton onClick={this.handleOpenModal}><AddIcon /></IconButton>
                 </this.PathCircle>
 
-                <SimpleDialogWrapped
+                <CourseSelectionDialog
                     currentPath={this.state.currentPath}
                     selectedValue={this.state.selectedValue}
                     open={this.state.modalOpened}
                     onClose={this.handleClose}
                 />
             </div>
-
-
-
         )
     }
 
@@ -155,11 +202,11 @@ class PathCreation extends React.Component {
             </div>
         )
     }
+
     generatePredefiendList = () => {
 
         return (
             <List>
-
                 {ApiClient.getPredefiendPaths().map((predefiend) => (
                     <ListItem key={predefiend._id}>
                         <ListItemText primary={predefiend.name} secondary="" />
@@ -169,9 +216,7 @@ class PathCreation extends React.Component {
                         </ListItemSecondaryAction>
                     </ListItem>
                 )
-
                 )}
-
             </List>
         )
     }
@@ -185,121 +230,10 @@ class PathCreation extends React.Component {
 
     }
 
-    render() {
-        const { classes } = this.props;
-
-        return (
-            <Grid container direction="column" spacing={24}>
-
-                <Grid item>
-
-                    <Card>
-                        <Typography variant="h3">Create Path to Amit Mizrahi</Typography>
-                    </Card>
-                </Grid>
-                <Grid item>
-                    <Grid container direction="row" spacing={24}>
-                        <Grid item xs={4}>
-                            <Card>
-                                <CardHeader title="Predefiend paths" titleTypographyProps={{ variant: "h6" }} />
-                                <Divider />
-                                <CardContent>
-                                    {this.generatePredefiendList()}
-
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Card>
-                                <CardHeader title="Course Path Preview" titleTypographyProps={{ variant: "h6" }} />
-                                <Divider />
-                                <CardContent>
-                                    <this.PathPreview />
-                                </CardContent>
-                                <CardActions>
-                                    <Button variant="outlined" color="primary" onClick={this.savePath} >
-                                        <SaveIcon className={classes.leftIcon} />
-                                        Save
-                                    </Button>
-                                    <Button variant="outlined" color="primary" >Save as Predifiend Path</Button>
-                                </CardActions>
-
-
-
-                            </Card>
-                        </Grid>
-                    </Grid>
-
-
-
-                </Grid>
-
-
-            </Grid>
-        )
-
-    }
-
 }
-
-const dialogStyles = {
-    avatar: {
-
-    },
-};
-
-
-class SimpleDialog extends React.Component {
-    handleClose = () => {
-        this.props.onClose(this.props.selectedValue);
-    };
-
-    handleListItemClick = value => {
-        this.props.onClose(value);
-    };
-
-    render() {
-        const { classes, onClose, selectedValue, ...other } = this.props;
-
-        const availableCourses = ApiClient.getAllCourses().filter((course) => {
-
-
-
-            const isFound = this.props.currentPath.find((usedCourse) => usedCourse._id === course._id)
-            return isFound == undefined;
-        })
-        const isCoursesLeft = availableCourses.length > 0
-
-        const mappedCourse = availableCourses.map(course => (
-            <ListItem button onClick={() => this.handleListItemClick(course)} key={course._id}>
-
-                <ListItemText primary={course.header} />
-                <ListItemSecondaryAction><IconButton><InfoIcon /></IconButton></ListItemSecondaryAction>
-            </ListItem>))
-
-        return (
-            <Dialog onClose={this.handleClose} {...other}>
-                <DialogTitle id="simple-dialog-title">Pick Course</DialogTitle>
-                <div>
-                    <List>
-                        {isCoursesLeft ? mappedCourse : "No coures left for selection"}
-
-                    </List>
-                </div>
-            </Dialog>
-        );
-    }
-}
-
-SimpleDialog.propTypes = {
-    classes: PropTypes.object.isRequired,
-    onClose: PropTypes.func,
-    selectedValue: PropTypes.object,
-};
-
-const SimpleDialogWrapped = withStyles(dialogStyles)(SimpleDialog);
 
 
 const styled = withStyles(styles, { withTheme: true })(PathCreation)
 
 export { styled as PathCreation };
+

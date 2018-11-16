@@ -8,12 +8,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const styles = theme => ({
-    card: {
+    root: {
         display: 'flex',
+        padding: '5px'
     },
     details: {
         display: 'flex',
         flexDirection: 'column',
+        marginLeft: '10px',
     },
     content: {
         flex: '1 0 auto',
@@ -35,28 +37,30 @@ const styles = theme => ({
 
 
 function MediaControlCard(props) {
-    const { classes, theme } = props;
+    const { classes, course } = props;
+
+    const courseTags = <div className={classes.tags}>
+        {course.tags.map((tag, index) => <Chip className={classes.chip} label={tag} key={index} />
+        )}
+    </div>
 
     return (
-        <Card className={classes.card}  >
-            <CardMedia className={classes.cover} image="/test.svg" title="Live from space album cover" />
+        <div className={classes.root}  >
+            <img src="/test.svg" />
             <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Typography component="h6" variant="h6">
-                        {props.header}
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                        {props.subheader}
-                    </Typography>
-                </CardContent>
-                <div className={classes.tags}>
-                    {props.tags.map((tag, index) => <Chip className={classes.chip} label={tag} key={index} />
-                    )}
+
+                <div className={classes.content}>
+                    <Typography component="h6" variant="h6"> {course.header} </Typography>
+                    <Typography variant="subtitle1" color="textSecondary"> {course.subheader}</Typography>
                 </div>
+
+                {courseTags}
             </div>
-        </Card>
+        </div>
     );
 }
+
+
 
 MediaControlCard.propTypes = {
     classes: PropTypes.object.isRequired,
@@ -66,7 +70,6 @@ MediaControlCard.propTypes = {
     tags: PropTypes.arrayOf(String).isRequired
 };
 
-const CourseCard = withStyles(styles, { withTheme: true })(MediaControlCard);
+const CourseInfo = withStyles(styles, { withTheme: true })(MediaControlCard);
 
-export { CourseCard };
- 
+export { CourseInfo };
