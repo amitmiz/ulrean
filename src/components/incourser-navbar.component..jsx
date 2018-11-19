@@ -1,15 +1,13 @@
-import { Badge, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { UserAvatar } from './avater.component';
-
+import { connect } from 'react-redux'
 
 
 
@@ -31,9 +29,11 @@ const styles = theme => ({
     }
 });
 
+const mapStateToProps = state => {
+    return { currentUser: state.currentUser };
+};
 
-@inject('userStore')
-@observer
+
 class CourseNavBar extends Component {
 
     constructor(props) {
@@ -62,8 +62,7 @@ class CourseNavBar extends Component {
 
 
     render() {
-        const { classes, userStore } = this.props;
-        const { currentUser } = userStore;
+        const { classes,  currentUser } = this.props;
         return (
             <div className={classes.root}>
                 <AppBar elevation={0} className={classes.appBar} position="fixed">
@@ -105,4 +104,4 @@ CourseNavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(CourseNavBar);
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CourseNavBar));

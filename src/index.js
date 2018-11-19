@@ -1,22 +1,22 @@
+import { CssBaseline } from "@material-ui/core";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import { App } from './App'
-import * as serviceWorker from './serviceWorker';
+import { Provider as Redux } from "react-redux";
 import 'typeface-roboto';
-import { Provider } from "mobx-react";
-import { AuthStore } from "./stores/auth.store";
-import { CssBaseline } from "@material-ui/core"
-import { UserStore } from './stores/user.store';
-
+import { App } from './App';
+import './index.css';
+import store from './redux';
+import * as serviceWorker from './serviceWorker';
 
 
 function Container() {
     return (<React.Fragment>
         <CssBaseline />
-        <Provider authStore={new AuthStore()} userStore={new UserStore()} >
-            <App />
-        </Provider>
+       
+            <Redux store={store} >
+                <App />
+            </Redux>
+    
     </React.Fragment>)
 }
 

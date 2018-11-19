@@ -6,6 +6,8 @@ import { Container, Item } from '../utils';
 import { Question } from './qa-question-card';
 import { PropTypes } from 'mobx-react';
 import { ApiClient } from '../../api-client';
+import { connect } from "react-redux";
+
 
 
 
@@ -24,6 +26,10 @@ const styles = theme => ({
     }
 });
 
+const mapStateToProps = state => {
+    return { questions: state.questions };
+};
+
 class QAPage extends Component {
 
 
@@ -37,6 +43,8 @@ class QAPage extends Component {
         }
     }
 
+
+
     handleChange = (event, tab) => {
         this.setState({ tab });
     };
@@ -44,7 +52,7 @@ class QAPage extends Component {
 
 
     render() {
-        const { classes } = this.props;
+        const { classes,questions } = this.props;
 
         return (
             <div className={classes.root}>
@@ -69,7 +77,7 @@ class QAPage extends Component {
                             </Tabs>
 
                             <List dense>
-                                {ApiClient.getRecentQuestions().map((question) => <ListItem dense button divider><Question question={question} /> </ListItem>)}
+                                {questions.map((question) => <ListItem dense button divider><Question question={question} /> </ListItem>)}
 
                             </List>
 
@@ -95,7 +103,8 @@ QAPage.propTypes = {
 };
 
 const QAPageStyled = withStyles(styles, { withTheme: true })(QAPage)
+const connectedQAPage = connect(mapStateToProps)(QAPageStyled)
 
-export { QAPageStyled as QAPage };
+export { connectedQAPage as QAPage };
 
 

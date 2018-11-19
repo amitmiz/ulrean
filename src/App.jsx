@@ -35,10 +35,29 @@ const style = theme => ({
 })
 
 
-@inject('authStore')
-@observer
+
 class App extends Component {
 
+
+  render() {
+    const { authStore } = this.props;
+    console.log(this.props)
+
+    return (
+      <React.Fragment>
+
+        <Router>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {this.WhenLogged()}
+
+          </div>
+
+        </Router>
+      </React.Fragment >
+
+    );
+
+  }
 
   WhenNotLogged = () => {
     return (
@@ -118,26 +137,7 @@ class App extends Component {
   }
 
 
-  render() {
-    const { authStore } = this.props;
-    console.log(this.props)
 
-    return (
-      <React.Fragment>
-
-        <Router>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {/* {authStore.isLoggedIn ? this.WhenLogged() : this.WhenNotLogged()} */}
-            {this.WhenLogged()}
-
-          </div>
-
-        </Router>
-      </React.Fragment >
-
-    );
-
-  }
 
 }
 

@@ -1,8 +1,6 @@
-import { Paper, TextField, Grid, withStyles, Button, Typography, Avatar } from '@material-ui/core';
+import { Avatar, Button, Grid, Paper, TextField, Typography, withStyles } from '@material-ui/core';
+import LockIcon from '@material-ui/icons/Lock';
 import React, { Component } from 'react';
-import LockIcon from '@material-ui/icons/Lock'
-import {inject, observer} from 'mobx-react'
-
 const style = {
     root: {
         flex: 1,
@@ -24,8 +22,6 @@ const style = {
     }
 }
 
-@inject('authStore')
-@observer
 class LoginScreen extends Component {
 
     constructor(props) {
@@ -46,7 +42,7 @@ class LoginScreen extends Component {
     }
 
     handleOnSubmit() {
-        this.props.authStore.login()
+        this.props.login()
     }
 
 
@@ -109,3 +105,4 @@ class LoginScreen extends Component {
 const withStyle = withStyles(style)(LoginScreen);
 
 export { withStyle as LoginScreen };
+

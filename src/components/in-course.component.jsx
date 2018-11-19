@@ -2,6 +2,7 @@ import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Grid, Typ
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { Component } from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import { observer, inject } from 'mobx-react';
 
 const requireConfig = {
     url: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.1/require.min.js',
@@ -27,11 +28,15 @@ const styles = {
     },
     stageNumber: {
         margin: '20px'
+    }, expandedRoot: {
+        flexDirection: "column"
     }
 
 }
 
-class InCourse extends Component {
+
+@inject('inCourseStore')
+@observer class InCourse extends Component {
     constructor(props) {
         super(props);
 
@@ -51,17 +56,16 @@ class InCourse extends Component {
             <div className={classes.root} >
 
 
-
                 <Grid container direction={"row"} spacing={8}>
 
                     <Grid item xs={4}>
 
-                        <CourseInstructions />
+                        <CourseInstructions {...this.props} stage={this.props.inCourseStore.currStage} />
                     </Grid>
 
 
                     <Grid item xs={4}>
-                        <Editor />
+                        <Editor stage={this.props.inCourseStore.currStage} />
                     </Grid>
 
 
@@ -69,7 +73,7 @@ class InCourse extends Component {
                     <Grid item xs={4}>
                         <Card>
                             <CardHeader title="preview"></CardHeader>
-                           <CardContent>preview</CardContent>
+                            <CardContent>preview</CardContent>
                         </Card>
                     </Grid>
 
@@ -81,9 +85,9 @@ class InCourse extends Component {
                     <Toolbar className={classes.toolbar}>
 
 
-                        <Button variant="outlined">prev</Button>
+                        <Button onClick={() => this.props.inCourseStore.prevStage()} variant="outlined">prev</Button>
                         <div className={classes.stageNumber} >7/16</div>
-                        <Button variant="outlined">next</Button>
+                        <Button onClick={() => this.props.inCourseStore.nextStage()} variant="outlined">next</Button>
 
 
                     </Toolbar>
@@ -102,30 +106,37 @@ InCourse.propTypes = {
 
 };
 
-function CourseInstructions() {
-    let classes = {}
+function CourseInstructions(props) {
+
+    const { stage, classes } = props;
 
     return (<React.Fragment>
         <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>Expansion Panel 1</Typography>
+                <Typography className={classes.heading}>Learn</Typography>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            <ExpansionPanelDetails className={classes.expandedRoot}>
+
+                <Typography variant="subheading">  {stage.learnSubheader}</Typography>
+                <Typography variant="h4">  {stage.learnHeader}</Typography>
+
+
+
+
+
                 <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-        </Typography>
+                    {stage.learn}
+                </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>Expansion Panel 2</Typography>
+                <Typography className={classes.heading}>Instructions</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
-         </Typography>
+                    {stage.instructions.map((inst) => <div>{inst}</div>)}
+                </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel defaultExpanded>
@@ -137,7 +148,9 @@ function CourseInstructions() {
     )
 }
 
-function Editor() {
+function Editor(props) {
+    const { stage } = props;
+
     return (<Card>
         <CardHeader title="editor"></CardHeader>
         <CardContent>
@@ -145,7 +158,7 @@ function Editor() {
                 // width="800"
                 height="65vh"
                 language="javascript"
-                value="// type your code..."
+                value={stage.codePlaceholder}
                 requireConfig={requireConfig}
             />
 

@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HelpIcon from '@material-ui/icons/Help';
 import classnames from 'classnames';
-import { inject, observer } from 'mobx-react';
 import React from 'react';
 import { ApiClient } from '../../api-client.js';
 import { CourseInfo } from '../course-info.jsx';
@@ -12,6 +11,7 @@ import { Container, Item, Loading } from '../utils.jsx';
 import { CourseTasks } from './course-tasks.jsx';
 import { PathStat } from './path-stat.jsx';
 import { PathStepper } from './path-stepper.jsx';
+import {connect} from 'react-redux';
 
 const styles = (theme) => ({
 
@@ -34,8 +34,12 @@ const styles = (theme) => ({
     },
 })
 
-@inject('userStore')
-@observer
+const mapStateToProps = state => {
+    return { currentUser: state.currentUser };
+};
+
+
+
 class CoursersCatalog extends React.Component {
 
     constructor(props) {
@@ -44,7 +48,7 @@ class CoursersCatalog extends React.Component {
     }
 
     componentDidMount() {
-        this.currentCoursePath = ApiClient.getUserPath(this.props.userStore.currentUser._id);
+        this.currentCoursePath = ApiClient.getUserPath(this.props.currentUser._id);
         this.setState({ loading: false })
     }
 
@@ -78,7 +82,7 @@ class CoursersCatalog extends React.Component {
                     {/* Right Side */}
                     <Item>
                         <Paper>
-                            <PathStat currentUser={this.props.userStore.currentUser} />
+                            <PathStat currentUser={this.props.currentUser} />
                         </Paper>
                     </Item>
                     {/* Left Side */}
@@ -142,7 +146,7 @@ class CoursersCatalog extends React.Component {
 
 }
 
-const styled = withStyles(styles, { withTheme: true })(CoursersCatalog);
+const styled = connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CoursersCatalog));
 styled.displayName = "CourseCatalog"
 export { styled as CoursersCatalog };
 

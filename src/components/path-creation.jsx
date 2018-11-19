@@ -75,8 +75,7 @@ const styles = theme => ({
 
 
 
-@inject('userStore')
-@observer
+
 class PathCreation extends React.Component {
 
 

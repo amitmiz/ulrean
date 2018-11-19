@@ -119,5 +119,5 @@ export const questions = [
 
 
 
-export const currentUser = users[0];
 
+export const currentUser = users[0];

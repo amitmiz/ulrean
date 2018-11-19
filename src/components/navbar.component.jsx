@@ -4,11 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { UserAvatar } from './avater.component';
+import {connect} from 'react-redux'
 
 
 
@@ -30,9 +30,13 @@ const styles = theme => ({
     }
 });
 
+const mapStateToProps = state => {
+    return { currentUser: state.currentUser };
+};
 
-@inject('userStore')
-@observer
+
+
+
 class NavBar extends Component {
 
     constructor(props) {
@@ -61,8 +65,8 @@ class NavBar extends Component {
 
 
     render() {
-        const { classes, userStore } = this.props;
-        const { currentUser } = userStore;
+        const { classes, currentUser } = this.props;
+
         return (
             <div className={classes.root}>
                 <AppBar className={classes.appBar} position="fixed">
@@ -109,4 +113,4 @@ NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(NavBar);
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(NavBar));
