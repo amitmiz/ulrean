@@ -1,14 +1,9 @@
-import { Button, Paper, Tab, Tabs, withStyles, Divider, List, ListItem } from '@material-ui/core';
+import { Button, List, ListItem, Paper, Tab, Tabs, withStyles } from '@material-ui/core';
 import { Component, default as React } from 'react';
-import { users } from '../../static-data';
+import { ApiClient } from '../../api-client';
 import { SearchInput } from '../search.component';
 import { Container, Item } from '../utils';
 import { Question } from './qa-question-card';
-import { PropTypes } from 'mobx-react';
-import { ApiClient } from '../../api-client';
-import { connect } from "react-redux";
-
-
 
 
 const styles = theme => ({
@@ -52,7 +47,7 @@ class QAPage extends Component {
 
 
     render() {
-        const { classes,questions } = this.props;
+        const { classes, questions } = this.props;
 
         return (
             <div className={classes.root}>
@@ -77,7 +72,7 @@ class QAPage extends Component {
                             </Tabs>
 
                             <List dense>
-                                {questions.map((question) => <ListItem dense button divider><Question question={question} /> </ListItem>)}
+                                {ApiClient.getRecentQuestions().map((question) => <ListItem dense button divider><Question question={question} /> </ListItem>)}
 
                             </List>
 
@@ -103,8 +98,5 @@ QAPage.propTypes = {
 };
 
 const QAPageStyled = withStyles(styles, { withTheme: true })(QAPage)
-const connectedQAPage = connect(mapStateToProps)(QAPageStyled)
 
-export { connectedQAPage as QAPage };
-
-
+export { QAPageStyled as QAPage };

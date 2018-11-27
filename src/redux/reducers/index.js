@@ -1,18 +1,36 @@
-import { ADD_ARTICLE } from "../actions/action-types";
-import { predefinedPaths, questions, staticCoureses, users } from "../../static-data";
+import { types } from "../actions/action-types";
+
+const defaultFetchState = {
+    isLoading: true,
+    error: null
+};
 
 const initialState = {
-    articles: [],
-    courses: staticCoureses,
-    predefinedPaths : predefinedPaths,
-    questions : questions,
-    users : users,
-    currentUser : users[0]
+    currentStage: {},
+    stageFetchState: {
+        ...defaultFetchState
+    },
 };
-const rootReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_ARTICLE:
-            return { ...state, articles: [...state.articles, action.payload] };
+
+
+const rootReducer = (state = initialState, { type, payload }) => {
+    switch (type) {
+        case types.fetchStage:
+            return {
+                ...state,
+                stageFetchState: { ...defaultFetchState }
+            };
+        case types.fetchStageSuccess:
+            return {
+                ...state,
+                currentStage: payload,
+                stageFetchState: { isLoading: false, error: null }
+            };
+        case types.fetchStageError:
+            return {
+                ...state,
+                stageFetchState: { isLoading: false, error: payload.error }
+            };
         default:
             return state;
     }

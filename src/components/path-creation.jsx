@@ -90,12 +90,9 @@ class PathCreation extends React.Component {
 
 
         this.state.currentUserId = this.props.match.params.id;
-
-
         this.handleOpenModal = this.handleOpenModal.bind(this)
         this.handleClose = this.handleClose.bind(this)
         this.savePath = this.savePath.bind(this)
-
     }
 
 
@@ -115,14 +112,12 @@ class PathCreation extends React.Component {
 
                 <Grid item>
                     <Grid container direction="row" spacing={24}>
-
                         <Grid item xs={12} lg={4}>
                             <Card>
                                 <CardHeader title="Predefiend paths" titleTypographyProps={{ variant: "h6" }} />
                                 <Divider />
                                 <CardContent>
                                     {this.generatePredefiendList()}
-
                                 </CardContent>
                             </Card>
                         </Grid>

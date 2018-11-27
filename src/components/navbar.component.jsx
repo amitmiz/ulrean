@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { UserAvatar } from './avater.component';
-import {connect} from 'react-redux'
+import { currentUser } from '../static-data';
 
 
 
@@ -42,6 +42,7 @@ class NavBar extends Component {
     constructor(props) {
         super(props)
 
+        this.currentUser = currentUser;
         this.state = { menuAnchor: null }
 
         this.handleMenuClose = this.handleMenuClose.bind(this)
@@ -65,7 +66,7 @@ class NavBar extends Component {
 
 
     render() {
-        const { classes, currentUser } = this.props;
+        const { classes} = this.props;
 
         return (
             <div className={classes.root}>
@@ -78,7 +79,7 @@ class NavBar extends Component {
                             <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link>
                         </div>
 
-                        <Typography variant="button" color="inherit" >{currentUser.type}</Typography>
+                        <Typography variant="button" color="inherit" >{this.currentUser.type}</Typography>
 
                         <IconButton color="inherit">
                             <Badge badgeContent={17} color="secondary">
@@ -86,7 +87,7 @@ class NavBar extends Component {
                             </Badge>
                         </IconButton>
 
-                        <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={currentUser} />
+                        <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={this.currentUser} />
 
 
                         {/* <Button variant="outlined" color="inherit">Login</Button> */}
@@ -113,4 +114,4 @@ NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(NavBar));
+export default withStyles(styles, { withTheme: true })(NavBar);

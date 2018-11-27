@@ -6,10 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { UserAvatar } from './avater.component';
-import { connect } from 'react-redux'
-
-
+import { currentUser } from '../../static-data';
+import { UserAvatar } from '../avater.component';
 
 const styles = theme => ({
     root: {
@@ -39,6 +37,8 @@ class CourseNavBar extends Component {
     constructor(props) {
         super(props)
 
+
+        this.currentUser = currentUser
         this.state = { menuAnchor: null }
 
         this.handleMenuClose = this.handleMenuClose.bind(this)
@@ -62,7 +62,7 @@ class CourseNavBar extends Component {
 
 
     render() {
-        const { classes,  currentUser } = this.props;
+        const { classes } = this.props;
         return (
             <div className={classes.root}>
                 <AppBar elevation={0} className={classes.appBar} position="fixed">
@@ -73,11 +73,11 @@ class CourseNavBar extends Component {
                         </div>
                         <div className={classes.courseName}>CSS Course</div>
 
-                        <Typography variant="button" color="inherit" >{currentUser.type}</Typography>
+                        <Typography variant="button" color="inherit" >{this.currentUser.type}</Typography>
 
 
 
-                        <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={currentUser} />
+                        <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={this.currentUser} />
 
 
 
@@ -104,4 +104,4 @@ CourseNavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(CourseNavBar));
+export default withStyles(styles, { withTheme: true })(CourseNavBar);

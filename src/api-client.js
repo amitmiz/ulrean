@@ -1,4 +1,4 @@
-import { users, staticCoureses, predefinedPaths, teachers, questions } from "./static-data";
+import { users, staticCoureses, predefinedPaths, teachers, questions, stages } from "./static-data";
 
 export class ApiClient {
 
@@ -49,6 +49,10 @@ export class ApiClient {
 
     static getRecentQuestions() {
         return questions;
+    }
+
+    static getStageById(id) {
+        return stages.filter(stage => stage.id == id)[0];
     }
 }
 

@@ -1,6 +1,10 @@
 import { Avatar, Button, Grid, Paper, TextField, Typography, withStyles } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { loginRequest } from '../users/users.actions';
+import { bindActionCreators } from 'redux';
+
 const style = {
     root: {
         flex: 1,
@@ -20,6 +24,13 @@ const style = {
     loginButton: {
         marginTop: '10px'
     }
+}
+
+const mapStateToProps = () => ({})
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ loginRequest }, dispatch)
+
+
 }
 
 class LoginScreen extends Component {
@@ -42,7 +53,9 @@ class LoginScreen extends Component {
     }
 
     handleOnSubmit() {
-        this.props.login()
+        const { user, password } = this.state;
+
+        this.props.loginRequest(user, password);
     }
 
 
@@ -102,7 +115,9 @@ class LoginScreen extends Component {
     }
 }
 
-const withStyle = withStyles(style)(LoginScreen);
+const withStyle = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(LoginScreen));
+
+withStyle.displayName = "LoginScreen"
 
 export { withStyle as LoginScreen };
 

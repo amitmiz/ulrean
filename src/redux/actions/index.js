@@ -1,3 +1,10 @@
-import { ADD_ARTICLE } from "./action-types";
+import { types } from "./action-types";
 
-export const addArticle = article => ({ type: ADD_ARTICLE, payload: article });
+
+
+
+export const fetchStage = stageId => ({ type: types.fetchStage, payload: stageId });
+
+export const fetchStageSuccess = stageId => ({ type: types.fetchStageSuccess, payload: stageId });
+
+export const fetchStageError = stageId => ({ type: types.fetchStageError, payload: stageId });
