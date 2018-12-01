@@ -1,8 +1,8 @@
-import { all, call, put, takeLatest, takeEvery } from 'redux-saga/effects';
-import { types } from './user.action-types';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { ApiClient } from '../../api-client';
+import history from '../../history';
+import { types } from './user.action-types';
 import { authRequest, authRequestError, authRequestSuccess } from './users.actions';
-import history from '../../history'
 
 
 export function* authorize(action) {
@@ -29,3 +29,5 @@ function* rootSaga() {
 }
 
 export { rootSaga };
+
+
