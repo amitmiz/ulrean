@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { UserAvatar } from '../avater.component';
-import { userSelector } from '../../users/user.reducer';
+import { userSelector } from '../../state/users/user.reducer';
 import { connect } from 'react-redux';
 
 const styles = theme => ({

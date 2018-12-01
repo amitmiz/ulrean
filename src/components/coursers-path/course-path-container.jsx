@@ -4,11 +4,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ApiClient } from '../../api-client.js';
-import { pathSelector } from '../../course-path/reducer.js';
-import { userSelector } from '../../users/user.reducer.js';
+import { pathSelector } from '../../state/course-path/reducer.js';
+import { userSelector } from '../../state/users/user.reducer.js';
 import { Loading } from '../utils.jsx';
 import { CourseCatalog } from './course-path.jsx';
-import { fetchPath } from '../../course-path/actions';
+import { fetchPath } from '../../state/course-path/actions';
 
 
 const styles = (theme) => ({

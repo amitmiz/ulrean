@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { ApiClient } from '../../api-client';
 import { types } from '../actions/action-types';
-import { createFiles, initTests, updateChallengeMeta, updateSuccessMessage, challengeMounted } from '../../stage-proccessor/redux';
+import { createFiles, initTests, updateChallengeMeta, updateSuccessMessage, challengeMounted } from '../../state/stage-proccessor/redux';
 
 function* fetchStage(action) {
     try {

@@ -5,10 +5,10 @@ import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 import { ApiClient } from '../../api-client';
-import { getPathlessUserSelector } from '../../pathless-users/reducer';
+import { getPathlessUserSelector } from '../../state/pathless-users/reducer';
 import { CourseSelectionDialog } from './path-creation-dialog.component';
 
-import { addPath } from '../../pathless-users/actions'
+import { addPath } from '../../state/pathless-users/actions'
 
 
 const styles = theme => ({

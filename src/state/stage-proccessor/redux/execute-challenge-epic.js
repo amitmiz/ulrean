@@ -37,7 +37,7 @@ import {
   createMainFramer
 } from '../utils/frame.js';
 
-import { backend } from '../../utils/challengeTypes';
+import { backend } from '../../../utils/challengeTypes';
 
 const executeDebounceTimeout = 750;
 

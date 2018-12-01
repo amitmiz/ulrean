@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, CardHeader, TextField, withStyles } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { userSelector } from '../users/user.reducer';
+import { userSelector } from '../state/users/user.reducer';
 import { UserAvatar } from './avater.component';
 
 

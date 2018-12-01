@@ -2,8 +2,8 @@ import React from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { fetchPathlessUser } from "../../pathless-users/actions";
-import { isPathlessUsersLoadingSelector, pathLessUsersSelector, pathlessUsersErrorSelector } from "../../pathless-users/reducer";
+import { fetchPathlessUser } from "../../state/pathless-users/actions";
+import { isPathlessUsersLoadingSelector, pathLessUsersSelector, pathlessUsersErrorSelector } from "../../state/pathless-users/reducer";
 import { PathLessStudents } from "./pathless-students.component";
 
 

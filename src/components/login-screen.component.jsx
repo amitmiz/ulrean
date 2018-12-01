@@ -2,7 +2,7 @@ import { Avatar, Button, Grid, Paper, TextField, Typography, withStyles } from '
 import LockIcon from '@material-ui/icons/Lock';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loginRequest } from '../users/users.actions';
+import { loginRequest } from '../state/users/users.actions';
 import { bindActionCreators } from 'redux';
 
 const style = {

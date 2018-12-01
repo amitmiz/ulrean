@@ -2,9 +2,9 @@ import { all } from 'redux-saga/effects';
 
 
 import { rootSaga as stageSaga } from './sagas'
-import { rootSaga as userSagas } from '../users/user.sagas'
-import { rootSaga as pathlessSagas } from '../pathless-users/sagas'
-import { rootSaga as pathSagas } from '../course-path/sagas'
+import { rootSaga as userSagas } from '../state/users/user.sagas'
+import { rootSaga as pathlessSagas } from '../state/pathless-users/sagas'
+import { rootSaga as pathSagas } from '../state/course-path/sagas'
 
 export default function* rootSaga() {
   yield all([stageSaga(), userSagas(), pathlessSagas(), pathSagas()]);

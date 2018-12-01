@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 import { stageIsLoadingSelector, stageSelector } from '../../redux';
 import { fetchStage } from '../../redux/actions';
-import { challengeFilesSelector, challengeTestsSelector, consoleOutputSelector, executeChallenge, updateFile } from '../../stage-proccessor/redux';
+import { challengeFilesSelector, challengeTestsSelector, consoleOutputSelector, executeChallenge, updateFile } from '../../state/stage-proccessor/redux';
 import { BottomNavBar } from './in-course-bottom-navbar.component';
 import CourseNavBar from './incourse-navbar.component.';
 import { RegualrStage } from './regualr-stage.component';

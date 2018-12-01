@@ -1,6 +1,6 @@
 
 import { call, put, takeLatest, all, select } from 'redux-saga/effects';
-import { ApiClient } from '../api-client';
+import { ApiClient } from '../../api-client';
 import { addPathError, addPathRequested, addPathSuccess, fetchPathlessUserError, fetchPathlessUserSuccess, types } from './actions';
 import { userSelector } from '../users/user.reducer';
 import { updatePath } from '../course-path/actions';

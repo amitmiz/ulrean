@@ -1,7 +1,7 @@
 import { put, takeLatest, select, all } from 'redux-saga/effects'
 import { types, fetchPathRequest, fetchPathSuccess } from './actions'
 import { userSelector } from '../users/user.reducer';
-import { ApiClient } from '../api-client';
+import { ApiClient } from '../../api-client';
 
 
 function* fetch(action) {

@@ -63,7 +63,7 @@ class SideMenuComponent extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { open: true }
+        this.state = { open: false }
 
         this.handleDrawerClose = this.handleDrawerClose.bind(this)
         this.handleDrawerOpen = this.handleDrawerOpen.bind(this)
