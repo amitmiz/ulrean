@@ -1,10 +1,14 @@
 import { Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography, withStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
-import { inject, observer } from 'mobx-react';
 import React from 'react';
-import { ApiClient } from '../api-client';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import { ApiClient } from '../../api-client';
+import { getPathlessUserSelector } from '../../pathless-users/reducer';
 import { CourseSelectionDialog } from './path-creation-dialog.component';
+
+import { addPath } from '../../pathless-users/actions'
 
 
 const styles = theme => ({
@@ -73,11 +77,17 @@ const styles = theme => ({
 })
 
 
+const mapStateToProps = (state, ownProps) => ({ currentUser: getPathlessUserSelector(state, ownProps.match.params.id) });
 
+const mapDispatchToProps = dispatch => bindActionCreators({ addPath }, dispatch)
 
 
 class PathCreation extends React.Component {
 
+
+    componentDidMount() {
+
+    }
 
     constructor(props) {
         super(props)
@@ -88,8 +98,6 @@ class PathCreation extends React.Component {
             currentPath: [],
         }
 
-
-        this.state.currentUserId = this.props.match.params.id;
         this.handleOpenModal = this.handleOpenModal.bind(this)
         this.handleClose = this.handleClose.bind(this)
         this.savePath = this.savePath.bind(this)
@@ -220,7 +228,7 @@ class PathCreation extends React.Component {
     }
 
     savePath() {
-        ApiClient.updateUsersPath(this.state.currentUserId, this.state.currentPath)
+        this.props.addPath({ id: this.props.currentUser._id, path: this.state.currentPath })
 
     }
 
@@ -229,5 +237,7 @@ class PathCreation extends React.Component {
 
 const styled = withStyles(styles, { withTheme: true })(PathCreation)
 
-export { styled as PathCreation };
+const connected = connect(mapStateToProps, mapDispatchToProps)(styled)
+
+export { connected as PathCreation };
 

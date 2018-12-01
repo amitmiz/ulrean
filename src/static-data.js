@@ -117,25 +117,25 @@ export const questions = [
 ]
 
 
-
-
-
-export const currentUser = users[0];
-
-
 export const stages = [{
     id: 12312312333123,
-    codePlaceholder: `<!DOCTYPE html>
-<html>
-<head>
-  <title>Vacation World</title>
-</head>`,
 
-    learnHeader: "Inline Styles",
-    learnSubheader: "CSS SETUP AND SELECTORS",
-    learn: "Although CSS is a different language than HTML, it's possible to write CSS code directly within HTML code using inline styles.",
-    instructions: ["In index.html, use inline styles to set the font-family of the first paragraph to Arial."],
-
+    learnHeader: "Basic HTML and HTML5",
+    learnSubheader: "Say Hello to HTML Elements",
+    learn: [
+        "Welcome to freeCodeCamp's HTML coding challenges. These will walk you through web development step-by-step.",
+        "First, you'll start by building a simple web page using HTML. You can edit <code>code</code> in your <code>code editor</code>, which is embedded into this web page.",
+        "Do you see the code in your code editor that says <code>&#60;h1&#62;Hello&#60;/h1&#62;</code>? That's an HTML <code>element</code>.",
+        "Most HTML elements have an <code>opening tag</code> and a <code>closing tag</code>.",
+        "Opening tags look like this:",
+        "<code>&#60;h1&#62;</code>",
+        "Closing tags look like this:",
+        "<code>&#60;/h1&#62;</code>",
+        "The only difference between opening and closing tags is the forward slash after the opening bracket of a closing tag.",
+        "Each challenge has tests you can run at any time by clicking the \"Run tests\" button. When you pass all tests, you'll be prompted to submit your solution and go to the next coding challenge.",
+        "<hr>",
+        "To pass the test on this challenge, change your <code>h1</code> element's text to say \"Hello World\"."
+    ],
     challengeType: 0,
     videoUrl: "https://scrimba.com/p/pVMPUv/cE8Gpt2",
     tests: [
@@ -166,6 +166,12 @@ export const stages = [{
     },
     slug: "/responsive-web-design/basic-html-and-html5/say-hello-to-html-elements"
 }]
+
+
+
+
+
+
 
 
 

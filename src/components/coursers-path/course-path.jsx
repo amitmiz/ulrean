@@ -6,12 +6,14 @@ import HelpIcon from '@material-ui/icons/Help';
 import classnames from 'classnames';
 import React from 'react';
 import { ApiClient } from '../../api-client.js';
-import { currentUser } from '../../static-data.js';
 import { CourseInfo } from '../course-info.jsx';
 import { Container, Item, Loading } from '../utils.jsx';
 import { CourseTasks } from './course-tasks.jsx';
 import { PathStat } from './path-stat.jsx';
 import { PathStepper } from './path-stepper.jsx';
+import PropTypes from 'prop-types';
+
+
 
 const styles = (theme) => ({
 
@@ -34,32 +36,30 @@ const styles = (theme) => ({
     },
 })
 
-const mapStateToProps = state => {
-    return { currentUser: state.currentUser };
-};
 
+const propTypes = {
+    currentUser: PropTypes.object.isRequired,
+    userPath: PropTypes.object.isRequired
+}
 
-
-class CoursersCatalog extends React.Component {
+class CourseCatalog extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = { loading: false, currentStep: 0, expanded: true }
-        this.currentUser = currentUser
 
     }
 
     componentDidMount() {
-        this.currentCoursePath = ApiClient.getUserPath(this.currentUser._id);
         this.setState({ loading: false })
     }
 
 
     render() {
-        const { classes } = this.props;
+        const { classes, userPath } = this.props;
 
         return (
-            this.state.loading ? <Loading /> : this.currentCoursePath ? this.rednerCoursePath(this.currentCoursePath, classes) : this.renderNoCoursePath()
+            this.state.loading ? <Loading /> : userPath ? this.rednerCoursePath() : this.renderNoCoursePath()
         )
     }
 
@@ -69,7 +69,9 @@ class CoursersCatalog extends React.Component {
 
 
 
-    rednerCoursePath(currentCoursePath, classes) {
+    rednerCoursePath = () => {
+
+        const { currentUser, classes, userPath } = this.props;
 
         const expandButton = <IconButton onClick={this.handleExpandClick} className={classnames(classes.expand, {
             [classes.expandOpen]: this.state.expanded,
@@ -84,7 +86,7 @@ class CoursersCatalog extends React.Component {
                     {/* Right Side */}
                     <Item>
                         <Paper>
-                            <PathStat currentUser={this.currentUser} />
+                            <PathStat currentUser={currentUser} />
                         </Paper>
                     </Item>
                     {/* Left Side */}
@@ -94,7 +96,7 @@ class CoursersCatalog extends React.Component {
 
                             <Item xs={12} lg={3}>
                                 <Paper>
-                                    <PathStepper courses={currentCoursePath} onStepChanged={this.handleStepChanged} />
+                                    <PathStepper courses={userPath} onStepChanged={this.handleStepChanged} />
                                 </Paper>
                             </Item>
 
@@ -103,7 +105,7 @@ class CoursersCatalog extends React.Component {
                                 <Container direction="column" spacing={24}>
 
                                     <Item><Card>
-                                        <CourseInfo course={currentCoursePath[this.state.currentStep]} />
+                                        <CourseInfo course={userPath[this.state.currentStep]} />
 
 
                                         <CardActions className={classes.actions} disableActionSpacing>
@@ -114,7 +116,7 @@ class CoursersCatalog extends React.Component {
 
                                         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                                             <CardContent>
-                                                <CourseTasks course={currentCoursePath[this.state.currentStep]} />
+                                                <CourseTasks course={userPath[this.state.currentStep]} />
                                             </CardContent>
                                         </Collapse>
 
@@ -148,7 +150,7 @@ class CoursersCatalog extends React.Component {
 
 }
 
-const styled = withStyles(styles, { withTheme: true })(CoursersCatalog);
+const styled = withStyles(styles, { withTheme: true })(CourseCatalog);
 styled.displayName = "CourseCatalog"
-export { styled as CoursersCatalog };
+export { styled as CourseCatalog };
 

@@ -8,14 +8,14 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { UserAvatar } from './avater.component';
-import { currentUser } from '../static-data';
+import { connect } from 'react-redux';
+import { userSelector } from '../users/user.reducer';
 
 
 
 
 const styles = theme => ({
     root: {
-        flexGrow: 1,
     },
     grow: {
         flexGrow: 1,
@@ -31,7 +31,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    return { currentUser: state.currentUser };
+    return { currentUser: userSelector(state) };
 };
 
 
@@ -42,7 +42,7 @@ class NavBar extends Component {
     constructor(props) {
         super(props)
 
-        this.currentUser = currentUser;
+
         this.state = { menuAnchor: null }
 
         this.handleMenuClose = this.handleMenuClose.bind(this)
@@ -66,7 +66,7 @@ class NavBar extends Component {
 
 
     render() {
-        const { classes} = this.props;
+        const { classes, currentUser } = this.props;
 
         return (
             <div className={classes.root}>
@@ -79,7 +79,7 @@ class NavBar extends Component {
                             <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link>
                         </div>
 
-                        <Typography variant="button" color="inherit" >{this.currentUser.type}</Typography>
+                        <Typography variant="button" color="inherit" >{currentUser.type}</Typography>
 
                         <IconButton color="inherit">
                             <Badge badgeContent={17} color="secondary">
@@ -87,7 +87,7 @@ class NavBar extends Component {
                             </Badge>
                         </IconButton>
 
-                        <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={this.currentUser} />
+                        <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={currentUser} />
 
 
                         {/* <Button variant="outlined" color="inherit">Login</Button> */}
@@ -110,8 +110,14 @@ class NavBar extends Component {
     }
 }
 
-NavBar.propTypes = {
-    classes: PropTypes.object.isRequired,
+
+
+const styled = withStyles(styles, { withTheme: true })(NavBar);
+const connected = connect(mapStateToProps)(styled)
+
+connected.propTypes = {
+    classes: PropTypes.object
 };
 
-export default withStyles(styles, { withTheme: true })(NavBar);
+connected.displayName = "NavBar"
+export default connected

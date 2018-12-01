@@ -1,31 +1,20 @@
-import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { PureComponent } from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import './classic.css';
 
-import { executeChallenge, updateFile } from '../../stage-proccessor/redux';
 
 
 
 const propTypes = {
   contents: PropTypes.string,
   dimensions: PropTypes.object,
-  executeChallenge: PropTypes.func.isRequired,
+  onEnterPressed: PropTypes.func.isRequired,
   ext: PropTypes.string,
   fileKey: PropTypes.string,
-  updateFile: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired
 };
 
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      executeChallenge,
-      updateFile
-    },
-    dispatch
-  );
 
 const modeMap = {
   css: 'css',
@@ -35,6 +24,8 @@ const modeMap = {
 };
 
 var monacoThemesDefined = false;
+
+
 const defineMonacoThemes = monaco => {
   if (monacoThemesDefined) {
     return;
@@ -99,7 +90,7 @@ class Editor extends PureComponent {
         /* eslint-disable no-bitwise */
         monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter)
       ],
-      run: this.props.executeChallenge
+      run: this.props.onEnterPressed
     });
   };
 
@@ -111,8 +102,8 @@ class Editor extends PureComponent {
   };
 
   onChange = editorValue => {
-    const { updateFile, fileKey } = this.props;
-    updateFile({ key: fileKey, editorValue });
+    const { onChange, fileKey } = this.props;
+    onChange({ key: fileKey, editorValue });
   };
 
   componentDidUpdate(prevProps) {
@@ -136,7 +127,7 @@ class Editor extends PureComponent {
           options={this.options}
           theme={editorTheme}
           value={contents}
-          height="65vh"
+          height="45vh"
 
         />
       </div>
@@ -147,7 +138,4 @@ class Editor extends PureComponent {
 Editor.displayName = 'Editor';
 Editor.propTypes = propTypes;
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Editor);
+export default Editor;

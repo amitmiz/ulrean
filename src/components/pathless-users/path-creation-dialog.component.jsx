@@ -3,10 +3,10 @@ import InfoIcon from '@material-ui/icons/Info';
 import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ApiClient } from '../api-client';
-import { CourseInfo } from './course-info';
-import { Item } from './utils';
-import { Container } from './utils';
+import { ApiClient } from '../../api-client';
+import { CourseInfo } from '../course-info';
+import { Item } from '../utils';
+import { Container } from '../utils';
 
 
 const dialogStyles = {

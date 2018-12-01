@@ -6,12 +6,12 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { currentUser } from '../../static-data';
 import { UserAvatar } from '../avater.component';
+import { userSelector } from '../../users/user.reducer';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
     root: {
-        flexGrow: 1,
     },
     courseName: {
         flexGrow: 1,
@@ -28,61 +28,38 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    return { currentUser: state.currentUser };
+    return { currentUser: userSelector(state) };
 };
-
 
 class CourseNavBar extends Component {
 
     constructor(props) {
         super(props)
-
-
-        this.currentUser = currentUser
         this.state = { menuAnchor: null }
-
         this.handleMenuClose = this.handleMenuClose.bind(this)
         this.handleMenuOpen = this.handleMenuOpen.bind(this)
-
-
     }
-
 
     handleMenuOpen(event) {
         this.setState({ menuAnchor: event.currentTarget });
     }
 
-
-
     handleMenuClose() {
         this.setState({ menuAnchor: null });
     }
 
-
-
-
     render() {
-        const { classes } = this.props;
+        const { classes, currentUser } = this.props;
         return (
             <div className={classes.root}>
                 <AppBar elevation={0} className={classes.appBar} position="fixed">
                     <Toolbar>
-
                         <div >
                             <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link>
                         </div>
                         <div className={classes.courseName}>CSS Course</div>
-
-                        <Typography variant="button" color="inherit" >{this.currentUser.type}</Typography>
-
-
-
-                        <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={this.currentUser} />
-
-
-
-
-
+                        <Typography variant="button" color="inherit" >{currentUser.type}</Typography>
+                        <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={currentUser} />
                     </Toolbar>
                 </AppBar>
 
@@ -100,8 +77,14 @@ class CourseNavBar extends Component {
     }
 }
 
-CourseNavBar.propTypes = {
-    classes: PropTypes.object.isRequired,
+const withSyles = withStyles(styles, { withTheme: true })(CourseNavBar);
+
+const conncted = connect(mapStateToProps)(withSyles)
+
+conncted.propTypes = {
+    classes: PropTypes.object,
 };
 
-export default withStyles(styles, { withTheme: true })(CourseNavBar);
+conncted.displayName = "NavBarCourse"
+
+export default conncted

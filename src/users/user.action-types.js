@@ -3,5 +3,6 @@ export const types = {
     registerRequest : "REGISTER_REQUEST",
     authRequest: "AUTH_REQUEST",
     authRequestSuccess: "AUTH_REQUEST_SUCCESS",
-    authRequestError: "AUTH_REQUEST_ERROR"
+    authRequestError: "AUTH_REQUEST_ERROR",
+    updatePath : 'UPDATE_PATH'
 }

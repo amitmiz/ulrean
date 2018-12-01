@@ -1,7 +1,8 @@
+import { Button, Card, CardActions, CardContent, CardHeader, TextField, withStyles } from '@material-ui/core';
 import React, { Component } from 'react';
-import { Paper, TextField, withStyles, Card, CardContent, Typography, CardActions, Button, CardHeader } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { userSelector } from '../users/user.reducer';
 import { UserAvatar } from './avater.component';
-import { currentUser } from '../static-data';
 
 
 const styles = {
@@ -10,19 +11,22 @@ const styles = {
     },
 
     container: {
-        display:'flex',
-        flexDirection : 'column'
+        display: 'flex',
+        flexDirection: 'column'
     }
 
 }
 
+const mapStateToProps = state => {
+    return { currentUser: userSelector(state) };
+};
+
+
+
 class UserInfo extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            ...currentUser
-        }
+    componentDidMount() {
+        this.setState({ ...this.props.currentUser });
     }
 
 
@@ -34,7 +38,7 @@ class UserInfo extends Component {
 
     render() {
 
-        const { classes } = this.props;
+        const { classes, currentUser } = this.props;
         return (
             <div className={classes.root}>
 
@@ -87,6 +91,8 @@ class UserInfo extends Component {
 }
 
 
-const WithStyles = withStyles(styles)(UserInfo);
+const styled = withStyles(styles)(UserInfo);
 
-export { WithStyles as UserInfo };
+const connected = connect(mapStateToProps)(styled);
+
+export { connected as UserInfo };
