@@ -1,5 +1,8 @@
 import { Button, Card, CardActions, CardContent, CardHeader, Divider, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Grid, Typography, withStyles } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
 import { first } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -80,7 +83,7 @@ class RegualrStage extends Component {
                     </Grid>
                 </Grid>
 
-  
+
             </div>
         )
     }
@@ -90,15 +93,15 @@ class RegualrStage extends Component {
 
 function CourseInstructions(props) {
 
-    const { stage, classes, tests } = props;
+    const { stage, classes, tests, course } = props;
 
     return (<div>
 
         <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}><Typography className={classes.heading}>Learn</Typography></ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.expandedRoot}>
-                <Typography variant="subtitle1">  {stage.learnSubheader}</Typography>
-                <Typography variant="h4">  {stage.learnHeader}</Typography>
+                <Typography variant="subtitle1">  {course.header}</Typography>
+                <Typography variant="h4">  {stage.title}</Typography>
                 <Typography component="div"> {stage.learn.map((learn, index) => <p key={index} dangerouslySetInnerHTML={{ __html: learn }} />)} </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -106,7 +109,10 @@ function CourseInstructions(props) {
         <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}> <Typography className={classes.heading}>Instructions</Typography></ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                <Typography component="div">{tests.map(({ text, pass }, index) => <div key={index}> {pass && <span>Passed </span>}<span dangerouslySetInnerHTML={{ __html: text }} /></div>)} </Typography>
+                <Typography component="div">{tests.map(({ text, pass, error }, index) => {
+                    return (<div key={index}> {pass && <CheckCircleIcon />}<span dangerouslySetInnerHTML={{ __html: text }} /></div>)
+                })}
+                </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
 

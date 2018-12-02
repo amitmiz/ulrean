@@ -4,14 +4,13 @@ import { withStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HelpIcon from '@material-ui/icons/Help';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { ApiClient } from '../../api-client.js';
 import { CourseInfo } from '../course-info.jsx';
-import { Container, Item, Loading } from '../utils.jsx';
+import { Container, Item } from '../utils.jsx';
 import { CourseTasks } from './course-tasks.jsx';
 import { PathStat } from './path-stat.jsx';
 import { PathStepper } from './path-stepper.jsx';
-import PropTypes from 'prop-types';
 
 
 
@@ -46,12 +45,12 @@ class CourseCatalog extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { loading: false, currentStep: 0, expanded: true }
+        this.state = {  currentStep: 0, expanded: true }
 
     }
 
     componentDidMount() {
-        this.setState({ loading: false })
+   
     }
 
 
@@ -59,7 +58,7 @@ class CourseCatalog extends React.Component {
         const { classes, userPath } = this.props;
 
         return (
-            this.state.loading ? <Loading /> : userPath ? this.rednerCoursePath() : this.renderNoCoursePath()
+             userPath ? this.rednerCoursePath() : this.renderNoCoursePath()
         )
     }
 
@@ -72,6 +71,7 @@ class CourseCatalog extends React.Component {
     rednerCoursePath = () => {
 
         const { currentUser, classes, userPath } = this.props;
+        const {courses} = userPath;
 
         const expandButton = <IconButton onClick={this.handleExpandClick} className={classnames(classes.expand, {
             [classes.expandOpen]: this.state.expanded,
@@ -96,7 +96,7 @@ class CourseCatalog extends React.Component {
 
                             <Item xs={12} lg={3}>
                                 <Paper>
-                                    <PathStepper courses={userPath} onStepChanged={this.handleStepChanged} />
+                                    <PathStepper courses={courses} onStepChanged={this.handleStepChanged} />
                                 </Paper>
                             </Item>
 
@@ -105,7 +105,7 @@ class CourseCatalog extends React.Component {
                                 <Container direction="column" spacing={24}>
 
                                     <Item><Card>
-                                        <CourseInfo course={userPath[this.state.currentStep]} />
+                                        <CourseInfo course={courses[this.state.currentStep]} />
 
 
                                         <CardActions className={classes.actions} disableActionSpacing>
@@ -116,7 +116,7 @@ class CourseCatalog extends React.Component {
 
                                         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                                             <CardContent>
-                                                <CourseTasks course={userPath[this.state.currentStep]} />
+                                                <CourseTasks  course={courses[this.state.currentStep]} />
                                             </CardContent>
                                         </Collapse>
 

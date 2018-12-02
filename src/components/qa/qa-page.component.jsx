@@ -21,9 +21,7 @@ const styles = theme => ({
     }
 });
 
-const mapStateToProps = state => {
-    return { questions: state.questions };
-};
+
 
 class QAPage extends Component {
 
@@ -72,22 +70,11 @@ class QAPage extends Component {
                             </Tabs>
 
                             <List dense>
-                                {ApiClient.getRecentQuestions().map((question) => <ListItem dense button divider><Question question={question} /> </ListItem>)}
-
+                                {questions.map((question) => <ListItem dense button divider><Question question={question} /> </ListItem>)}
                             </List>
-
-
-
-
-
                         </Paper>
                     </Item>
                 </Container>
-
-
-
-
-
             </div>
         );
     }

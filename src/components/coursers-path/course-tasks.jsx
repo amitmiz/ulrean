@@ -1,6 +1,9 @@
 import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import { PlayCircleOutline } from "@material-ui/icons";
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+
 
 
 export class CourseTasks extends Component {
@@ -14,7 +17,7 @@ export class CourseTasks extends Component {
             <div>
                 <List >
                     {
-                        course.tasks.map(this.createTaskView)
+                        course.stages.map((stage, index) => this.createTaskView(course, stage, index))
                     }
                 </List>
             </div>
@@ -22,7 +25,7 @@ export class CourseTasks extends Component {
     }
 
 
-    createTaskView({ name, _id }, index) {
+    createTaskView(course, { title, _id }, index) {
 
         return (<ListItem key={_id}>
             <ListItemAvatar>
@@ -31,10 +34,10 @@ export class CourseTasks extends Component {
                 </Avatar>
             </ListItemAvatar>
             <ListItemText
-                primary={name}
+                primary={title}
             />
             <ListItemSecondaryAction>
-                <IconButton aria-label="Delete">
+                <IconButton component={Link} to={`/incourse/${course._id}/${_id}`} aria-label="Delete">
                     <PlayCircleOutline></PlayCircleOutline>
                 </IconButton>
             </ListItemSecondaryAction>

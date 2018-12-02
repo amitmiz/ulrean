@@ -2,13 +2,8 @@ import { Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, Icon
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import React from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux';
-import { ApiClient } from '../../api-client';
-import { getPathlessUserSelector } from '../../state/pathless-users/reducer';
 import { CourseSelectionDialog } from './path-creation-dialog.component';
 
-import { addPath } from '../../state/pathless-users/actions'
 
 
 const styles = theme => ({
@@ -77,17 +72,9 @@ const styles = theme => ({
 })
 
 
-const mapStateToProps = (state, ownProps) => ({ currentUser: getPathlessUserSelector(state, ownProps.match.params.id) });
-
-const mapDispatchToProps = dispatch => bindActionCreators({ addPath }, dispatch)
-
 
 class PathCreation extends React.Component {
 
-
-    componentDidMount() {
-
-    }
 
     constructor(props) {
         super(props)
@@ -95,7 +82,8 @@ class PathCreation extends React.Component {
         this.state = {
             modalOpened: false,
             selectedValue: null,
-            currentPath: [],
+            currentPath: [], // TODO : CHANGE TO CREATE PATH 
+            currentPathId: null
         }
 
         this.handleOpenModal = this.handleOpenModal.bind(this)
@@ -107,14 +95,14 @@ class PathCreation extends React.Component {
 
 
     render() {
-        const { classes } = this.props;
+        const { classes,currentUser } = this.props;
 
         return (
             <Grid container direction="column" spacing={24}>
 
                 <Grid item>
                     <div className={classes.headerCard}>
-                        <Typography variant="h4">Create Path to Amit Mizrahi</Typography>
+                        <Typography variant="h4">Create Path to {`${currentUser.name} ${currentUser.lastname}`}</Typography>
                     </div>
                 </Grid>
 
@@ -209,7 +197,7 @@ class PathCreation extends React.Component {
 
         return (
             <List>
-                {ApiClient.getPredefiendPaths().map((predefiend) => (
+                {this.props.paths.map((predefiend) => (
                     <ListItem key={predefiend._id}>
                         <ListItemText primary={predefiend.name} secondary="" />
                         <ListItemSecondaryAction>
@@ -224,11 +212,11 @@ class PathCreation extends React.Component {
     }
 
     fillPath(predefiend) {
-        this.setState({ currentPath: [...predefiend.path] })
+        this.setState({ currentPathId: predefiend._id, currentPath: [...predefiend.courses] })
     }
 
     savePath() {
-        this.props.addPath({ id: this.props.currentUser._id, path: this.state.currentPath })
+        this.props.addPath({ id: this.props.currentUser._id, path: this.state.currentPathId })
 
     }
 
@@ -237,7 +225,6 @@ class PathCreation extends React.Component {
 
 const styled = withStyles(styles, { withTheme: true })(PathCreation)
 
-const connected = connect(mapStateToProps, mapDispatchToProps)(styled)
 
-export { connected as PathCreation };
+export { styled as PathCreation };
 

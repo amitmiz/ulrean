@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { UserAvatar } from '../avater.component';
-import { userSelector } from '../../state/users/user.reducer';
+import { loggedInUserSelector } from '../../state/users/user.reducer';
 import { connect } from 'react-redux';
 
 const styles = theme => ({
@@ -27,8 +27,9 @@ const styles = theme => ({
     }
 });
 
-const mapStateToProps = state => {
-    return { currentUser: userSelector(state) };
+// TODO : Not sure if course should be passed this way
+const mapStateToProps = (state, ownProps) => {
+    return { currentUser: loggedInUserSelector(state), course: ownProps.course };
 };
 
 class CourseNavBar extends Component {
@@ -49,7 +50,7 @@ class CourseNavBar extends Component {
     }
 
     render() {
-        const { classes, currentUser } = this.props;
+        const { classes, currentUser, course } = this.props;
         return (
             <div className={classes.root}>
                 <AppBar elevation={0} className={classes.appBar} position="fixed">
@@ -57,7 +58,7 @@ class CourseNavBar extends Component {
                         <div >
                             <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link>
                         </div>
-                        <div className={classes.courseName}>CSS Course</div>
+                        <div className={classes.courseName}>{course.header}</div>
                         <Typography variant="button" color="inherit" >{currentUser.type}</Typography>
                         <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={currentUser} />
                     </Toolbar>
@@ -83,6 +84,7 @@ const conncted = connect(mapStateToProps)(withSyles)
 
 conncted.propTypes = {
     classes: PropTypes.object,
+    course: PropTypes.object
 };
 
 conncted.displayName = "NavBarCourse"

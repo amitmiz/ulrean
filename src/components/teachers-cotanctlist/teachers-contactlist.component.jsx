@@ -1,6 +1,6 @@
 import React from 'react'
 import { Paper, Table, TableHead, TableRow, TableCell, TableBody, withStyles, Typography } from '@material-ui/core';
-import { ApiClient } from '../api-client';
+import { ApiClient } from '../../api-client';
 
 
 const styles = {
@@ -19,7 +19,7 @@ class TeacherContactList extends React.Component {
 
     render() {
 
-        const { classes } = this.props
+        const { classes ,teachers} = this.props
         return (
             <div className={classes.root}>
 
@@ -42,7 +42,7 @@ class TeacherContactList extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {ApiClient.getTeachers().map(teacher => {
+                            {teachers.map(teacher => {
                                 return (
                                     <TableRow key={teacher._id}>
                                         <TableCell >{teacher.name}</TableCell>

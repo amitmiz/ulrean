@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, CardHeader, TextField, withStyles } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { userSelector } from '../state/users/user.reducer';
+import { loggedInUserSelector } from '../state/users/user.reducer';
 import { UserAvatar } from './avater.component';
 
 
@@ -18,7 +18,7 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-    return { currentUser: userSelector(state) };
+    return { currentUser: loggedInUserSelector(state) };
 };
 
 

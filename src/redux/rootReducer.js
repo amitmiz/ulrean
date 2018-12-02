@@ -2,18 +2,19 @@ import { combineReducers } from 'redux';
 
 
 import { reducer as challenge } from '../state/stage-proccessor/redux'
-import stageReducer from "./reducers";
 import userReducer from '../state/users/user.reducer';
-import pathlessReducer from '../state/pathless-users/reducer';
-import pathReducer from '../state/course-path/reducer';
-
+import coursesReducer from '../state/courses/reducer';
+import pathsReducer from '../state/predefiend-path/reducer';
+import stagesReducer from '../state/stages/reducer';
+import questionsReducer from '../state/questions/reducer';
 
 
 
 export default combineReducers({
   challenge,
-  stage: stageReducer,
   user: userReducer,
-  pathless: pathlessReducer,
-  path: pathReducer
+  paths: pathsReducer,
+  courses: coursesReducer,
+  stages: stagesReducer,
+  questions: questionsReducer
 });

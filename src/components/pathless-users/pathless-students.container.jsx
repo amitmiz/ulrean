@@ -1,26 +1,21 @@
 import React from "react";
-import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { createSelector } from "reselect";
-import { fetchPathlessUser } from "../../state/pathless-users/actions";
-import { isPathlessUsersLoadingSelector, pathLessUsersSelector, pathlessUsersErrorSelector } from "../../state/pathless-users/reducer";
+import { bindActionCreators } from 'redux';
+import { pathlessUsersSelector, usersApiSelector } from "../../state/users/user.reducer";
 import { PathLessStudents } from "./pathless-students.component";
 
 
-const mapStateToProps = createSelector(
-    isPathlessUsersLoadingSelector,
-    pathlessUsersErrorSelector,
-    pathLessUsersSelector,
-    (isLoading, error, users) => ({ isLoading, error, users }));
+const mapStateToProps = state => ({
+    isLoading : usersApiSelector(state).isLoading,
+    users : pathlessUsersSelector(state)
+})
 
-const mapDispatchToProps = dispatch => bindActionCreators({ fetchPathlessUser }, dispatch)
-
-
+const mapDispatchToProps = dispatch => bindActionCreators({  }, dispatch)
 
 class PathLessStudentsContainer extends React.Component {
 
     componentDidMount() {
-        this.props.fetchPathlessUser()
+        // this.props.fetchPathlessUser()
     }
 
     render() {

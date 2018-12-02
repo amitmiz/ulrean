@@ -19,8 +19,7 @@ const style = theme => ({
 function Question(props) {
     const { classes, question } = props;
 
-    // remove from here
-    const user = ApiClient.getUserById(question.userId)
+    const user = question.author;
 
     const tags = <div className={classes.tags}>
         {question.tags.map((tag, index) => <Chip className={classes.chip} label={tag} key={index} />

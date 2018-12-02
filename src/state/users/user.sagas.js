@@ -1,8 +1,8 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { ApiClient } from '../../api-client';
 import history from '../../history';
 import { types } from './user.action-types';
-import { authRequest, authRequestError, authRequestSuccess } from './users.actions';
+import { addPathRequested, authRequest, authRequestError, authRequestSuccess, fetchPathlessUserError, fetchPathlessUserSuccess, addPathSuccess, addPathError } from './users.actions';
 
 
 export function* authorize(action) {
@@ -18,16 +18,43 @@ export function* authorize(action) {
         yield put(authRequestError(error))
     }
 
-
-
 }
 
+
+export function* addPath(action) {
+
+    const { id, path } = action.payload;
+
+    yield put(addPathRequested())
+
+    try {
+
+        yield put(addPathSuccess({id,path}))
+
+    } catch (error) {
+        yield put(addPathError(error))
+    }
+}
+
+
+
+
+export function* fetchPathlessUsers(action) {
+
+
+    try {
+        //const users = yield call(ApiClient.getPathlessStudents);
+        yield put(fetchPathlessUserSuccess({}))
+    } catch (error) {
+        yield put(fetchPathlessUserError(error))
+    }
+}
 
 
 function* rootSaga() {
-    yield takeEvery(types.loginRequest, authorize);
+
+    yield all([yield takeEvery(types.loginRequest, authorize), yield takeLatest(types.fetchPathlessUser, fetchPathlessUsers), yield takeLatest(types.addPath, addPath)]);
 }
 
 export { rootSaga };
-
 

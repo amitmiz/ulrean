@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { UserAvatar } from './avater.component';
 import { connect } from 'react-redux';
-import { userSelector } from '../state/users/user.reducer';
+import { loggedInUserSelector } from '../state/users/user.reducer';
 
 
 
@@ -31,7 +31,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-    return { currentUser: userSelector(state) };
+    return { currentUser: loggedInUserSelector(state) };
 };
 
 

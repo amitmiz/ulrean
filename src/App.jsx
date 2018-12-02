@@ -2,19 +2,20 @@ import { withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { Route, Router, Switch } from "react-router-dom";
-import { CoursersCatalogContainer } from "./components/coursers-path/course-path-container";
+import { CoursersCatalogContainer } from "./components/coursers-path/course-path.container";
 import { InCourseContainer } from "./components/in-course/in-course.container";
 import { LoginScreen } from "./components/login-screen.component";
 import NavBar from "./components/navbar.component";
-import { PathCreation } from "./components/pathless-users/path-creation";
-import  PathLessStudentsContainer from "./components/pathless-users/pathless-students.container";
+import { PathCreationContainer } from "./components/pathless-users/path-creation.container";
+import PathLessStudentsContainer from "./components/pathless-users/pathless-students.container";
 import PrivateRoute from './components/private-route';
-import { QAPage } from "./components/qa/qa-page.component";
+import { QAPageContainer } from "./components/qa/qa-page.container";
 import { SideMenu } from "./components/side-menu";
 import { TeacherDashbaord } from "./components/teacher-dashbaord.component";
-import { TeacherContactList } from "./components/teachers-contactlist.component";
+import { TeacherContactListContainer } from "./components/teachers-cotanctlist/teachers-contactlist.container";
 import { UserInfo } from "./components/user-info.component";
 import history from './history';
+import { loggedInUserSelector } from "./state/users/user.reducer";
 
 const style = theme => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -40,7 +41,7 @@ const style = theme => ({
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: loggedInUserSelector(state)
   }
 }
 
@@ -60,8 +61,8 @@ class App extends Component {
 
             <Switch>
               <Route path="/login" component={LoginScreen} />
-              <PrivateRoute path="/incourse" authed={user.data} component={this.CourseLayout.bind(this)} />
-              <PrivateRoute path="/" authed={user.data} component={this.MainLayout.bind(this)} />
+              <PrivateRoute path="/incourse" authed={user} component={this.CourseLayout.bind(this)} />
+              <PrivateRoute path="/" authed={user} component={this.MainLayout.bind(this)} />
 
             </Switch>
           </div>
@@ -84,13 +85,13 @@ class App extends Component {
         <div className={classes.content} >
 
           <Route path="/path" component={CoursersCatalogContainer} />
-          <Route path="/qa" component={QAPage} />
+          <Route path="/qa" component={QAPageContainer} />
           <Route path="/user" component={UserInfo} />
           <Route path="/course" component={InCourseContainer} />
           <Route path="/pathless" component={PathLessStudentsContainer} />
-          <Route path="/path-creation/:id" component={PathCreation} />
+          <Route path="/path-creation/:id" component={PathCreationContainer} />
           <Route path="/tdashboard" component={TeacherDashbaord} />
-          <Route path="/teacher-contact" component={TeacherContactList} />
+          <Route path="/teacher-contact" component={TeacherContactListContainer} />
         </div>
       </React.Fragment>
     )
@@ -103,7 +104,7 @@ class App extends Component {
       <React.Fragment>
 
         <div className={classes.appBarSpacer} ></div>
-        <Route path="/incourse" component={InCourseContainer} />
+        <Route path="/incourse/:courseId/:stageId" component={InCourseContainer} />
       </React.Fragment>
     )
   }
