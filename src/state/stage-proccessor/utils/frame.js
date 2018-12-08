@@ -9,9 +9,10 @@ import {
   timeout,
   catchError
 } from 'rxjs/operators';
-import { ShallowWrapper, ReactWrapper } from 'enzyme';
+// import { ShallowWrapper, ReactWrapper } from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter16 from 'enzyme-adapter-react-16';
-import { isJSEnabledSelector } from '../redux';
+import { isJSEnabledSelector } from '..';
 import chai from 'chai';
 window.chai = chai;
 
@@ -25,7 +26,7 @@ const testId = 'fcc-test-frame';
 
 // base tag here will force relative links
 // within iframe to point to '' instead of
-// append to the current challenge url
+// append to the current stage url
 // this also allows in-page anchors to work properly
 // rather than load another instance of the learn
 //
@@ -121,28 +122,33 @@ const buildProxyConsole = proxyLogger => ctx => {
 };
 
 const writeTestDepsToDocument = frameReady => ctx => {
-  const { sources, checkChallengePayload } = ctx;
+  const { sources, checkStagePayload } = ctx;
+  debugger;
   // add enzyme
   // TODO: do programatically
   // TODO: webpack lazyload this
-  ctx.document.Enzyme = {
-    shallow: (node, options) =>
-      new ShallowWrapper(node, null, {
-        ...options,
-        adapter: new Adapter16()
-      }),
-    mount: (node, options) =>
-      new ReactWrapper(node, null, {
-        ...options,
-        adapter: new Adapter16()
-      })
-  };
-  // default for classic challenges
+  // ctx.document.Enzyme = {
+  //   shallow: (node, options) =>
+  //     new ShallowWrapper(node, null, {
+  //       ...options,
+  //       adapter: new Adapter16()
+  //     }),
+  //   mount: (node, options) =>
+  //     new ReactWrapper(node, null, {
+  //       ...options,
+  //       adapter: new Adapter16()
+  //     })
+  // };
+
+  Enzyme.configure({ adapter: new Adapter16() });
+  ctx.document.Enzyme = Enzyme
+
+  // default for classic stages
   // should not be used for modern
   ctx.document.__source = sources && 'index' in sources ? sources['index'] : '';
   // provide the file name and get the original source
   ctx.document.__getUserInput = fileName => toString(sources[fileName]);
-  ctx.document.__checkChallengePayload = checkChallengePayload;
+  ctx.document.__checkStagePayload = checkStagePayload;
   ctx.document.__frameReady = frameReady;
   return ctx;
 };

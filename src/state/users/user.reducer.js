@@ -34,7 +34,8 @@ const initialState = {
             lastname: "mizrahi",
             phone: "052-654655",
             photo: './amit.jpg',
-            type: "student"
+            type: "student",
+            path: "1212"
         },
         "12312312312": {
             _id: "12312312312",
@@ -63,9 +64,9 @@ const initialState = {
 
 
 
-const updateUserPath = (state, { id, path }) => {
+const updateUserPath = (state, { userId, path }) => {
     const newState = { ...state };
-    newState.models[id].path = path;
+    newState.models[userId].path = path;
 
     return newState;
 }

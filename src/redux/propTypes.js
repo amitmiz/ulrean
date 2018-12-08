@@ -18,9 +18,9 @@ export const MarkdownRemark = PropTypes.shape({
   })
 });
 
-export const ChallengeNode = PropTypes.shape({
+export const StageNode = PropTypes.shape({
   block: PropTypes.string,
-  challengeType: PropTypes.number,
+  stageType: PropTypes.number,
   dashedName: PropTypes.string,
   description: PropTypes.string,
   files: PropTypes.shape({
@@ -33,7 +33,7 @@ export const ChallengeNode = PropTypes.shape({
   }),
   guideUrl: PropTypes.string,
   head: PropTypes.arrayOf(PropTypes.string),
-  challengeOrder: PropTypes.number,
+  stageOrder: PropTypes.number,
   instructions: PropTypes.string,
   isBeta: PropTypes.bool,
   isComingSoon: PropTypes.bool,
@@ -57,10 +57,10 @@ export const ChallengeNode = PropTypes.shape({
   videoUrl: PropTypes.string
 });
 
-export const AllChallengeNode = PropTypes.shape({
+export const AllStageNode = PropTypes.shape({
   edges: PropTypes.arrayOf(
     PropTypes.shape({
-      node: ChallengeNode
+      node: StageNode
     })
   )
 });

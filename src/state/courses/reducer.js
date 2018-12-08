@@ -1,4 +1,5 @@
 import { handleActions } from "redux-actions";
+import { toArray } from 'lodash'
 
 const ns = "courses"
 
@@ -10,7 +11,7 @@ const initialState = {
             header: "Basic HTML and HTML5",
             subheader: "Master the languages of the web: HTML, CSS, JavaScript, and SQL. This path is great for budding front-end or back-end engineers!",
             tags: ["html", "css", "javascript"],
-            stages: ["12312312333123", "12321"]
+            stages: ["12321222232213","12321222232", "123212222", "12312312333123", "12321", "123212"]
         },
         "12312": {
             _id: "12312",
@@ -31,6 +32,8 @@ const initialState = {
 
 export const courseSelector = (id, state) => state[ns].models[id]
 export const makeCourseSelector = (id) => (state) => state[ns].models[id]
+export const coursesSelector = (state) => toArray(state[ns].models);
+
 
 
 const reducerMap = {};

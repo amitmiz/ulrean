@@ -7,11 +7,16 @@ import { App } from './App';
 import './index.css';
 import { createStore } from './redux/createStore';
 import * as serviceWorker from './serviceWorker';
+import Helmet from "react-helmet";
 
 
 function Container() {
     return (<React.Fragment>
         <CssBaseline />
+        <Helmet>
+            <title>Ulrean</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Helmet>
 
         <Redux store={createStore()} >
             <App />

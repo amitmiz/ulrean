@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const chai = parent.chai;
   const source = document.__source;
   const __getUserInput = document.__getUserInput || (x => x);
-  const checkChallengePayload = document.__checkChallengePayload;
+  const checkStagePayload = document.__checkStagePayload;
 
   const fiveSeconds = 5000;
 
@@ -129,5 +129,5 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   // notify that the window methods are ready to run
-  frameReady.next({ checkChallengePayload });
+  frameReady.next({ checkStagePayload });
 });

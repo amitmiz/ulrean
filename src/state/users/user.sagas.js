@@ -5,7 +5,7 @@ import { types } from './user.action-types';
 import { addPathRequested, authRequest, authRequestError, authRequestSuccess, fetchPathlessUserError, fetchPathlessUserSuccess, addPathSuccess, addPathError } from './users.actions';
 
 
-export function* authorize(action) {
+ function* authorize(action) {
 
     yield put(authRequest())
 
@@ -21,15 +21,15 @@ export function* authorize(action) {
 }
 
 
-export function* addPath(action) {
+ function* addPath(action) {
 
-    const { id, path } = action.payload;
+    const { userId, path } = action.payload;
 
     yield put(addPathRequested())
 
     try {
 
-        yield put(addPathSuccess({id,path}))
+        yield put(addPathSuccess({userId,path}))
 
     } catch (error) {
         yield put(addPathError(error))
@@ -39,7 +39,7 @@ export function* addPath(action) {
 
 
 
-export function* fetchPathlessUsers(action) {
+ function* fetchPathlessUsers(action) {
 
 
     try {

@@ -2,18 +2,18 @@ import { withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { Route, Router, Switch } from "react-router-dom";
-import { CoursersCatalogContainer } from "./components/coursers-path/course-path.container";
-import { InCourseContainer } from "./components/in-course/in-course.container";
-import { LoginScreen } from "./components/login-screen.component";
-import NavBar from "./components/navbar.component";
-import { PathCreationContainer } from "./components/pathless-users/path-creation.container";
-import PathLessStudentsContainer from "./components/pathless-users/pathless-students.container";
-import PrivateRoute from './components/private-route';
-import { QAPageContainer } from "./components/qa/qa-page.container";
-import { SideMenu } from "./components/side-menu";
-import { TeacherDashbaord } from "./components/teacher-dashbaord.component";
-import { TeacherContactListContainer } from "./components/teachers-cotanctlist/teachers-contactlist.container";
-import { UserInfo } from "./components/user-info.component";
+import  CoursersPathContainer  from "./components/coursers-path/CoursersPathContainer";
+import  InCourseContainer  from "./components/in-course/InCourseContainer";
+import  LoginScreen  from "./components/LoginScreen";
+import NavBar from "./components/NavBar";
+import  PathCreationContainer from "./components/pathless-users/PathCreationContainer";
+import PathLessStudentsContainer from "./components/pathless-users/PathLessStudentsContainer";
+import PrivateRoute from './components/PrivateRoute';
+import  QAPageContainer  from "./components/qa/QAPageContainer";
+import  SideMenu  from "./components/SideMenu";
+import  TeacherDashbaord  from "./components/teacher-dashbaord/TeacherDashbaord";
+import  TeacherContactListContainer  from "./components/teachers-cotanctlist/TeacherContactListContainer";
+import  UserInfo  from "./components/UserInfo";
 import history from './history';
 import { loggedInUserSelector } from "./state/users/user.reducer";
 
@@ -25,7 +25,7 @@ const style = theme => ({
     flexDirection: 'column'
   },
   content: {
-    padding: '0 100px 0 100px',
+ 
     margin: "30px 0",
     display: "flex",
     margin: "0 auto",
@@ -33,7 +33,8 @@ const style = theme => ({
 
     [theme.breakpoints.up('lg')]: {
 
-      width: "80%"
+      width: "80%",
+      padding: '0 100px 0 100px',
     },
 
   }
@@ -84,7 +85,7 @@ class App extends Component {
         <SideMenu />
         <div className={classes.content} >
 
-          <Route path="/path" component={CoursersCatalogContainer} />
+          <Route path="/path" component={CoursersPathContainer} />
           <Route path="/qa" component={QAPageContainer} />
           <Route path="/user" component={UserInfo} />
           <Route path="/course" component={InCourseContainer} />

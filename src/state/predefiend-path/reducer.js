@@ -1,6 +1,11 @@
 import { handleActions } from 'redux-actions';
-
+import { types } from './actions';
 const ns = "paths"
+
+
+export const pathSelector = (id, state) => state[ns].models[id];
+export const allPathsSelector = (state) => Object.keys(state[ns].models).map(key => state[ns].models[key]);
+
 
 const initialState = {
     api: {},
@@ -21,9 +26,24 @@ const initialState = {
     }
 }
 
-export const pathSelector = (id, state) => state[ns].models[id];
-export const allPathsSelector = (state) => Object.keys(state[ns].models).map(key => state[ns].models[key]);
 
-const reducerMap = {}
+const reducerMap = {
+
+
+    [types.addNewPath]: (state, { payload }) => ({
+        ...state, api: { isLoading: true }
+    }),
+
+    [types.addNewPathSuccess]: (state, { payload }) => ({
+        ...state, models: { ...state.models, [payload._id]: payload }
+    }),
+
+    [types.addNewPathError]: (state, { payload }) => ({
+        ...state, api: { error: payload }
+    })
+
+
+
+}
 
 export default handleActions(reducerMap, initialState);

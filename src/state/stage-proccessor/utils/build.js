@@ -2,15 +2,15 @@ import { combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { flow } from 'lodash';
 
-import { throwers } from '../rechallenge/throwers';
+import { throwers } from '../restage/throwers';
 import {
-  challengeFilesSelector,
+  stageFilesSelector,
   isJSEnabledSelector,
-  challengeMetaSelector,
+  stageMetaSelector,
   backendFormValuesSelector
-} from '../redux';
-import { transformers, testJS$JSX } from '../rechallenge/transformers';
-import { cssToHtml, jsToHtml, concatHtml } from '../rechallenge/builders.js';
+} from '..';
+import { transformers, testJS$JSX } from '../restage/transformers';
+import { cssToHtml, jsToHtml, concatHtml } from '../restage/builders.js';
 import { isPromise } from './polyvinyl';
 
 const jQueryCDN =
@@ -72,8 +72,8 @@ const pipeLine = flow(
 );
 
 export function buildFromFiles(state) {
-  const files = challengeFilesSelector(state);
-  const { required = [], template } = challengeMetaSelector(state);
+  const files = stageFilesSelector(state);
+  const { required = [], template } = stageMetaSelector(state);
   const finalRequires = [...globalRequires, ...required];
   const requiredFiles = Object.keys(files)
     .map(key => files[key])
@@ -83,7 +83,7 @@ export function buildFromFiles(state) {
   return concatHtml(finalRequires, template, finalFiles);
 }
 
-export function buildBackendChallenge(state) {
+export function buildBackendStage(state) {
   const {
     solution: { value: url }
   } = backendFormValuesSelector(state);
@@ -91,7 +91,7 @@ export function buildBackendChallenge(state) {
     map(([frameRunner, jQuery]) => ({
       build: jQuery + frameRunner,
       sources: { url },
-      checkChallengePayload: { solution: url }
+      checkStagePayload: { solution: url }
     }))
   );
 }
