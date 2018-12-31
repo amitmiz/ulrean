@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import UserAvatar from '../../UserAvatar';
-import { loggedInUserSelector } from '../../../state/users/user.reducer';
+import { loggedInUserSelector } from '../../../state/users/reducer';
 import { connect } from 'react-redux';
 
 const styles = theme => ({
@@ -56,7 +56,11 @@ class InCourseNav extends Component {
                 <AppBar elevation={0} className={classes.appBar} position="fixed">
                     <Toolbar>
                         <div >
-                            <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link>
+                            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                                <Typography variant="h5" color="inherit" style={{ fontStyle: 'italic', fontWeight: '100' }}>
+                                    ULEARN
+                                </Typography>
+                            </Link>
                         </div>
                         <div className={classes.courseName}>{course.header}</div>
                         <Typography variant="button" color="inherit" >{currentUser.type}</Typography>

@@ -15,6 +15,7 @@ const options = {
     enabled: false
   },
   readOnly: true,
+  automaticLayout : true,
   wordWrap: 'on',
   scrollBeyondLastLine: false,
   scrollbar: {

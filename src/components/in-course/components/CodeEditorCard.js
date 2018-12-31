@@ -13,7 +13,7 @@ export default function CodeEditorCard({ executeStage, updateFile, files }) {
         <CardContent >
             <Editor {...stageFile} fileKey={stageFile.key} onChange={updateFile} onEnterPressed={executeStage} />
         </CardContent>
-        <Divider></Divider>
+        <Divider variant="middle"></Divider>
         <CardActions>
             <Button onClick={executeStage} color={"primary"} variant={"outlined"}>Run</Button>
             <Button color={"secondary"} variant={"outlined"}>Reset</Button>

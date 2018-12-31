@@ -1,8 +1,8 @@
 import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { ApiClient } from '../../api-client';
 import history from '../../history';
-import { types } from './user.action-types';
-import { addPathRequested, authRequest, authRequestError, authRequestSuccess, fetchPathlessUserError, fetchPathlessUserSuccess, addPathSuccess, addPathError } from './users.actions';
+import { types } from './action-types';
+import { addPathRequested, authRequest, authRequestError, authRequestSuccess, fetchPathlessUserError, fetchPathlessUserSuccess, addPathSuccess, addPathError } from './actions';
 
 
  function* authorize(action) {
@@ -56,5 +56,5 @@ function* rootSaga() {
     yield all([yield takeEvery(types.loginRequest, authorize), yield takeLatest(types.fetchPathlessUser, fetchPathlessUsers), yield takeLatest(types.addPath, addPath)]);
 }
 
-export { rootSaga };
+export default rootSaga;
 

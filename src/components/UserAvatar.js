@@ -16,14 +16,13 @@ const styles = {
 
 
 
-function UserAvatar(props) {
-  const { user, classes } = props;
+function UserAvatar({ user, classes, onClick }) {
 
   const avatarContent = user.photo ? <img className={classes.imageAvatar} src={user.photo} alt="user" /> : user.name[0]
 
   return (
 
-    <Avatar onClick={props.onClick} className={classes.avatar}>{avatarContent}</Avatar>
+    <Avatar onClick={onClick} className={classes.avatar}>{avatarContent}</Avatar>
 
 
   );
@@ -32,11 +31,10 @@ function UserAvatar(props) {
 UserAvatar.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  onClick : PropTypes.func
+  onClick: PropTypes.func
 
 };
 
 
-const UserAvaterComponent = withStyles(styles)(UserAvatar);
 
-export default UserAvaterComponent;
+export default withStyles(styles)(UserAvatar);;

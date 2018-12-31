@@ -7,10 +7,11 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import CourseInfo from '../CourseInfo.js';
+import PageTitle from '../PageTitle';
 import { Container, Item } from '../utils';
 import CourseTasks from './CourseTasks.js';
-import PathStat from './PathStat.js';
 import PathStepper from './PathStepper.js';
+
 
 
 
@@ -48,29 +49,19 @@ class CoursePath extends React.Component {
         this.state = { currentStep: 0, expanded: true }
 
     }
-
-    componentDidMount() {
-
-    }
-
-
     render() {
         const { classes, userPath } = this.props;
-
         return (
             userPath ? this.rednerCoursePath() : this.renderNoCoursePath()
         )
     }
 
     handleExpandClick = () => this.setState(prevState => ({ expanded: !prevState.expanded }));
-
     handleStepChanged = (newStep) => this.setState(prevState => prevState.currentStep = newStep)
-
-
 
     rednerCoursePath = () => {
 
-        const { currentUser, classes, userPath, maxCompletedCourseIndex, lastCourse } = this.props;
+        const { classes, userPath, maxCompletedCourseIndex, progress } = this.props;
         const { courses } = userPath;
         const currentCourse = courses[this.state.currentStep];
 
@@ -84,44 +75,47 @@ class CoursePath extends React.Component {
             <div  >
 
                 <Container direction={"column"} wrap="nowrap" spacing={16}>
-                    {/* Right Side */}
+
                     <Item>
-                        <Paper>
-                            <PathStat currentUser={currentUser} lastCourse={lastCourse} />
-                        </Paper>
+
+                        <PageTitle>{`The ${userPath.name} Path`}</PageTitle>
+
+
                     </Item>
-                    {/* Left Side */}
+
                     <Item>
 
                         <Container spacing={24} direction={"row"}>
-
+                            {/* Right Side */}
                             <Item xs={12} lg={3}>
                                 <Paper>
                                     <PathStepper courses={courses} max={maxCompletedCourseIndex} onStepChanged={this.handleStepChanged} />
                                 </Paper>
                             </Item>
 
-
+                            {/* Left Side */}
                             <Item xs={12} lg={9}>
                                 <Container direction="column" spacing={24}>
 
-                                    <Item><Card>
-                                        <CourseInfo course={currentCourse} />
+                                    <Item>
+                                        <Card>
+                                            <CourseInfo course={currentCourse} />
 
 
-                                        <CardActions className={classes.actions} disableActionSpacing>
-                                            {expandButton}
-                                        </CardActions>
+                                            <CardActions className={classes.actions} disableActionSpacing>
+                                                {expandButton}
+                                            </CardActions>
 
-                                        <Divider />
+                                            <Divider />
 
-                                        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                                            <CardContent>
-                                                <CourseTasks course={currentCourse} />
-                                            </CardContent>
-                                        </Collapse>
+                                            <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                                                <CardContent>
+                                                    <CourseTasks course={currentCourse} courseProgress={progress[currentCourse._id]} />
+                                                </CardContent>
+                                            </Collapse>
 
-                                    </Card></Item>
+                                        </Card>
+                                    </Item>
 
 
                                 </Container>

@@ -3,7 +3,7 @@ import { Card, CardHeader, CardContent, withStyles, Typography, Divider } from '
 
 const styles = {
     cardRoot: {
-        marginBottom: '10px'
+ 
     },
 
     contentRoot: {
@@ -21,11 +21,11 @@ const styles = {
     rowLabel: {
         flex: '1'
     },
-    passed :{
-        color :'green'
+    passed: {
+        color: 'green'
     },
-    failed : {
-        color : 'red'
+    failed: {
+        color: 'red'
     }
 
 }
@@ -53,7 +53,7 @@ const SubmissionCard = ({ index = 0, classes, submission }) => (
                     </div>
                     <div className={classes.row}>
                         <span className={classes.rowLabel}><strong>Teacher:</strong> </span>
-                        <span>{(submission.testResult && submission.testResult.teacher) ? submission.testResult.teacher : "Not yet"}</span>
+                        <span>{(submission.testResult && submission.testResult.teacher) ? `${submission.testResult.teacher.name} ${submission.testResult.teacher.lastname}` : "Not yet"}</span>
                     </div>
                     <div className={classes.row}>
                         <span className={classes.rowLabel}><strong>Comments:</strong> </span>

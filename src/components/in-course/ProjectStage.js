@@ -14,6 +14,9 @@ const styles = {
         overflow: 'hidden',
         display: 'flex',
         marginTop: '10px'
+    },
+    submissionCard: {
+        marginBottom: '10px'
     }
 }
 
@@ -58,7 +61,7 @@ class ProjectStage extends Component {
 
                     {/*Right */}
                     <Grid item lg={2} xs={12}>
-                        {submissions ? submissions.map((sub, index) => <SubmissionCard index={index} submission={sub} key={sub._id} />) : "No submissions yet"}
+                        {(submissions && submissions.length > 0) ? submissions.map((sub, index) => <div className={classes.submissionCard} ><SubmissionCard index={index} submission={sub} key={sub._id} /></div>) : "No submissions yet"}
                     </Grid>
                 </Grid >
 

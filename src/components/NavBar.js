@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import UserAvatar from './UserAvatar';
 import { connect } from 'react-redux';
-import { loggedInUserSelector } from '../state/users/user.reducer';
+import { loggedInUserSelector } from '../state/users/reducer';
 import { bindActionCreators } from 'redux';
 import { sideBarOpenSelector } from '../state/ui/reducer';
 import { setSideBarOpen } from '../state/ui/actions'
@@ -40,7 +40,7 @@ const styles = theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        [theme.breakpoints.up('sm')]: { display: 'none', },
+        [theme.breakpoints.up('lg')]: { display: 'none', },
     }, menuIconRotated: {
         transform: 'rotate(90deg)',
     }
@@ -101,7 +101,13 @@ class NavBar extends Component {
                             </IconButton>
 
 
-                            <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link>
+                            <Typography variant="h5" color="inherit" style={{
+                                fontStyle: 'italic',
+                                fontWeight: '100',
+                            }} >
+                                ULEARN
+                     </Typography>
+                            {/* <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link> */}
                         </div>
 
                         <Typography variant="button" color="inherit" >{currentUser.type}</Typography>

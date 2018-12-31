@@ -12,7 +12,8 @@ const propTypes = {
   onEnterPressed: PropTypes.func.isRequired,
   ext: PropTypes.string,
   fileKey: PropTypes.string,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  darkTheme :  PropTypes.bool
 };
 
 
@@ -59,7 +60,7 @@ class Editor extends PureComponent {
       minimap: {
         enabled: false
       },
-      automaticLayout : true,
+      automaticLayout: true,
       selectOnLineNumbers: true,
       wordWrap: 'on',
       scrollbar: {
@@ -83,17 +84,21 @@ class Editor extends PureComponent {
   editorDidMount = (editor, monaco) => {
     this._editor = editor;
     this._editor.focus();
-    
+
     document.addEventListener('keyup', this.focusEditor);
-    this._editor.addAction({
-      id: 'execute-stage',
-      label: 'Run tests',
-      keybindings: [
-        /* eslint-disable no-bitwise */
-        monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter)
-      ],
-      run: this.props.onEnterPressed
-    });
+
+    if (this.props.onEnterPressed) {
+      this._editor.addAction({
+        id: 'execute-stage',
+        label: 'Run tests',
+        keybindings: [
+          /* eslint-disable no-bitwise */
+          monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter)
+        ],
+        run: this.props.onEnterPressed
+      });
+    }
+
   };
 
   focusEditor = e => {
@@ -115,8 +120,8 @@ class Editor extends PureComponent {
   }
 
   render() {
-    const { contents, ext, fileKey } = this.props;
-    const editorTheme = 'night'
+    const { contents, ext, fileKey,darkTheme } = this.props;
+    const editorTheme = darkTheme ? 'vs-dark' : 'vs-custom'
     return (
       <div className='classic-editor editor'>
         <base href='/' />

@@ -14,11 +14,14 @@ code {
 }
 
 .active  {
-  background-color: black;
+  background-color: #dcdbdb!important;
+  border-radius: 5px!important;
+
+  color: white;
 }
 
 
-.active span {
+.active span ,.active div {
   color: #3f51b5!important;
 
 }

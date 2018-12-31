@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography, withStyles } from '@material-ui/core';
 import React from 'react';
+import PageTitle from '../PageTitle';
 
 
 const styles = {
@@ -10,25 +11,15 @@ const styles = {
 
 class TeacherContactList extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
 
 
 
     render() {
 
-        const { classes ,teachers} = this.props
+        const { classes, teachers } = this.props
         return (
             <div className={classes.root}>
-
-
-
-                <div>
-                    <Typography variant="h4">
-                        Teachers Contact List
-                    </Typography>
-                </div>
+                <PageTitle>Teachers </PageTitle>
 
                 <Paper >
                     <Table className={classes.table}>

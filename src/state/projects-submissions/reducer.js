@@ -12,13 +12,14 @@ const initialState = {
     },
     models: {
         "123123123123": {
-            stageId: "123212",
-            userId: "123123434",
+            _id: "123123123123",
+            stage: "123212",
+            user: "123123434",
             gitLink: "gitush.com",
             testResult: null,
             dateSubmited: "2018-12-07T18:02:00.611Z",
             testResult: {
-                teacher: 123123,
+                teacher: "123123",
                 comments: "asdsad",
                 date: "2018-12-07T18:02:00.611Z",
                 pass: false
@@ -27,28 +28,38 @@ const initialState = {
 
         },
         "1231231231a23": {
-            stageId: "12321a",
-            userId: "123123434",
+            _id: "1231231231a23",
+            stage: "123212222",
+            user: "123123434",
             gitLink: "gitush.com",
             dateSubmited: "2018-12-07T18:02:00.611Z",
             testResult: {
-                teacher: null,
+                teacher: "12314342312312",
                 comments: "",
                 date: "2018-12-07T18:02:00.611Z",
                 pass: false
             }
+        },
+        "1234331231a23": {
+            _id: "1234331231a23",
+            stage: "123212222",
+            user: "123123434",
+            gitLink: "gitush.com",
+            dateSubmited: "2018-12-07T18:02:00.611Z"
         }
     }
 
 
 }
 
-export const makeUserStageSubmissionsSelector = ({ userId, stageId }) => (state) => {
-    return filter(toArray(state[ns].models), x => x.userId === userId && x.stageId === stageId)
+export const makeUserStageSubmissionsSelector = ({ user, stage }) => (state) => {
+    return filter(toArray(state[ns].models), x => x.user === user && x.stage === stage)
 
 }
 
-export const unhandledSubmissionsSelector = state => filter(toArray(state[ns].modles), x => !x.testResult)
+export const makesSubmissionSelector = id => state => state[ns].models[id]
+
+export const unhandledSubmissionsSelector = state => filter(toArray(state[ns].models), x => !x.testResult)
 
 
 

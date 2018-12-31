@@ -1,6 +1,6 @@
 import { types } from './actions';
 import { put, all, takeLatest, select, call } from 'redux-saga/effects';
-import { loggedInUserSelector } from '../users/user.reducer';
+import { loggedInUserSelector } from '../users/reducer';
 import { submitProjectSuccess, submitProjectError } from './actions';
 import { currentMountedStage } from '../stage-proccessor';
 
@@ -30,7 +30,7 @@ const serverMock = ({ userId, gitLink, stageId }) => {
     return new Promise((resolve, reject) => {
 
         setTimeout(() => resolve({
-            _id: "!@3123123123",
+            _id: `${Math.random() * 1000000}`,
             stageId,
             userId,
             gitLink,
@@ -43,7 +43,7 @@ const serverMock = ({ userId, gitLink, stageId }) => {
 
 
 
-export function* rootSaga() {
+export default function* rootSaga() {
     yield all(
         [
             takeLatest(types.submitProject, submitProject)

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { teachersSelector } from '../../state/users/user.reducer';
+import { teachersSelector } from '../../state/users/reducer';
 import TeacherContactList from './TeacherContactList';
 
 

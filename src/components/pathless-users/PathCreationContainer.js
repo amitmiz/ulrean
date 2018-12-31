@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { courseSelector, coursesSelector } from '../../state/courses/reducer';
 import { addNewPath } from '../../state/predefiend-path/actions';
 import { allPathsSelector } from '../../state/predefiend-path/reducer';
-import { userSelector } from '../../state/users/user.reducer';
-import { addPath } from '../../state/users/users.actions';
+import { userSelector } from '../../state/users/reducer';
+import { addPath } from '../../state/users/actions';
 import PathCreation from './PathCreation';
 
 const mapStateToProps = (state, ownProps) => ({

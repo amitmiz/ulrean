@@ -34,8 +34,7 @@ const styles = theme => ({
 });
 
 
-function MediaControlCard(props) {
-    const { classes, course } = props;
+function MediaControlCard({ classes, course }) {
 
     const courseTags = <div className={classes.tags}>
         {course.tags.map((tag, index) => <Chip className={classes.chip} label={tag} key={index} />

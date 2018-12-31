@@ -24,7 +24,7 @@ function* addNewPath(action) {
 
 function mockServer({ courses, name = "test" }) {
 
-    let path = { _id: "test", courses, name }
+    let path = { _id: `${Math.random() * 1000000}`, courses, name }
 
     return new Promise((resolve, reject) => {
         setTimeout(() => resolve(path), 200);
@@ -36,7 +36,7 @@ function mockServer({ courses, name = "test" }) {
 
 
 
-export function* rootSaga() {
+export default function* rootSaga() {
 
     yield all([yield takeLatest(types.addNewPath, addNewPath)])
 }

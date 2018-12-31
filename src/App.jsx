@@ -2,20 +2,28 @@ import { withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { Route, Router, Switch } from "react-router-dom";
-import  CoursersPathContainer  from "./components/coursers-path/CoursersPathContainer";
-import  InCourseContainer  from "./components/in-course/InCourseContainer";
-import  LoginScreen  from "./components/LoginScreen";
+import CoursersPathContainer from "./components/coursers-path/CoursersPathContainer";
+import InCourseContainer from "./components/in-course/InCourseContainer";
+import LoginScreen from "./components/LoginScreen";
 import NavBar from "./components/NavBar";
-import  PathCreationContainer from "./components/pathless-users/PathCreationContainer";
+import PathCreationContainer from "./components/pathless-users/PathCreationContainer";
 import PathLessStudentsContainer from "./components/pathless-users/PathLessStudentsContainer";
 import PrivateRoute from './components/PrivateRoute';
-import  QAPageContainer  from "./components/qa/QAPageContainer";
-import  SideMenu  from "./components/SideMenu";
-import  TeacherDashbaord  from "./components/teacher-dashbaord/TeacherDashbaord";
-import  TeacherContactListContainer  from "./components/teachers-cotanctlist/TeacherContactListContainer";
-import  UserInfo  from "./components/UserInfo";
+import QAPageContainer from "./components/qa/QAPageContainer";
+import SideMenu from "./components/SideMenu";
+import TeacherDashbaord from "./components/teacher-dashbaord/TeacherDashbaord";
+import TeacherContactListContainer from "./components/teachers-cotanctlist/TeacherContactListContainer";
 import history from './history';
-import { loggedInUserSelector } from "./state/users/user.reducer";
+import { loggedInUserSelector } from "./state/users/reducer";
+import QuestionContainer from "./components/qa/QuestionContainer";
+import UserInfoContainer from "./components/user-profile/UserInfoContainer";
+import StudentDashboard from "./components/student-dashbaord/StudentDashboard";
+import CoursesContainer from "./components/coureses/CoursesContainer"
+import StageContainer from "./components/coureses/StageContainer";
+import CourseContainer from "./components/coureses/CourseContainer";
+import SubmittedProjectsContainer from "./components/project-submissions/SubmittedProjectsContainer";
+import CheckSubmissionContainer from "./components/check-submission/CheckSubmissionContainer";
+
 
 const style = theme => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -25,11 +33,12 @@ const style = theme => ({
     flexDirection: 'column'
   },
   content: {
- 
+
     margin: "30px 0",
     display: "flex",
     margin: "0 auto",
     marginTop: '20px',
+    width: "90%",
 
     [theme.breakpoints.up('lg')]: {
 
@@ -85,14 +94,25 @@ class App extends Component {
         <SideMenu />
         <div className={classes.content} >
 
-          <Route path="/path" component={CoursersPathContainer} />
-          <Route path="/qa" component={QAPageContainer} />
-          <Route path="/user" component={UserInfo} />
-          <Route path="/course" component={InCourseContainer} />
-          <Route path="/pathless" component={PathLessStudentsContainer} />
-          <Route path="/path-creation/:id" component={PathCreationContainer} />
-          <Route path="/tdashboard" component={TeacherDashbaord} />
-          <Route path="/teacher-contact" component={TeacherContactListContainer} />
+          <Switch>
+
+
+            <Route path="/path" component={CoursersPathContainer} />
+            <Route path="/qa" component={QAPageContainer} />
+            <Route path="/user" component={UserInfoContainer} />
+            <Route path="/course" component={InCourseContainer} />
+            <Route path="/pathless" component={PathLessStudentsContainer} />
+            <Route path="/path-creation/:id" component={PathCreationContainer} />
+            <Route path="/tdashboard" component={TeacherDashbaord} />
+            <Route path="/dashboard" component={StudentDashboard} />
+            <Route path="/new-submissions" component={SubmittedProjectsContainer} />
+            <Route path="/check-submission/:id" component={CheckSubmissionContainer} />
+            <Route path="/courses/:id" component={CourseContainer} />
+            <Route exact path="/courses" component={CoursesContainer} />
+            <Route path="/stages/:id" component={StageContainer} />
+            <Route path="/teacher-contact" component={TeacherContactListContainer} />
+            <Route path="/question/:questionId" component={QuestionContainer} />
+          </Switch>
         </div>
       </React.Fragment>
     )

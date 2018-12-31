@@ -1,50 +1,141 @@
-import { Chip, Typography, withStyles } from '@material-ui/core';
-import PropTypes from 'prop-types';
 import React from 'react';
-import  UserAvatar  from '../UserAvatar';
-import { Container, Item } from '../utils';
+import { withStyles, Card, CardHeader, CardContent, Divider, Typography, CardActions, Button } from '@material-ui/core';
+import UserAvater from '../UserAvatar';
+import ReplyDialog from './ReplyDialog';
+import QuestionTags from './QuestionTags';
+import PageTitle from '../PageTitle';
 
 
-const style = theme => ({
+
+const styles = {
     root: {
-        padding: theme.spacing.unit,
         flex: 1
-    }, chip: {
-        marginRight: '10px'
+    },
+    card: {
+        margin: '20px'
+    },
+    cardContent: {
+        display: 'flex',
+        flexDirection: 'row',
     }
-});
+}
 
-function Question(props) {
-    const { classes, question } = props;
 
-    const user = question.author;
+class Question extends React.Component {
 
-    const tags = <div className={classes.tags}>
-        {question.tags.map((tag, index) => <Chip className={classes.chip} label={tag} key={index} />
-        )}
-    </div>
+    constructor(props) {
+        super(props);
 
+        this.openModel = this.openModel.bind(this);
+        this.closeModel = this.closeModel.bind(this);
+        this.reply = this.reply.bind(this)
+
+        this.state = {
+            replyModalOpen: false
+        }
+    }
+
+    openModel() {
+        this.setState({ replyModalOpen: true })
+    }
+
+
+    closeModel() {
+        this.setState({ replyModalOpen: false })
+    }
+
+    reply(reply) {
+        this.props.postReply({ questionId: this.props.question._id, content: reply.content })
+        this.closeModel()
+    }
+
+    render() {
+        const { question, classes } = this.props;
+
+
+        return (
+            <div className={classes.root}>
+
+                <PageTitle>Q & A > Question</PageTitle>
+
+                <Card className={classes.card}>
+
+                    <CardHeader
+                        title={question.header}
+                        action={<QuestionTags tags={question.tags} />}
+                        subheader={question.date}
+                    />
+                    <Divider />
+
+                    <CardContent>
+                        <div className={classes.cardContent} >
+                            <UserAvater user={question.author} />
+
+                            <div className={classes.questionContent} >
+                                <Typography>{`${question.author.name} ${question.author.lastname}`}</Typography>
+                                <div dangerouslySetInnerHTML={{ __html: question.content }} ></div>
+                            </div>
+
+                        </div>
+
+
+                    </CardContent>
+                    <Divider />
+
+                    <CardActions>
+                        <Button onClick={this.openModel}>Reply</Button>
+                    </CardActions>
+
+
+                </Card>
+
+                <Typography variant="h4"> Replies</Typography>
+
+                <Replies classes={classes} replies={question.replies} />
+
+                <ReplyDialog open={this.state.replyModalOpen} onClose={this.closeModel} onPost={this.reply} />
+
+            </div>
+
+
+
+        )
+    }
+
+}
+
+
+
+
+
+function Replies({ replies, classes }) {
     return (
-        <div className={classes.root}>
-            <Container style={{ height: "200px" }} container direction={"row"} alignItems={"center"} wrap={"nowrap"} spacing={24}>
-                <Item ><UserAvatar user={user} /></Item>
-
-                <Item md={10}>
-                    <Typography variant="h5"><div>{question.header}</div></Typography>
-                </Item>
-
-                <Item>
-                    {tags}
-                </Item>
-            </Container>
-        </div >
-    );
+        replies.map((reply) => <Reply classes={classes} reply={reply} />)
+    )
 }
 
-Question.propTypes = {
-    question: PropTypes.object.isRequired
+
+
+function Reply({ reply, classes }) {
+    return (
+        <Card className={classes.card}>
+            <CardContent>
+                <div className={classes.cardContent} >
+                    <UserAvater user={reply.author} />
+
+                    <div className={classes.questionContent} >
+                        <Typography>{`${reply.author.name} ${reply.author.lastname}`}</Typography>
+                        <div dangerouslySetInnerHTML={{ __html: reply.content }} ></div>
+                    </div>
+
+                </div>
+
+
+            </CardContent>
+        </Card>
+
+
+    )
 }
 
-const WithStyles = withStyles(style)(Question)
-
-export default WithStyles;
+export default withStyles(styles)(Question)

@@ -1,32 +1,46 @@
-import { handleActions } from 'redux-actions';
-import { types } from './actions';
+
+import { createAction, handleActions } from 'redux-actions';
 
 const ns = "coursesProgress"
+
+
+export const types = {
+    updateCourseProgressRequested: "SAVE_COURSE_PROGRESS_REQUESTED",
+    updateCourseProgressSuccess: "SAVE_COURSE_PROGRESS_SUCCESS",
+    updateCourseProgressError: "SAVE_COURSE_PROGRESS_ERROR"
+}
+
+export const updateCourseProgressRequested = createAction(types.updateCourseProgressRequested)
+export const updateCourseProgressSuccess = createAction(types.updateCourseProgressSuccess)
+export const updateCourseProgressError = createAction(types.updateCourseProgressError)
+
 
 export const makeCourseCompletionProgressSelector = (id) => (state) => state[ns].models[id];
 
 export const userCoursesProgressSelector = state => state[ns].models;
 
+export const makeCurrentStageIndexSelector = courseId => state => state[ns].models[courseId].stagesCompleted
+
 const initialState = {
     api: { isLoading: false, error: null },
     models: {
         "1111": {
-            courseId: "1111",
-            userId: "123123",
+            course: "1111",
+            user: "123123",
             started: new Date(),
             completed: false,
             stagesCompleted: 0
         },
         "12312": {
-            courseId: "12312",
-            userId: "123123",
+            course: "12312",
+            user: "123123",
             started: new Date(),
             completed: false,
             stagesCompleted: 0
         },
         "12312312": {
-            courseId: "12312312",
-            userId: "123123",
+            course: "12312312",
+            user: "123123",
             started: new Date(),
             completed: false,
             stagesCompleted: 0
@@ -45,7 +59,7 @@ const reducerMap = {
         ...state, api: { isLoading: true, error: null }
     }),
     [types.updateCourseProgressSuccess]: (state, { payload }) => ({
-        ...state, api: { isLoading: false, error: null }, models: updateProgress(state.models, payload.courseId, payload.newProgress)
+        ...state, api: { isLoading: false, error: null }, models: updateProgress(state.models, payload.course, payload.newProgress)
     }),
     [types.updateCourseProgressError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }

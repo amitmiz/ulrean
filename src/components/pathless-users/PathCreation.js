@@ -4,6 +4,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import React from 'react';
 import CourseSelectionDialog from './CourseSelectionDialog';
 import PathCreationDialog from './PathCreationDialog';
+import PageTitle from '../PageTitle'
+
 
 
 
@@ -99,7 +101,9 @@ class PathCreation extends React.Component {
         const { classes, currentUser, paths } = this.props;
 
         return (
-            <React.Fragment>
+            <div className={classes.root}>
+                <PageTitle>Pathless Students > Path Creation</PageTitle>
+
 
                 <PathCreationDialog
                     open={this.state.savePathModalOpen}
@@ -120,7 +124,7 @@ class PathCreation extends React.Component {
                             <Grid item xs={12} lg={4}>
                                 <Card>
                                     <CardHeader title="Predefiend paths" titleTypographyProps={{ variant: "h6" }} />
-                                    <Divider />
+                                    <Divider variant="middle"/>
                                     <CardContent>
                                         <this.PredefiendList />
                                     </CardContent>
@@ -130,7 +134,7 @@ class PathCreation extends React.Component {
                             <Grid item xs={12} lg={8}>
                                 <Card>
                                     <CardHeader title="Course Path Preview" titleTypographyProps={{ variant: "h6" }} />
-                                    <Divider />
+                                    <Divider variant="middle" />
                                     <CardContent>
                                         <this.PathPreview />
                                     </CardContent>
@@ -154,7 +158,7 @@ class PathCreation extends React.Component {
                         </Grid>
                     </Grid>
                 </Grid>
-            </React.Fragment>
+            </div>
         )
 
     }
@@ -285,5 +289,5 @@ class PathCreation extends React.Component {
 const styled = withStyles(styles, { withTheme: true })(PathCreation)
 
 
-export default styled ;
+export default styled;
 

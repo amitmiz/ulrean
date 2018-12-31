@@ -7,7 +7,7 @@ import { stageFilesSelector, stageTestsSelector, consoleOutputSelector, executeS
 import { submitProject } from '../../state/projects-submissions/actions';
 import { makeStageSelector } from '../../state/stages/reducer';
 import BottomNavBar from './components/BottomNavBar';
-import { loggedInUserSelector } from '../../state/users/user.reducer';
+import { loggedInUserSelector } from '../../state/users/reducer';
 import { makeUserStageSubmissionsSelector } from '../../state/projects-submissions/reducer';
 import { makeCourseCompletionProgressSelector } from '../../state/courses-progress/reducer';
 import InCourseNav from './components/InCourseNav';
@@ -81,15 +81,18 @@ class InCourseContainer extends Component {
 
 
     componentDidMount() {
-        const { stageId, courseId } = this.props.match.params;
+       // const { stageId, courseId } = this.props.match.params;
 
-        this.props.mountStage({ stageId, courseId });
+       const {stage,course} = this.props;
+
+        this.props.mountStage({ stage, course });
     }
 
     componentDidUpdate(prevProps) {
         const { stageId, courseId } = this.props.match.params;
         if (prevProps.match.params.stageId !== stageId) {
-            this.props.mountStage({ stageId, courseId });
+            const {stage,course} = this.props;
+            this.props.mountStage({ stage, course });
         }
     }
 

@@ -1,8 +1,7 @@
 import { all, put, select, takeLatest, call } from 'redux-saga/effects';
 import { stageMetaSelector } from '../stage-proccessor';
 import { types as stageTypes } from '../stage-proccessor';
-import { updateCourseProgressError, updateCourseProgressRequested, updateCourseProgressSuccess } from './actions';
-import { makeCourseCompletionProgressSelector } from './reducer';
+import { makeCourseCompletionProgressSelector, updateCourseProgressError, updateCourseProgressRequested, updateCourseProgressSuccess } from './reducer';
 import { makeCourseSelector } from '../courses/reducer'
 
 function* updateCourseProgression() {
@@ -16,7 +15,7 @@ function* updateCourseProgression() {
 
     const courseCompletionProgressSelector = makeCourseCompletionProgressSelector(courseId);
     const progress = yield select(courseCompletionProgressSelector);
-
+    debugger;
     if (progress.stagesCompleted < stageIndex + 1) {
 
         yield put(updateCourseProgressRequested(course._id));
@@ -25,7 +24,7 @@ function* updateCourseProgression() {
             const newProgress = yield call(mockServerSide, course, progress, stageIndex);
             debugger
 
-            yield put(updateCourseProgressSuccess({ courseId ,newProgress : {...newProgress}}))
+            yield put(updateCourseProgressSuccess({ course: course._id, newProgress: { ...newProgress } }))
         } catch (error) {
             debugger;
             yield put(updateCourseProgressError(error));
@@ -41,6 +40,6 @@ const mockServerSide = (course, progress, stageIndex) => {
 
 
 
-export function* rootSaga() {
+export default function* rootSaga() {
     yield all([yield takeLatest(stageTypes.stageComplete, updateCourseProgression)])
 }

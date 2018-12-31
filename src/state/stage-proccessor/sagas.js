@@ -1,17 +1,14 @@
-import { all, put, select, takeLatest } from 'redux-saga/effects';
+import { all, put, takeLatest } from 'redux-saga/effects';
 import { createFiles, initTests, updateStageMeta } from '.';
 import { mountStageError, mountStageSuccess, stageComplete, types } from './';
-import { makeStageSelector } from '../stages/reducer';
 import { types as stageProccessorTypes } from './index';
 
 
 function* mountStage(action) {
-    const { stageId, courseId } = action.payload;
+    const { stage, course } = action.payload;
 
     try {
-        const stageSelector = makeStageSelector(stageId);
-        const stage = yield select(stageSelector)
-
+      
         const {
             _id,
             files,
@@ -23,8 +20,9 @@ function* mountStage(action) {
         } = stage;
 
 
+        // should only dispatch one action!
         const mountingProccess = [
-            put(updateStageMeta({ title, stageType, _id, courseId, template, required })),
+            put(updateStageMeta({ title, stageType, _id, courseId: course._id, template, required })),
             put(mountStageSuccess(_id))
         ]
 
@@ -67,5 +65,5 @@ function* rootSaga() {
     yield all[yield takeLatest(types.mountStage, mountStage), yield takeLatest(stageProccessorTypes.updateTests, checkStageTestsResults)];
 }
 
-export { rootSaga };
+export default rootSaga;
 

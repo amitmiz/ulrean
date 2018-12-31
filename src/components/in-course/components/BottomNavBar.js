@@ -1,6 +1,7 @@
 import { AppBar, Button, Toolbar, withStyles } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 const styles = {
     appBar: {
@@ -16,8 +17,21 @@ const styles = {
         margin: '20px'
     }, expandedRoot: {
         flexDirection: "column"
+    },
+    nextButton: {
+        padding: '0 30px',
+        transition: 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    },
+    nextButtonEnabled: {
+        color: 'black',
+        height: '48px',
+        padding: '0 30px',
+        background: 'linear-gradient(45deg, #04ff00 30%, #a8e4a4 90%)',
     }
+
 }
+
+
 
 
 class BottomNavBar extends React.Component {
@@ -31,13 +45,15 @@ class BottomNavBar extends React.Component {
                 <Toolbar className={classes.toolbar}>
                     <Button disabled={this.props.currentStageIndex === 0} onClick={this.props.onPrev} variant="outlined">prev</Button>
                     <div className={classes.stageNumber}>{`${currentStageIndex + 1}/${courseLength}`}</div>
-                    <Button disabled={!this.props.canAccessNextExercise} onClick={this.props.onNext} variant="outlined">next</Button>
+                    <Button className={classnames(classes.nextButton, { [classes.nextButtonEnabled]: this.props.canAccessNextExercise })} disabled={!this.props.canAccessNextExercise} onClick={this.props.onNext} variant="outlined">next</Button>
                 </Toolbar>
-            </AppBar>
+            </AppBar >
         )
 
     }
 }
+
+
 
 const styled = withStyles(styles)(BottomNavBar);
 styled.displayName = "BottomNavBar";

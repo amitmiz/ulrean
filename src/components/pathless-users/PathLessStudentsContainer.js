@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { pathlessUsersSelector, usersApiSelector } from "../../state/users/user.reducer";
+import { pathlessUsersSelector, usersApiSelector } from "../../state/users/reducer";
 import PathLessStudents from "./PathLessStudents";
 
 

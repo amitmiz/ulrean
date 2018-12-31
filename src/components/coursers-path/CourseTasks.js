@@ -1,49 +1,43 @@
 import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
-import { PlayCircleOutline } from "@material-ui/icons";
-import React, { Component } from 'react';
+import PlayIcon from "@material-ui/icons/PlayCircleOutline";
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 
 
 
-export default class CourseTasks extends Component {
+const CourseTasks = ({ course, courseProgress }) => {
 
 
-    render() {
 
-        const { course } = this.props
+    return (
+        <div>
+            <List >
+                {
+                    course.stages.map((stage, index) => <Task key={stage._id} course={course} stage={stage} index={index} disabled={courseProgress.stagesCompleted < index} />)
+                }
+            </List>
+        </div>
+    );
+}
 
-        return (
-            <div>
-                <List >
-                    {
-                        course.stages.map((stage, index) => this.createTaskView(course, stage, index))
-                    }
-                </List>
-            </div>
-        );
-    }
+function Task({ course, stage, index ,disabled}) {
 
-
-    createTaskView(course, { title, _id }, index) {
-
-        return (<ListItem key={_id}>
+    return (
+        <ListItem >
             <ListItemAvatar>
                 <Avatar>
                     {++index}
                 </Avatar>
             </ListItemAvatar>
-            <ListItemText
-                primary={title}
-            />
+            <ListItemText primary={stage.title} />
             <ListItemSecondaryAction>
-                <IconButton component={Link} to={`/incourse/${course._id}/${_id}`} aria-label="Delete">
-                    <PlayCircleOutline></PlayCircleOutline>
+                <IconButton disabled={disabled} component={Link} to={`/incourse/${course._id}/${stage._id}`} >
+                    <PlayIcon></PlayIcon>
                 </IconButton>
             </ListItemSecondaryAction>
         </ListItem>
-        )
-    }
+    )
 }
 
-
+export default CourseTasks;

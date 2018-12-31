@@ -28,9 +28,11 @@ const styles = theme => ({
 
     hide: {
 
-  
+
     },
     drawerPaper: {
+        borderRight: '1px solid #8e8e8e52',
+        padding: '0 10px 0 10px',
         whiteSpace: 'nowrap',
         width: drawerWidth,
         [theme.breakpoints.down('sm')]: { width: '300px', },
@@ -42,15 +44,15 @@ const styles = theme => ({
     },
     drawerPaperClose: {
         overflowX: 'hidden',
-        [theme.breakpoints.down('sm')]: { width: '0', },
+        [theme.breakpoints.down('md')]: { width: '0', padding: 0 },
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        width: theme.spacing.unit * 7,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 9,
-        },
+        // width: theme.spacing.unit * 7,
+        // [theme.breakpoints.up('sm')]: {
+        //     width: theme.spacing.unit * 9,
+        // },
     },
 
     toggleButton: {
@@ -68,7 +70,7 @@ const styles = theme => ({
 const mapStateToProps = state => ({ isSideBarOpen: sideBarOpenSelector(state) });
 const mapDistpachToProps = (dispatch) => bindActionCreators({ setSideBarOpen }, dispatch)
 
-@connect(mapStateToProps,mapDistpachToProps)
+@connect(mapStateToProps, mapDistpachToProps, null, { pure: false })
 class SideMenuComponent extends Component {
 
     constructor(props) {
@@ -95,7 +97,7 @@ class SideMenuComponent extends Component {
         const { classes, isSideBarOpen } = this.props;
         return (
 
-            
+
             <Drawer
                 variant="permanent"
                 classes={{
@@ -110,48 +112,20 @@ class SideMenuComponent extends Component {
                 <Divider />
                 <List>
 
-
-
-
-                    <ListItem button component={NavLink} to="/path" onClick={this.handleDrawerClose}>
-                        <ListItemIcon>
-                            <LibraryBooks />
-                        </ListItemIcon>
-                        <ListItemText primary="Course Path" />
-                    </ListItem>
-
-                    <ListItem button component={NavLink} to="/tdashboard" onClick={this.handleDrawerClose}>
-                        <ListItemIcon>
-                            <DashboardRoundedIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Dashbaord" />
-                    </ListItem>
-                    <ListItem button component={NavLink} to="/pathless" onClick={this.handleDrawerClose} >
-                        <ListItemIcon>
-                            <NewReleaseIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Pathless" />
-                    </ListItem>
-                    <ListItem button component={NavLink} to="/qa" onClick={this.handleDrawerClose} >
-                        <ListItemIcon>
-                            <QuestionAnswerIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="QA" />
-                    </ListItem>
-                    <ListItem button component={NavLink} to="/teacher-contact" onClick={this.handleDrawerClose}>
-                        <ListItemIcon>
-                            <ContactsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Teachers" />
-                    </ListItem>
-
+                    <SideMenuLink text="Course Path" to="/path" onClick={this.handleDrawerClose} icon={LibraryBooks} />
+                    <SideMenuLink text="Dashbaord" to="/dashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
+                    <SideMenuLink text="TDashbaord" to="/tdashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
+                    <SideMenuLink text="Pathless" to="/pathless" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
+                    <SideMenuLink text="Submissions" to="/new-submissions" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
+                    <SideMenuLink text="QA" to="/qa" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
+                    <SideMenuLink text="Courses" to="/courses" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
+                    <SideMenuLink text="Teachers" to="/teacher-contact" onClick={this.handleDrawerClose} icon={ContactsIcon} />
 
                 </List>
 
                 <Divider />
 
 
-                {this.toggleButton()}
 
             </Drawer>
 
@@ -183,6 +157,18 @@ class SideMenuComponent extends Component {
 
 
 
+
+
+}
+
+function SideMenuLink({ to, text, onClick, icon }) {
+    const LinkIcon = icon
+    return (<ListItem button component={NavLink} to={to} onClick={onClick} >
+        <ListItemIcon>
+            <LinkIcon />
+        </ListItemIcon>
+        <ListItemText primaryTypographyProps={{ variant: "body2" }} primary={text} />
+    </ListItem>)
 }
 
 

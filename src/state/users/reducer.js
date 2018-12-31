@@ -1,4 +1,4 @@
-import { types } from './user.action-types';
+import { types } from './action-types';
 import { handleActions } from 'redux-actions';
 
 
@@ -33,7 +33,9 @@ const initialState = {
             name: "amit",
             lastname: "mizrahi",
             phone: "052-654655",
-            photo: './amit.jpg',
+            headingTo : "qa team",
+            priorKnowlege : "javascript",
+            photo: '/amit.jpg',
             type: "student",
             path: "1212"
         },
@@ -42,7 +44,9 @@ const initialState = {
             name: "amir",
             phone: "052-654655",
             lastname: "east",
-            photo: './amit.jpg',
+            headingTo : "qa team",
+            priorKnowlege : "javascript",
+            photo: '/amit.jpg',
             type: "student",
             path: null
         }, "12314342312312": {
@@ -50,7 +54,7 @@ const initialState = {
             name: "amin",
             phone: "052-654655",
             lastname: "west",
-            photo: './amit.jpg',
+            photo: '/amit.jpg',
             type: "teacher",
         }
     }
@@ -101,11 +105,4 @@ const reducerMap = {
 }
 
 
-
-
-
-
-const reducer = handleActions(reducerMap, initialState)
-
-
-export default reducer;
+export default  handleActions(reducerMap, initialState);

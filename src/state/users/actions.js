@@ -1,4 +1,4 @@
-import { types } from "./user.action-types";
+import { types } from "./action-types";
 import { createAction } from 'redux-actions';
 
 

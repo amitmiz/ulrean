@@ -23,15 +23,14 @@ StageInstructions.propTypes = {
 function StageInstructions(props) {
 
     const { stage, classes, tests, course } = props;
-
     return (<div>
 
         <ExpansionPanel defaultExpanded>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>Learn</Typography>
+                <Typography className={classes.heading}> Learn </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.expandedRoot}>
-                <Typography variant="subtitle1">  {course.header}</Typography>
+                {course && <Typography variant="subtitle1">  {course.header}</Typography>}
                 <Typography variant="h4">  {stage.title}</Typography>
                 <Typography component="div"> {stage.learn.map((learn, index) => <p key={index} dangerouslySetInnerHTML={{ __html: learn }} />)} </Typography>
             </ExpansionPanelDetails>

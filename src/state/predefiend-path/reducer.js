@@ -3,8 +3,10 @@ import { types } from './actions';
 const ns = "paths"
 
 
-export const pathSelector = (id, state) => state[ns].models[id];
+export const makePathSelector = pathId => state => state[ns].models[pathId];
 export const allPathsSelector = (state) => Object.keys(state[ns].models).map(key => state[ns].models[key]);
+
+
 
 
 const initialState = {
@@ -12,13 +14,13 @@ const initialState = {
     models: {
         "1212": {
             _id: "1212",
-            name: "frontend",
+            name: "Frontend",
             courses: ["1111", "12312"]
         },
         "1231":
         {
             _id: "1231",
-            name: "backend",
+            name: "Backend",
             courses: ["12312", "12312312"]
         }
 
