@@ -1,9 +1,10 @@
-import { Grid, withStyles } from '@material-ui/core';
+import { Grid, withStyles, Button, Divider } from '@material-ui/core';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import StageInstructions from '../in-course/components/StageInstructions';
-import SubmissionCard from '../in-course/components/SubmissionCard';
+import SubmissionCard from '../SubmissionCard';
+import ReviewDialog from './ReviewDialog';
 
 
 
@@ -31,9 +32,30 @@ const propTypes = {
 
 class CheckSubmission extends Component {
 
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            reviewDialogOpen: false
+        }
+
+        this.submitReview = this.submitReview.bind(this);
+    }
+
+
+    openDialog() {
+        this.setState({ reviewDialogOpen: true });
+    }
+
+    submitReview({ _id, comments, pass }) {
+        this.props.reviewSubmission({ submissionId: _id, comments, pass })
+    }
+
+
     render() {
-        const { classes, submissions, currentSubmission } = this.props
-        const currentSubmissionIndex = submissions.findIndex(x => currentSubmission._id == x._id)
+        const { classes, submissions, currentSubmission, reviewSubmission } = this.props
+        const currentSubmissionIndex = submissions.findIndex(x => currentSubmission._id === x._id)
 
         return (
             <div className={classes.root} >
@@ -53,11 +75,33 @@ class CheckSubmission extends Component {
 
                     {/*Right */}
                     <Grid item lg={4} xs={12}>
-                        {submissions ? submissions.map((sub, index) => <div className={classnames(classes.submissionCard, { [classes.currentSubmission]: index === currentSubmissionIndex })} ><SubmissionCard index={index} submission={sub} key={sub._id} /> </div>) : "No submissions yet"}
+                        {submissions ? submissions.map((sub, index) =>
+                            <div
+                                className={classnames(classes.submissionCard, { [classes.currentSubmission]: index === currentSubmissionIndex })}
+                            >
+                                <SubmissionCard
+                                    index={index}
+                                    submission={sub}
+                                    key={sub._id}
+                                    extraSection={(submission) =>
+                                        index === currentSubmissionIndex && !currentSubmission.testResult && 
+                                        <section>
+                                            <p><Button variant="raised" color="primary" onClick={() => this.setState({ reviewDialogOpen: true })}>Add Review</Button></p>
+                                        </section>
+                                    }
+                                />
+                            </div>
+                        )
+                            : "No submissions yet"}
                     </Grid>
                 </Grid >
 
-
+                <ReviewDialog
+                    open={this.state.reviewDialogOpen}
+                    submission={this.props.currentSubmission}
+                    onClose={() => this.setState({ reviewDialogOpen: false })}
+                    onPost={this.submitReview}
+                />
             </div >
         )
     }

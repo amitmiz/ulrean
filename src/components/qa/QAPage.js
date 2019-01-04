@@ -67,18 +67,20 @@ class QAPage extends Component {
 
         return (
             <div className={classes.root}>
-                    <PageTitle>Q & A</PageTitle>
-                
+                <PageTitle>Q & A</PageTitle>
+
                 <Container spacing={24} direction="column">
 
                     <Item>
-                        <div className={classes.searchContainer}>
+                        <Paper className={classes.searchContainer}>
+
                             <Container spacing={24} direction="row" alignItems="center" justify="center">
                                 <Item> <SearchInput /></Item>
                                 <Item><Button variant="outlined" color="primary" >Search</Button>  </Item>
                                 <Item><Button onClick={this.openModel} variant="outlined" color="primary" >Ask</Button> </Item>
                             </Container>
-                        </div>
+
+                        </Paper>
                     </Item>
 
 
@@ -94,7 +96,7 @@ class QAPage extends Component {
                                     <ListItem
                                         dense
                                         button
-                                        
+
                                         component={Link}
                                         to={`/question/${question._id}`}
                                     >

@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, Grid, withStyles } from '@material-ui/co
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import StageInstructions from './components/StageInstructions';
-import SubmissionCard from './components/SubmissionCard';
+import SubmissionCard from '../SubmissionCard';
 import SubmissionForm from './components/SubmissionForm';
 
 

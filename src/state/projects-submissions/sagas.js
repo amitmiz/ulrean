@@ -1,4 +1,4 @@
-import { types } from './actions';
+import { types, reviewSubmissionSuccess } from './actions';
 import { put, all, takeLatest, select, call } from 'redux-saga/effects';
 import { loggedInUserSelector } from '../users/reducer';
 import { submitProjectSuccess, submitProjectError } from './actions';
@@ -25,6 +25,19 @@ function* submitProject(action) {
 
 }
 
+function* reviewSubmission({ type, payload }) {
+
+    const currentUser = yield select(loggedInUserSelector)
+    const submissionId = payload.submissionId
+    try {
+        const result = yield call(serverMockReviewSubmit, { teacher: currentUser._id, comments: payload.comments, pass: payload.pass })
+        yield put(reviewSubmissionSuccess({ _id: submissionId, result }))
+    } catch (error) {
+        yield put(submitProjectError(error))
+    }
+}
+
+
 const serverMock = ({ userId, gitLink, stageId }) => {
 
     return new Promise((resolve, reject) => {
@@ -42,11 +55,29 @@ const serverMock = ({ userId, gitLink, stageId }) => {
 }
 
 
+const serverMockReviewSubmit = ({ teacher, comments, pass }) => {
+
+    return new Promise((resolve, reject) => {
+
+        setTimeout(() => resolve({
+
+            teacher,
+            comments,
+            date: new Date(),
+            pass
+
+        }), 500)
+
+    })
+}
+
+
 
 export default function* rootSaga() {
     yield all(
         [
-            takeLatest(types.submitProject, submitProject)
+            takeLatest(types.submitProject, submitProject),
+            takeLatest(types.reviewSubmission, reviewSubmission)
         ]
     )
 }

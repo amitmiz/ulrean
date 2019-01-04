@@ -24,7 +24,7 @@ class SubmittedProjects extends React.Component {
         const { classes, submissions } = this.props;
 
         return (<div className={classes.root} >
-            <PageTitle >Pathless Students</PageTitle>
+            <PageTitle >New Project Submissions</PageTitle>
 
             {
                 submissions.length === 0 ? "No" :

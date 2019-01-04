@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { makesSubmissionSelector, makeUserStageSubmissionsSelector } from '../../state/projects-submissions/reducer';
 import { mapSubmission } from '../../state/selectors';
 import CheckSubmission from './CheckSubmission';
+import { bindActionCreators } from 'redux';
+import { reviewSubmission } from '../../state/projects-submissions/actions';
 
 
 function mapStateToProps(state, ownProps) {
@@ -17,15 +19,18 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-@connect(mapStateToProps)
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ reviewSubmission }, dispatch)
+
+@connect(mapStateToProps, mapDispatchToProps)
 class CheckSubmissionContainer extends React.Component {
 
 
     render() {
-        const { currentSubmission, submissions } = this.props;
+        const { currentSubmission, submissions, reviewSubmission } = this.props;
 
 
-        return <CheckSubmission submissions={submissions} currentSubmission={currentSubmission} />
+        return <CheckSubmission submissions={submissions} currentSubmission={currentSubmission} reviewSubmission={reviewSubmission} />
     }
 }
 

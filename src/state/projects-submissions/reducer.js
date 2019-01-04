@@ -15,7 +15,7 @@ const initialState = {
             _id: "123123123123",
             stage: "123212",
             user: "123123434",
-            gitLink: "gitush.com",
+            gitLink: "https://gitush.com",
             testResult: null,
             dateSubmited: "2018-12-07T18:02:00.611Z",
             testResult: {
@@ -31,7 +31,7 @@ const initialState = {
             _id: "1231231231a23",
             stage: "123212222",
             user: "123123434",
-            gitLink: "gitush.com",
+            gitLink: "https://gitush.com",
             dateSubmited: "2018-12-07T18:02:00.611Z",
             testResult: {
                 teacher: "12314342312312",
@@ -44,7 +44,7 @@ const initialState = {
             _id: "1234331231a23",
             stage: "123212222",
             user: "123123434",
-            gitLink: "gitush.com",
+            gitLink: "https://gitush.com",
             dateSubmited: "2018-12-07T18:02:00.611Z"
         }
     }
@@ -63,7 +63,9 @@ export const unhandledSubmissionsSelector = state => filter(toArray(state[ns].mo
 
 
 
-
+const addTestResult = (state, submissionId, testResult) => ({
+    ...state.models[submissionId], testResult
+})
 
 const reducerMap = {
     [types.submitProject]: (state, { payload }) => ({
@@ -73,6 +75,15 @@ const reducerMap = {
         ...state, api: { isLoading: false, error: null }, models: { ...state.models, [payload._id]: payload }
     }),
     [types.submitProjectError]: (state, { payload }) => ({
+        ...state, api: { isLoading: false, error: payload }
+    }),
+    [types.reviewSubmission]: (state, { payload }) => ({
+        ...state, api: { isLoading: true, error: null }
+    }),
+    [types.reviewSubmissionSuccess]: (state, { payload }) => ({
+        ...state, api: { isLoading: false, error: null }, models: { ...state.models, [payload._id]: addTestResult(state, payload._id, payload.result) }
+    }),
+    [types.reviewSubmissionError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }
     })
 }
