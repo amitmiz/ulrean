@@ -1,6 +1,25 @@
 import { users, staticCoureses, predefinedPaths, teachers, questions, stages } from "./static-data";
+import Axios from "axios";
 
 export class ApiClient {
+
+
+    static login(username, password) {
+        return Axios.post('http://localhost:8000/api/users/login', { "user": { "username": username, "email": "amit123@gmail.com", password: password } }, { withCredentials: true });
+    }
+
+    static fetchCurrUser() {
+        return Axios.get('http://localhost:8000/api/user', { withCredentials: true });
+    }
+
+    static fetchUsers() {
+        return Axios.get('http://localhost:8000/api/');
+    }
+
+    static fetchCourses() {
+        return Axios.get('http://localhost:8000/api/courses');
+    }
+
 
     static getAllUsers() {
         return users;

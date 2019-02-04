@@ -16,7 +16,6 @@ const initialState = {
             stage: "123212",
             user: "123123434",
             gitLink: "https://gitush.com",
-            testResult: null,
             dateSubmited: "2018-12-07T18:02:00.611Z",
             testResult: {
                 teacher: "123123",
@@ -68,6 +67,9 @@ const addTestResult = (state, submissionId, testResult) => ({
 })
 
 const reducerMap = {
+    ["ADD_ENTITIES"]: (state, { payload }) => ({
+        ...state, models: payload.projectSubmission
+    }),
     [types.submitProject]: (state, { payload }) => ({
         ...state, api: { isLoading: true, error: null }
     }),

@@ -7,6 +7,7 @@ import progressSaga from '../state/courses-progress/sagas'
 import pathSaga from '../state/predefiend-path/sagas'
 import submissionSaga from '../state/projects-submissions/sagas';
 import questionsSaga from '../state/questions/sagas';
+import coursesSaga from '../state/courses/sagas';
 
 export default function* rootSaga() {
   yield all(
@@ -16,7 +17,9 @@ export default function* rootSaga() {
       progressSaga(),
       pathSaga(),
       submissionSaga(),
-      questionsSaga()
+      questionsSaga(),
+      coursesSaga()
+
     ]
   );
 }

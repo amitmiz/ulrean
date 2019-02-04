@@ -14,7 +14,9 @@ import SideMenu from "./components/SideMenu";
 import TeacherDashbaord from "./components/teacher-dashbaord/TeacherDashbaord";
 import TeacherContactListContainer from "./components/teachers-cotanctlist/TeacherContactListContainer";
 import history from './history';
-import { loggedInUserSelector } from "./state/users/reducer";
+import { loggedInUserSelector, usersApiSelector } from "./state/users/reducer";
+import { fetchCurrentUser } from "./state/users/actions";
+
 import QuestionContainer from "./components/qa/QuestionContainer";
 import UserInfoContainer from "./components/user-profile/UserInfoContainer";
 import StudentDashboard from "./components/student-dashbaord/StudentDashboard";
@@ -23,6 +25,8 @@ import StageContainer from "./components/coureses/StageContainer";
 import CourseContainer from "./components/coureses/CourseContainer";
 import SubmittedProjectsContainer from "./components/project-submissions/SubmittedProjectsContainer";
 import CheckSubmissionContainer from "./components/check-submission/CheckSubmissionContainer";
+import { bindActionCreators } from "redux";
+
 
 
 const style = theme => ({
@@ -51,32 +55,42 @@ const style = theme => ({
 
 function mapStateToProps(state) {
   return {
-    user: loggedInUserSelector(state)
+    user: loggedInUserSelector(state),
+    isLoadingUser: usersApiSelector(state).isLoading
   }
 }
 
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchCurrentUser }, dispatch)
+}
+
 class App extends Component {
 
+  componentDidMount() {
+    this.props.fetchCurrentUser();
+  }
 
   render() {
-    const { user, classes } = this.props;
+    const { user, classes, isLoadingUser } = this.props;
 
     return (
       <React.Fragment>
 
-        <Router history={history}>
-          <div className={classes.appRoot} >
+        {!isLoadingUser &&
+          <Router history={history}>
+            <div className={classes.appRoot} >
 
 
-            <Switch>
-              <Route path="/login" component={LoginScreen} />
-              <PrivateRoute path="/incourse" authed={user} component={this.CourseLayout.bind(this)} />
-              <PrivateRoute path="/" authed={user} component={this.MainLayout.bind(this)} />
+              <Switch>
+                <Route path="/login" component={LoginScreen} />
+                <PrivateRoute path="/incourse" authed={user} component={this.CourseLayout.bind(this)} />
+                <PrivateRoute path="/" authed={user} component={this.MainLayout.bind(this)} />
 
-            </Switch>
-          </div>
-        </Router>
+              </Switch>
+            </div>
+          </Router>
+        }
       </React.Fragment >
 
     );
@@ -133,7 +147,7 @@ class App extends Component {
 
 
 
-const AppWithStyles = connect(mapStateToProps)(withStyles(style)(App));
+const AppWithStyles = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(App));
 
 
 

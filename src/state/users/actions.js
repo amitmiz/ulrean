@@ -3,6 +3,7 @@ import { createAction } from 'redux-actions';
 
 
 
+export const fetchCurrentUser = createAction("FETCH_USER")
 
 
 export const loginRequest = (userName, password) => ({ type: types.loginRequest, payload: { userName, password } });
@@ -11,9 +12,9 @@ export const authRequestSuccess = createAction(types.authRequestSuccess)
 export const authRequestError = createAction(types.authRequestError)
 
 
-export const fetchPathlessUser = createAction(types.fetchPathlessUser)
-export const fetchPathlessUserSuccess = createAction(types.fetchPathlessUserSuccess)
-export const fetchPathlessUserError = createAction(types.fetchPathlessUserError)
+export const fetchUsers = createAction(types.fetchUsers)
+export const fetchUsersSuccess = createAction(types.fetchUsersSuccess)
+export const fetchUsersError = createAction(types.fetchUsersError)
 
 
 export const addPath = createAction(types.addPath)

@@ -2,7 +2,7 @@ import { Avatar, Button, Grid, Paper, TextField, Typography, withStyles } from '
 import LockIcon from '@material-ui/icons/Lock';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loginRequest } from '../state/users/actions';
+import { authRequest } from '../state/users/actions';
 import { bindActionCreators } from 'redux';
 
 const style = {
@@ -28,7 +28,7 @@ const style = {
 
 const mapStateToProps = () => ({})
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ loginRequest }, dispatch)
+    return bindActionCreators({ authRequest }, dispatch)
 
 
 }
@@ -52,10 +52,15 @@ class LoginScreen extends Component {
         });
     }
 
-    handleOnSubmit() {
+    handleOnSubmit(event) {
         const { user, password } = this.state;
 
-        this.props.loginRequest(user, password);
+        this.props.authRequest({ user, password });
+
+        event.preventDefault();
+
+
+
     }
 
 
@@ -80,7 +85,7 @@ class LoginScreen extends Component {
 
                         <Typography variant="h5">Login</Typography>
 
-                        <form onSubmit={this.handleOnSubmit}>
+                        <form onSubmit={this.handleOnSubmit} >
 
 
                             <TextField fullWidth={true}

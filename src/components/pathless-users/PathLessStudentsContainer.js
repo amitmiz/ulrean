@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { pathlessUsersSelector, usersApiSelector } from "../../state/users/reducer";
 import PathLessStudents from "./PathLessStudents";
+import {fetchUsers} from "../../state/users/actions"
 
 
 const mapStateToProps = state => ({
@@ -10,12 +11,12 @@ const mapStateToProps = state => ({
     users: pathlessUsersSelector(state)
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({fetchUsers}, dispatch)
 
 class PathLessStudentsContainer extends React.Component {
 
     componentDidMount() {
-        // this.props.fetchPathlessUser()
+        this.props.fetchUsers()
     }
 
     render() {

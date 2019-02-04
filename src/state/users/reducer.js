@@ -1,5 +1,7 @@
 import { types } from './action-types';
 import { handleActions } from 'redux-actions';
+import { ADD_ENTITIES } from '../../redux/actions';
+import { stage } from '../../api/schema';
 
 
 
@@ -22,41 +24,41 @@ const initialState = {
     api: {
         isLoading: false, error: null
     },
-    loggedInUser: "123123434",
+    loggedInUser: null,
     addPathStatus: {
         isLoading: false,
         error: null
     },
     models: {
-        "123123434": {
-            _id: "123123434",
-            name: "amit",
-            lastname: "mizrahi",
-            phone: "052-654655",
-            headingTo : "qa team",
-            priorKnowlege : "javascript",
-            photo: '/amit.jpg',
-            type: "student",
-            path: "1212"
-        },
-        "12312312312": {
-            _id: "12312312312",
-            name: "amir",
-            phone: "052-654655",
-            lastname: "east",
-            headingTo : "qa team",
-            priorKnowlege : "javascript",
-            photo: '/amit.jpg',
-            type: "student",
-            path: null
-        }, "12314342312312": {
-            _id: "12314342312312",
-            name: "amin",
-            phone: "052-654655",
-            lastname: "west",
-            photo: '/amit.jpg',
-            type: "teacher",
-        }
+        // "123123434": {
+        //     _id: "123123434",
+        //     name: "amit",
+        //     lastname: "mizrahi",
+        //     phone: "052-654655",
+        //     headingTo: "qa team",
+        //     priorKnowlege: "javascript",
+        //     photo: '/amit.jpg',
+        //     type: "student",
+        //     path: "1212"
+        // },
+        // "12312312312": {
+        //     _id: "12312312312",
+        //     name: "amir",
+        //     phone: "052-654655",
+        //     lastname: "east",
+        //     headingTo: "qa team",
+        //     priorKnowlege: "javascript",
+        //     photo: '/amit.jpg',
+        //     type: "student",
+        //     path: null
+        // }, "12314342312312": {
+        //     _id: "12314342312312",
+        //     name: "amin",
+        //     phone: "052-654655",
+        //     lastname: "west",
+        //     photo: '/amit.jpg',
+        //     type: "teacher",
+        // }
     }
 }
 
@@ -80,17 +82,19 @@ const reducerMap = {
     [types.authRequest]: (state) => ({
         ...state, api: { isLoading: true, error: null }
     }),
+    "FETCH_USER": (state) => ({
+        ...state, api: { isLoading: true, error: null }
+    }),
     [types.authRequestSuccess]: (state, { payload }) => ({
-        ...state, loggedInUser: payload, api: { isLoading: false, error: null }
+        ...state, models: { ...state.models, [payload._id]: payload }, loggedInUser: payload._id, token: payload.token, api: { isLoading: false, error: null }
     }),
     [types.authRequestError]: (state, { payload }) => (
         { ...state, api: { isLoading: false, error: payload } }),
-
-
-    [types.fetchPathlessUserSuccess]: (state, { payload }) => ({
-        ...state, models: { ...state.models, payload }, api: { isLoading: true, error: null }
+    //types.fetchUsersSuccess
+    [ADD_ENTITIES]: (state, { payload }) => ({
+        ...state, models: { ...state.models, ...payload.users }, api: { isLoading: false, error: null }
     }),
-    [types.fetchPathlessUserError]: (state, { payload }) => ({
+    [types.fetchUsersError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }
     }),
     [types.addPathRequested]: (state, { payload }) => ({
@@ -101,8 +105,11 @@ const reducerMap = {
     }),
     [types.addPathError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }
-    })
+    }),
+
+
+
 }
 
 
-export default  handleActions(reducerMap, initialState);
+export default handleActions(reducerMap, initialState);

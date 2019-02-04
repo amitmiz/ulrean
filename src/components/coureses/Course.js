@@ -60,7 +60,7 @@ function StageListItem({ stage, index }) {
             </ListItemAvatar>
             <ListItemText primary={stage.title} />
             <ListItemSecondaryAction>
-                <IconButton component={Link} to={`/stages/${stage._id}`} >
+                <IconButton component={Link} to={`/stages/${stage.slug}`} >
                     <Info />
                 </IconButton>
             </ListItemSecondaryAction>

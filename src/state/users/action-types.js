@@ -6,9 +6,9 @@ export const types = {
     authRequestError: "AUTH_REQUEST_ERROR",
     updatePath : 'UPDATE_PATH',
 
-    fetchPathlessUser: 'FETCH_PATHLESS_USERS',
-    fetchPathlessUserSuccess: 'FETCH_PATHLESS_USERS_SUCCESS',
-    fetchPathlessUserError: 'FETCH_PATHLESS_USERS_ERROR',
+    fetchUsers: 'FETCH_USERS',
+    fetchUsersSuccess: 'FETCH_USERS_SUCCESS',
+    fetchUsersError: 'FETCH_USERS_ERROR',
 
     addPath: 'ADD_PATH',
     addPathRequested: 'ADD_PATH_REQUESTED',

@@ -50,7 +50,7 @@ function CourseListItem({ course, index }) {
             </ListItemAvatar>
             <ListItemText primary={course.header} />
             <ListItemSecondaryAction>
-                <IconButton component={Link} to={`/courses/${course._id}`}>
+                <IconButton component={Link} to={`/courses/${course.slug}`}>
                     <Info />
                 </IconButton>
             </ListItemSecondaryAction>

@@ -1,18 +1,40 @@
-import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { normalize } from 'normalizr';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { ApiClient } from '../../api-client';
+import { usersList } from '../../api/schema';
 import history from '../../history';
+import { addEntities } from '../../redux/actions';
 import { types } from './action-types';
-import { addPathRequested, authRequest, authRequestError, authRequestSuccess, fetchPathlessUserError, fetchPathlessUserSuccess, addPathSuccess, addPathError } from './actions';
+import { addPathError, addPathRequested, addPathSuccess, authRequestError, authRequestSuccess } from './actions';
 
 
- function* authorize(action) {
-
-    yield put(authRequest())
+function* fetchLoggedUser() {
 
     try {
-        const user = yield call(ApiClient.getUserById, 123123434);
+        const user = yield call(ApiClient.fetchCurrUser);
+
+
+
         console.log(user);
-        yield put(authRequestSuccess(user))
+        yield put(authRequestSuccess(user.data.user))
+        history.push('/');
+    } catch (error) {
+        yield put(authRequestError(error))
+    }
+
+
+
+}
+
+function* authorize({ payload }) {
+
+    try {
+        const user = yield call(ApiClient.login, payload.user, payload.password);
+
+
+
+        console.log(user);
+        yield put(authRequestSuccess(user.data.user))
         history.push('/');
     } catch (error) {
         yield put(authRequestError(error))
@@ -21,7 +43,7 @@ import { addPathRequested, authRequest, authRequestError, authRequestSuccess, fe
 }
 
 
- function* addPath(action) {
+function* addPath(action) {
 
     const { userId, path } = action.payload;
 
@@ -29,7 +51,7 @@ import { addPathRequested, authRequest, authRequestError, authRequestSuccess, fe
 
     try {
 
-        yield put(addPathSuccess({userId,path}))
+        yield put(addPathSuccess({ userId, path }))
 
     } catch (error) {
         yield put(addPathError(error))
@@ -37,23 +59,29 @@ import { addPathRequested, authRequest, authRequestError, authRequestSuccess, fe
 }
 
 
-
-
- function* fetchPathlessUsers(action) {
-
+function* fetchUsers(action) {
 
     try {
-        //const users = yield call(ApiClient.getPathlessStudents);
-        yield put(fetchPathlessUserSuccess({}))
-    } catch (error) {
-        yield put(fetchPathlessUserError(error))
+        const response = yield call(ApiClient.fetchUsers);
+        const data = normalize(response.data, [usersList]);
+
+        yield put(addEntities(data.entities));
+    } catch (e) {
+        // yield put(fetchFailed(e));
+        return;
     }
 }
 
-
 function* rootSaga() {
 
-    yield all([yield takeEvery(types.loginRequest, authorize), yield takeLatest(types.fetchPathlessUser, fetchPathlessUsers), yield takeLatest(types.addPath, addPath)]);
+    yield all(
+        [
+            yield takeLatest("FETCH_USER", fetchLoggedUser),
+            yield takeLatest(types.authRequest, authorize),
+            yield takeLatest(types.addPath, addPath),
+            yield takeLatest(types.fetchUsers, fetchUsers),
+        ]
+    );
 }
 
 export default rootSaga;

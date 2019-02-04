@@ -59,7 +59,7 @@ const reducerMap = {
     [types.postQuestionSuccess]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: null }, models: { ...state.models, [payload._id]: payload }
     }),
-    [types.postQuestion]: (state, { payload }) => ({
+    [types.postQuestionError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }
     }),
 

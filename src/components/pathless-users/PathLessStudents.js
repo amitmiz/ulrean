@@ -26,24 +26,24 @@ class PathLessStudents extends React.Component {
         return (
             <div className={classes.root} >
                 <PageTitle >Pathless Students</PageTitle>
-       
+
                 {
                     users.length === 0 ? "No" :
 
-                            <List>
+                        <List>
 
-                                {users.map(user => (
-                                    <ListItem key={user._id}>
-                                        <UserAvatar user={user} />
-                                        <ListItemText>
-                                            {`${user.name} ${user.lastname}`}
-                                        </ListItemText>
-                                        <ListItemSecondaryAction>
-                                            <Button to={`/path-creation/${user._id}`} component={Link} variant="outlined" color="primary">create</Button>
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
-                                ))}
-                            </List>
+                            {users.map(user => (
+                                <ListItem key={user._id}>
+                                    <UserAvatar user={user} />
+                                    <ListItemText>
+                                        {user.name}  <strong>{user.lastname}</strong>
+                                    </ListItemText>
+                                    <ListItemSecondaryAction>
+                                        <Button to={`/path-creation/${user._id}`} component={Link} variant="outlined" color="primary">create</Button>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            ))}
+                        </List>
                 }
             </div>)
     }
