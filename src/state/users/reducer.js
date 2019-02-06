@@ -9,9 +9,16 @@ const ns = "user"
 
 export const loggedInUserSelector = state => state[ns].models[state[ns].loggedInUser];
 
+export const loggedInUserIdSelector = state => state[ns].loggedInUser;
+
 export const usersSelector = state => Object.keys(state[ns].models).map(key => state[ns].models[key]);
 
-export const userSelector = (state, id) => state[ns].models[id];
+export const userSelector = (state, id) => {
+    console.log("id: " + id);
+    console.log(state[ns].models[id])
+    return state[ns].models[id];
+
+}
 
 export const pathlessUsersSelector = state => usersSelector(state).filter(user => !user.path && user.type === "student")
 

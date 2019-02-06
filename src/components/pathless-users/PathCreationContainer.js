@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { courseSelector, coursesSelector } from '../../state/courses/reducer';
-import { addNewPath } from '../../state/predefiend-path/actions';
+import { addNewPath, fetchPaths } from '../../state/predefiend-path/actions';
 import { allPathsSelector } from '../../state/predefiend-path/reducer';
 import { userSelector } from '../../state/users/reducer';
 import { addPath } from '../../state/users/actions';
@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
     paths: generatePredefiendPaths(state)
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addPath, addNewPath }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchPaths, addPath, addNewPath }, dispatch)
 
 const generatePredefiendPaths = (state) => {
     const allPaths = allPathsSelector(state);
@@ -23,6 +23,9 @@ const generatePredefiendPaths = (state) => {
 
 class PathCreationContainer extends React.Component {
 
+    componentDidMount() {
+        this.props.fetchPaths();
+    }
 
     render() {
 

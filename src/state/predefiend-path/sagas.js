@@ -1,6 +1,25 @@
+import { normalize } from 'normalizr';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { ApiClient } from '../../api-client';
+import { predefiendPaths } from '../../api/schema';
+import { addEntities } from '../../redux/actions';
 import { addNewPathError, addNewPathSuccess, types } from './actions';
 
+
+
+function* fetchPaths(action) {
+
+    try {
+        const response = yield call(ApiClient.fetchPredefiendPaths);
+        const data = normalize(response.data, [predefiendPaths]);
+
+        yield put(addEntities(data.entities));
+    } catch (e) {
+        console.error(e)
+        // yield put(fetchFailed(e));
+        return;
+    }
+}
 
 
 
@@ -9,8 +28,8 @@ function* addNewPath(action) {
 
 
     try {
-        const path = yield call(mockServer, { courses, name })
-        yield put(addNewPathSuccess(path))
+        const {data} = yield call(ApiClient.addNewPath, { courses, name })
+        yield put(addNewPathSuccess(data.predefiendPath))
 
     } catch (error) {
         yield put(addNewPathError(error));
@@ -20,23 +39,11 @@ function* addNewPath(action) {
 }
 
 
-
-
-function mockServer({ courses, name = "test" }) {
-
-    let path = { _id: `${Math.random() * 1000000}`, courses, name }
-
-    return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(path), 200);
-    })
-}
-
-
-
-
-
-
 export default function* rootSaga() {
 
-    yield all([yield takeLatest(types.addNewPath, addNewPath)])
+    yield all(
+        [
+            yield takeLatest(types.addNewPath, addNewPath),
+            yield takeLatest("FETCH_PATHS", fetchPaths)
+        ])
 }

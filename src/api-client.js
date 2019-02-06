@@ -20,6 +20,18 @@ export class ApiClient {
         return Axios.get('http://localhost:8000/api/courses');
     }
 
+    static fetchPredefiendPaths() {
+        return Axios.get('http://localhost:8000/api/predefiend-pathes');
+    }
+
+    static addNewPath(path) {
+        return Axios.post('http://localhost:8000/api/predefiend-pathes', { predefiendPath: path }, { withCredentials: true });
+    }
+
+    static fetchQuestions(path) {
+        return Axios.get("http://localhost:8000/api/questions")
+    }
+
 
     static getAllUsers() {
         return users;

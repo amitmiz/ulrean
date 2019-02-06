@@ -14,7 +14,7 @@ import SideMenu from "./components/SideMenu";
 import TeacherDashbaord from "./components/teacher-dashbaord/TeacherDashbaord";
 import TeacherContactListContainer from "./components/teachers-cotanctlist/TeacherContactListContainer";
 import history from './history';
-import { loggedInUserSelector, usersApiSelector } from "./state/users/reducer";
+import { loggedInUserSelector, usersApiSelector, loggedInUserIdSelector } from "./state/users/reducer";
 import { fetchCurrentUser } from "./state/users/actions";
 
 import QuestionContainer from "./components/qa/QuestionContainer";
@@ -55,7 +55,7 @@ const style = theme => ({
 
 function mapStateToProps(state) {
   return {
-    user: loggedInUserSelector(state),
+    loggedInUser : loggedInUserIdSelector(state),
     isLoadingUser: usersApiSelector(state).isLoading
   }
 }
@@ -72,25 +72,25 @@ class App extends Component {
   }
 
   render() {
-    const { user, classes, isLoadingUser } = this.props;
+    const { user, classes, loggedInUser } = this.props;
 
     return (
       <React.Fragment>
 
-        {!isLoadingUser &&
-          <Router history={history}>
-            <div className={classes.appRoot} >
+
+        <Router history={history}>
+          <div className={classes.appRoot} >
 
 
-              <Switch>
-                <Route path="/login" component={LoginScreen} />
-                <PrivateRoute path="/incourse" authed={user} component={this.CourseLayout.bind(this)} />
-                <PrivateRoute path="/" authed={user} component={this.MainLayout.bind(this)} />
+            <Switch>
+              <Route path="/login" component={LoginScreen} />
+              <PrivateRoute path="/incourse" authed={loggedInUser} component={this.CourseLayout.bind(this)} />
+              <PrivateRoute path="/" authed={loggedInUser} component={this.MainLayout.bind(this)} />
 
-              </Switch>
-            </div>
-          </Router>
-        }
+            </Switch>
+          </div>
+        </Router>
+
       </React.Fragment >
 
     );

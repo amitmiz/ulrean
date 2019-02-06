@@ -8,7 +8,9 @@ export const types = {
 
     postReply: "QA/POST_REPLY",
     postReplySuccess: "QA/POST_REPLY_SUCCESS",
-    postReplyError: "QA/POST_REPLY_ERROR"
+    postReplyError: "QA/POST_REPLY_ERROR",
+
+    fetchQuestions: "FETCH_QUESTIONS"
 
 
 }
@@ -20,3 +22,6 @@ export const postQuestionError = createAction(types.postQuestionError)
 export const postReply = createAction(types.postReply)
 export const postReplySuccess = createAction(types.postReplySuccess)
 export const postReplyError = createAction(types.postReplyError)
+
+
+export const fetchQuestions = createAction(types.fetchQuestions);

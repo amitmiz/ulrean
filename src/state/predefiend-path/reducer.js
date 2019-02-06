@@ -1,43 +1,34 @@
 import { handleActions } from 'redux-actions';
 import { types } from './actions';
+import { ADD_ENTITIES } from '../../redux/actions';
 const ns = "paths"
 
 
 export const makePathSelector = pathId => state => state[ns].models[pathId];
-export const allPathsSelector = (state) => Object.keys(state[ns].models).map(key => state[ns].models[key]);
+export const allPathsSelector = (state) => {
+    return (state[ns].models && Object.keys(state[ns].models).map(key => state[ns].models[key])) || []
+};
 
 
 
 
 const initialState = {
     api: {},
-    models: {
-        "1212": {
-            _id: "1212",
-            name: "Frontend",
-            courses: ["1111", "12312"]
-        },
-        "1231":
-        {
-            _id: "1231",
-            name: "Backend",
-            courses: ["12312", "12312312"]
-        }
-
-
-    }
+    models: {}
 }
 
 
 const reducerMap = {
-
-
+    ["FETCH_PATHS"]: (state, { payload }) => ({ ...state, api: { isLoading: true } }),
+    [ADD_ENTITIES]: (state, { payload }) => ({
+        ...state, api: { isLoading: false }, models: { ...state.models, ...payload.predefiendPaths }
+    }),
     [types.addNewPath]: (state, { payload }) => ({
         ...state, api: { isLoading: true }
     }),
 
     [types.addNewPathSuccess]: (state, { payload }) => ({
-        ...state, models: { ...state.models, [payload._id]: payload }
+        ...state, models: { ...state.models, [payload.slug]: payload }
     }),
 
     [types.addNewPathError]: (state, { payload }) => ({

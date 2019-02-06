@@ -2,46 +2,15 @@
 import { handleActions } from 'redux-actions';
 
 import { types } from './actions'
+import { ADD_ENTITIES } from '../../redux/actions';
 
 const ns = "questions"
 
 const initialState = {
 
     api: {},
-    models: {
-        "asdasd": {
-            _id: "asdasd",
-            header: "Question1",
-            content: "asdasdasd",
-            author: "123123434",
-            date : new Date().toISOString(),
-            tags: ["pyhton", "sql"],
-            replies: [
-                {
-                    content: "asdasdasd",
-                    date : new Date().toISOString(),
-                    author: "123123434",
-                }
+    models: {}
 
-            ]
-        },
-        "aasddd": {
-            _id: "aasddd",
-            header: "Question1",
-            content: "asdasdasd",
-            date : new Date().toISOString(),
-            tags: ["pyhton", "sql"],
-            author: "123123434"
-        },
-        "asdasdddd": {
-            _id: "asdasdddd",
-            header: "Question1",
-            content: "asdasdasd",
-            date : new Date().toISOString(),
-            tags: ["pyhton", "sql"],
-            author: "123123434"
-        }
-    }
 }
 
 
@@ -53,6 +22,16 @@ const addReply = (models, reply, questionId) => ({ ...models, [questionId]: { ..
 
 
 const reducerMap = {
+    [types.fetchQuestions]: (state) => ({
+        ...state, api: { isLoading: true }
+    }),
+    [ADD_ENTITIES]: (state, { payload }) => ({
+        ...state, models: {
+            ...state.models,
+            ...payload.questions
+        }
+    }),
+
     [types.postQuestion]: (state) => ({
         ...state, api: { isLoading: true, error: null }
     }),

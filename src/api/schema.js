@@ -18,6 +18,17 @@ export const user = new schema.Entity('users', {}, { idAttribute: "_id" });
 
 export const usersList = [user];
 
+export const predefiendPath = new schema.Entity("predefiendPaths", {
+    courses: [courses],
+}, { idAttribute: "slug" })
+
+export const predefiendPaths = [predefiendPath]
+
+export const question = new schema.Entity("questions", {
+    author: user
+}, { idAttribute: "slug" })
+
+export const questions = [question]
 
 // export const label = new schema.Entity('labels');
 

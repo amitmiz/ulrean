@@ -39,6 +39,7 @@ class PathLessStudents extends React.Component {
                                         {user.name}  <strong>{user.lastname}</strong>
                                     </ListItemText>
                                     <ListItemSecondaryAction>
+                                        {console.log(`/path-creation/${user._id}`)}
                                         <Button to={`/path-creation/${user._id}`} component={Link} variant="outlined" color="primary">create</Button>
                                     </ListItemSecondaryAction>
                                 </ListItem>

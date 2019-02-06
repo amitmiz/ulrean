@@ -13,3 +13,5 @@ export const addNewPath = createAction(types.addNewPath);
 export const addNewPathSuccess = createAction(types.addNewPathSuccess);
 export const addNewPathError = createAction(types.addNewPathError);
 
+export const fetchPaths = createAction("FETCH_PATHS");
+

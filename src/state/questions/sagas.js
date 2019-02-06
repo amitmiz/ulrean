@@ -3,6 +3,24 @@ import { loggedInUserSelector } from '../users/reducer';
 import { postQuestionSuccess, postQuestionError, postReplySuccess, postReplyError } from './actions';
 
 import { types } from './actions';
+import { ApiClient } from '../../api-client';
+import { addEntities } from '../../redux/actions';
+import { normalize } from 'normalizr';
+import { questions } from '../../api/schema';
+
+
+export function* fetchQuestions() {
+
+
+    try {
+        const response = yield call(ApiClient.fetchQuestions)
+        const data = normalize(response.data, [questions]);
+
+        yield put(addEntities(data.entities));
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 export function* postQuestion(action) {
     const currentUser = yield select(loggedInUserSelector);
@@ -52,7 +70,7 @@ function serverMockNewQuestion({ content, header, tags, userId }) {
         content,
         tags: tags,
         author: userId,
-        replies : [],
+        replies: [],
         date: new Date().toISOString(),
     }
 
@@ -65,6 +83,7 @@ function serverMockNewQuestion({ content, header, tags, userId }) {
 
 export default function* rootSaga() {
     yield all([
+        takeLatest(types.fetchQuestions, fetchQuestions),
         takeLatest(types.postQuestion, postQuestion),
         takeLatest(types.postReply, postReply)
     ])
