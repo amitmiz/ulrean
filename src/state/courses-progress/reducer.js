@@ -1,5 +1,6 @@
 
 import { createAction, handleActions } from 'redux-actions';
+import { ADD_ENTITIES } from '../../redux/actions';
 
 const ns = "coursesProgress"
 
@@ -23,29 +24,8 @@ export const makeCurrentStageIndexSelector = courseId => state => state[ns].mode
 
 const initialState = {
     api: { isLoading: false, error: null },
-    models: {
-        "1111": {
-            course: "1111",
-            user: "123123",
-            started: new Date(),
-            completed: false,
-            stagesCompleted: 0
-        },
-        "12312": {
-            course: "12312",
-            user: "123123",
-            started: new Date(),
-            completed: false,
-            stagesCompleted: 0
-        },
-        "12312312": {
-            course: "12312312",
-            user: "123123",
-            started: new Date(),
-            completed: false,
-            stagesCompleted: 0
-        }
-    }
+    models: {}
+
 };
 
 
@@ -54,6 +34,9 @@ const updateProgress = (models, id, update) => {
 }
 
 const reducerMap = {
+    [ADD_ENTITIES]: (state, { payload }) => ({
+        ...state, models: { ...state.models, ...payload.coursesProgress }
+    }),
 
     [types.updateCourseProgressRequested]: (state, { payload }) => ({
         ...state, api: { isLoading: true, error: null }

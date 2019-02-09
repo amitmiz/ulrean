@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RadialChart } from 'react-vis';
+import { bindActionCreators } from 'redux';
 import { unhandledSubmissionsSelector } from '../../state/projects-submissions/reducer';
+import { fetchQuestions } from '../../state/questions/actions';
+import { questionsWithAutorSelector } from '../../state/selectors';
+import { fetchUsers } from "../../state/users/actions";
 import { pathlessUsersSelector } from '../../state/users/reducer';
 import DashboardCard from '../DashboardCard';
-import PageTitle from '../PageTitle'
+import PageTitle from '../PageTitle';
 import QuestionCard from '../qa/QuestionCard';
-import { questionsSelector } from '../../state/questions/reducer';
-import { questionsWithAutorSelector } from '../../state/selectors';
 
 
 
@@ -27,8 +29,16 @@ const mapStateToProps = (state) => ({
     questions: questionsWithAutorSelector(state)
 })
 
-@connect(mapStateToProps)
+const mapDispatchToProps = dispath => bindActionCreators({ fetchUsers, fetchQuestions }, dispath)
+
+@connect(mapStateToProps, mapDispatchToProps)
 class TeacherDashbaord extends React.Component {
+
+
+    componentDidMount() {
+        this.props.fetchUsers()
+        this.props.fetchQuestions()
+    }
 
     render() {
         const { classes, pathless, submissions, questions } = this.props;
@@ -92,7 +102,7 @@ class TeacherDashbaord extends React.Component {
 
                         <Grid item lg={6} xs={12}>
                             <DashboardCard title="recent question" >
-                                <QuestionCard question={questions[0]} />
+                               {questions.length > 0 ? <QuestionCard question={questions[0]} /> : "None"} 
                             </DashboardCard>
 
                         </Grid>

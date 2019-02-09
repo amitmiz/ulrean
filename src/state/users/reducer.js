@@ -29,7 +29,7 @@ export const usersApiSelector = state => state[ns].api;
 
 const initialState = {
     api: {
-        isLoading: false, error: null
+        isLoading: true, error: null
     },
     loggedInUser: null,
     addPathStatus: {
@@ -93,13 +93,13 @@ const reducerMap = {
         ...state, api: { isLoading: true, error: null }
     }),
     [types.authRequestSuccess]: (state, { payload }) => ({
-        ...state, models: { ...state.models, [payload._id]: payload }, loggedInUser: payload._id, token: payload.token, api: { isLoading: false, error: null }
+        ...state, loggedInUser: payload._id, token: payload.token, api: { isLoading: false, error: null }
     }),
     [types.authRequestError]: (state, { payload }) => (
         { ...state, api: { isLoading: false, error: payload } }),
     //types.fetchUsersSuccess
     [ADD_ENTITIES]: (state, { payload }) => ({
-        ...state, models: { ...state.models, ...payload.users }, api: { isLoading: false, error: null }
+        ...state, models: { ...state.models, ...payload.users }
     }),
     [types.fetchUsersError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }

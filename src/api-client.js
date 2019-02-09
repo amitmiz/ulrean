@@ -1,35 +1,39 @@
+/* eslint-disable no-restricted-globals */
 import { users, staticCoureses, predefinedPaths, teachers, questions, stages } from "./static-data";
 import Axios from "axios";
 
 export class ApiClient {
 
-
-    static login(username, password) {
-        return Axios.post('http://localhost:8000/api/users/login', { "user": { "username": username, "email": "amit123@gmail.com", password: password } }, { withCredentials: true });
+    static login(email, password) {
+        return Axios.post(`http://${location.hostname}:8000/api/users/login`, { "user": { email, password } }, { withCredentials: true });
     }
 
     static fetchCurrUser() {
-        return Axios.get('http://localhost:8000/api/user', { withCredentials: true });
+        return Axios.get(`http://${location.hostname}:8000/api/user`, { withCredentials: true });
     }
 
     static fetchUsers() {
-        return Axios.get('http://localhost:8000/api/');
+        return Axios.get(`http://${location.hostname}:8000/api/`);
     }
 
     static fetchCourses() {
-        return Axios.get('http://localhost:8000/api/courses');
+        return Axios.get(`http://${location.hostname}:8000/api/courses`);
     }
 
     static fetchPredefiendPaths() {
-        return Axios.get('http://localhost:8000/api/predefiend-pathes');
+        return Axios.get(`http://${location.hostname}:8000/api/predefiend-pathes`);
     }
 
     static addNewPath(path) {
-        return Axios.post('http://localhost:8000/api/predefiend-pathes', { predefiendPath: path }, { withCredentials: true });
+        return Axios.post(`http://${location.hostname}:8000/api/predefiend-pathes`, { predefiendPath: path }, { withCredentials: true });
     }
 
     static fetchQuestions(path) {
-        return Axios.get("http://localhost:8000/api/questions")
+        return Axios.get(`http://${location.hostname}:8000/api/questions`)
+    }
+
+    static updateProgress({ courseSlug, stage }) {
+        return Axios.put(`http://${location.hostname}:8000/api/progress/${courseSlug}`, { courseProgress : {stagesCompleted: stage} },{withCredentials : true})
     }
 
 

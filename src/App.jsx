@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Route, Router, Switch } from "react-router-dom";
+import { Route, Router, Switch ,Redirect} from "react-router-dom";
 import CoursersPathContainer from "./components/coursers-path/CoursersPathContainer";
 import InCourseContainer from "./components/in-course/InCourseContainer";
 import LoginScreen from "./components/LoginScreen";
@@ -55,7 +55,7 @@ const style = theme => ({
 
 function mapStateToProps(state) {
   return {
-    loggedInUser : loggedInUserIdSelector(state),
+    loggedInUser: loggedInUserIdSelector(state),
     isLoadingUser: usersApiSelector(state).isLoading
   }
 }
@@ -72,13 +72,17 @@ class App extends Component {
   }
 
   render() {
-    const { user, classes, loggedInUser } = this.props;
+    const { user, classes, loggedInUser, isLoadingUser } = this.props;
+    console.log(isLoadingUser)
 
     return (
+
+
+
+
       <React.Fragment>
-
-
-        <Router history={history}>
+        {isLoadingUser}
+        {!isLoadingUser && <Router history={history}>
           <div className={classes.appRoot} >
 
 
@@ -87,11 +91,15 @@ class App extends Component {
               <PrivateRoute path="/incourse" authed={loggedInUser} component={this.CourseLayout.bind(this)} />
               <PrivateRoute path="/" authed={loggedInUser} component={this.MainLayout.bind(this)} />
 
+
             </Switch>
           </div>
         </Router>
+        }
+
 
       </React.Fragment >
+
 
     );
 
@@ -126,6 +134,7 @@ class App extends Component {
             <Route path="/stages/:id" component={StageContainer} />
             <Route path="/teacher-contact" component={TeacherContactListContainer} />
             <Route path="/question/:questionId" component={QuestionContainer} />
+            <Redirect to="/dashboard" />
           </Switch>
         </div>
       </React.Fragment>

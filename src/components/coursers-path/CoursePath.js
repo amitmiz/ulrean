@@ -110,7 +110,7 @@ class CoursePath extends React.Component {
 
                                             <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                                                 <CardContent>
-                                                    <CourseTasks course={currentCourse} courseProgress={progress[currentCourse._id]} />
+                                                    <CourseTasks course={currentCourse} courseProgress={progress[currentCourse.slug]} />
                                                 </CardContent>
                                             </Collapse>
 

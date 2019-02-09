@@ -3,30 +3,35 @@ import { stageMetaSelector } from '../stage-proccessor';
 import { types as stageTypes } from '../stage-proccessor';
 import { makeCourseCompletionProgressSelector, updateCourseProgressError, updateCourseProgressRequested, updateCourseProgressSuccess } from './reducer';
 import { makeCourseSelector } from '../courses/reducer'
+import { ApiClient } from '../../api-client';
+
+
+
+
+
 
 function* updateCourseProgression() {
-    const { _id, courseId } = yield select(stageMetaSelector);
+
+    const { slug, courseId } = yield select(stageMetaSelector);
     const courseSelector = makeCourseSelector(courseId);
 
     const course = yield select(courseSelector)
 
-    const stageIndex = course.stages.findIndex(stageId => stageId === _id);
+    const stageIndex = course.stages.findIndex(stageId => stageId === slug);
 
 
     const courseCompletionProgressSelector = makeCourseCompletionProgressSelector(courseId);
     const progress = yield select(courseCompletionProgressSelector);
-    debugger;
     if (progress.stagesCompleted < stageIndex + 1) {
 
-        yield put(updateCourseProgressRequested(course._id));
+        yield put(updateCourseProgressRequested(course.slug));
         try {
-            // TODO API SHIT
-            const newProgress = yield call(mockServerSide, course, progress, stageIndex);
-            debugger
 
-            yield put(updateCourseProgressSuccess({ course: course._id, newProgress: { ...newProgress } }))
+            const {data} = yield call(ApiClient.updateProgress, { courseSlug: course.slug, stage: progress.stagesCompleted + 1 });
+
+            yield put(updateCourseProgressSuccess({ course: course.slug, newProgress: { ...data.courseProgress } }))
         } catch (error) {
-            debugger;
+
             yield put(updateCourseProgressError(error));
         }
     }

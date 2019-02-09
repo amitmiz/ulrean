@@ -8,12 +8,13 @@ export const makePathSelector = pathId => state => state[ns].models[pathId];
 export const allPathsSelector = (state) => {
     return (state[ns].models && Object.keys(state[ns].models).map(key => state[ns].models[key])) || []
 };
+export const pathsApiSeletor = state => state[ns].api
 
 
 
 
 const initialState = {
-    api: {},
+    api: { isLoading: false, error: null },
     models: {}
 }
 

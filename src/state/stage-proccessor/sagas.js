@@ -11,6 +11,7 @@ function* mountStage(action) {
       
         const {
             _id,
+            slug,
             files,
             title,
             tests,
@@ -22,8 +23,8 @@ function* mountStage(action) {
 
         // should only dispatch one action!
         const mountingProccess = [
-            put(updateStageMeta({ title, stageType, _id, courseId: course._id, template, required })),
-            put(mountStageSuccess(_id))
+            put(updateStageMeta({ title, stageType, slug, courseId: course.slug, template, required })),
+            put(mountStageSuccess(slug))
         ]
 
         if (files) {

@@ -1,11 +1,11 @@
 import { normalize } from 'normalizr';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { ApiClient } from '../../api-client';
-import { usersList } from '../../api/schema';
+import { usersList, user as userSchema } from '../../api/schema';
 import history from '../../history';
 import { addEntities } from '../../redux/actions';
 import { types } from './action-types';
-import { addPathError, addPathRequested, addPathSuccess, authRequestError, authRequestSuccess } from './actions';
+import { addPathError, addPathRequested, addPathSuccess, authRequestError, authRequestSuccess, fetchCurrentUser } from './actions';
 
 
 function* fetchLoggedUser() {
@@ -16,9 +16,19 @@ function* fetchLoggedUser() {
 
 
         console.log(user);
+
+        const data = normalize(user.data.user, userSchema)
+
+        console.log(data)
+
+        yield put(addEntities(data.entities));
         yield put(authRequestSuccess(user.data.user))
-        history.push('/');
+
     } catch (error) {
+        console.error("error")
+
+
+
         yield put(authRequestError(error))
     }
 
@@ -29,12 +39,15 @@ function* fetchLoggedUser() {
 function* authorize({ payload }) {
 
     try {
-        const user = yield call(ApiClient.login, payload.user, payload.password);
+        const user = yield call(ApiClient.login, payload.email, payload.password);
 
 
 
         console.log(user);
-        yield put(authRequestSuccess(user.data.user))
+      //  yield put(authRequestSuccess(user.data.user))
+
+        yield put(fetchCurrentUser())
+
         history.push('/');
     } catch (error) {
         yield put(authRequestError(error))
@@ -52,7 +65,7 @@ function* addPath(action) {
     try {
 
         yield put(addPathSuccess({ userId, path }))
-
+        
     } catch (error) {
         yield put(addPathError(error))
     }

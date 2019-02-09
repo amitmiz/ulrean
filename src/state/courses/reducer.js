@@ -42,7 +42,7 @@ export const coursesSelector = (state) => toArray(state[ns].models);
 const reducerMap = {
 
     ["ADD_ENTITIES"]: (state, { payload }) => ({
-        ...state, models: payload.courses
+        ...state, models: { ...state.models, ...payload.courses }
     })
 
 };

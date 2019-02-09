@@ -111,9 +111,8 @@ class SideMenuComponent extends Component {
 
                 <Divider />
                 <List>
-
-                    <SideMenuLink text="Course Path" to="/path" onClick={this.handleDrawerClose} icon={LibraryBooks} />
                     <SideMenuLink text="Dashbaord" to="/dashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
+                    <SideMenuLink text="Course Path" to="/path" onClick={this.handleDrawerClose} icon={LibraryBooks} />
                     <SideMenuLink text="TDashbaord" to="/tdashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
                     <SideMenuLink text="Pathless" to="/pathless" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
                     <SideMenuLink text="Submissions" to="/new-submissions" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />

@@ -6,6 +6,9 @@ import { courseSelector, coursesSelector, makeCourseSelector } from "./courses/r
 import { stageSelector } from "./stages/reducer";
 import { questionsSelector } from "./questions/reducer";
 import { unhandledSubmissionsSelector } from "./projects-submissions/reducer";
+import { normalize } from "normalizr";
+
+import {predefiendPath } from "../api/schema"
 
 export const pathStatsSelector = createSelector(
     [
@@ -20,9 +23,9 @@ export const pathStatsSelector = createSelector(
 
         const lastCourse = path.courses[(maxCompletedCourseIndex + 1) % path.courses.length]
 
-        const lastStageIndex = progress[lastCourse._id].stagesCompleted;
+        const lastStageIndex = progress[lastCourse.slug].stagesCompleted;
 
-        const lastStage = lastCourse.stages[lastStageIndex];
+        const lastStage = lastCourse.stages[lastStageIndex ];
 
         return { currentUser, path, progress, maxCompletedCourseIndex, lastCourse, lastStage }
     }
@@ -61,19 +64,21 @@ function generatePathToView(state) {
 
     if (id) {
         const path = makePathSelector(id)(state);
-        const denormalizedPath = { ...path };
-        denormalizedPath.courses = denormalizedPath.courses.map(courseId => courseSelector(courseId, state))
-        denormalizedPath.courses = denormalizedPath.courses.map(course => ({ ...course, stages: course.stages.map(stageId => stageSelector(stageId, state)) }));
+        if (path) {
+            const denormalizedPath = { ...path };
+            denormalizedPath.courses = denormalizedPath.courses.map(courseId => courseSelector(courseId, state))
+            denormalizedPath.courses = denormalizedPath.courses.map(course => ({ ...course, stages: course.stages.map(stageId => stageSelector(stageId, state)) }));
 
-        return denormalizedPath;
-    } else {
-        return null;
+            return denormalizedPath;
+        }
     }
+    return null;
+
 }
 
 
 
 function lastCompletedCourse(courses, progress) {
-    let completedCourses = courses.map(course => progress[course._id].completed);
+    let completedCourses = courses.map(course => progress[course.slug].completed);
     return completedCourses.lastIndexOf(true)
 }

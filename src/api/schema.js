@@ -14,15 +14,17 @@ export const courses = new schema.Entity(
 export const coursesList = [courses]
 
 
-export const user = new schema.Entity('users', {}, { idAttribute: "_id" });
-
-export const usersList = [user];
+export const progress = new schema.Entity("coursesProgress", {}, { idAttribute: "course" })
 
 export const predefiendPath = new schema.Entity("predefiendPaths", {
     courses: [courses],
 }, { idAttribute: "slug" })
 
 export const predefiendPaths = [predefiendPath]
+
+export const user = new schema.Entity('users', { path: predefiendPath, progress : [progress] }, { idAttribute: "_id" });
+
+export const usersList = [user];
 
 export const question = new schema.Entity("questions", {
     author: user

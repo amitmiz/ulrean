@@ -90,7 +90,7 @@ class VerticalLinearStepper extends React.Component {
 
 
         return (
-            <Step key={course._id}>
+            <Step key={course.slug}>
                 <StepLabel>{course.header}</StepLabel>
                 <StepContent>
                     <Typography>{course.subheader}</Typography>

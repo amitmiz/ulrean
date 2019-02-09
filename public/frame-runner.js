@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // on new stacks
     const results = from(tests).pipe(
       switchMap(function runOneTest({ text, testString }) {
+        debugger
         const newTest = { text, testString };
         let test;
         let __result;

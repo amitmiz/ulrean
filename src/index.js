@@ -8,7 +8,9 @@ import './index.css';
 import { createStore } from './redux/createStore';
 import * as serviceWorker from './serviceWorker';
 import Helmet from "react-helmet";
+import Axios from "axios";
 
+Axios.defaults = {withCredentials : true}
 
 function Container() {
     return (<React.Fragment>

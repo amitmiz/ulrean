@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { authRequest } from '../state/users/actions';
 import { bindActionCreators } from 'redux';
 
-const style = {
+const style = theme => ({
     root: {
         flex: 1,
         display: "flex",
@@ -19,12 +19,13 @@ const style = {
         width: "20%",
         height: "300px",
         marginTop: "40px",
-        padding: '20px'
+        padding: '20px',
+        [theme.breakpoints.down('md')]: { width: "100%", height: "100%", marginTop: "0", }
     },
     loginButton: {
         marginTop: '10px'
     }
-}
+})
 
 const mapStateToProps = () => ({})
 const mapDispatchToProps = (dispatch) => {
@@ -38,7 +39,7 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: '',
+            email: '',
             password: ''
         }
 
@@ -53,9 +54,9 @@ class LoginScreen extends Component {
     }
 
     handleOnSubmit(event) {
-        const { user, password } = this.state;
 
-        this.props.authRequest({ user, password });
+
+        this.props.authRequest(this.state);
 
         event.preventDefault();
 
@@ -89,11 +90,11 @@ class LoginScreen extends Component {
 
 
                             <TextField fullWidth={true}
-                                id="user"
-                                label="User Name"
+                                id="email"
+                                label="Email"
                                 // className={classes.textField}
                                 value={this.state.user}
-                                onChange={this.handleChange('user')}
+                                onChange={this.handleChange('email')}
                                 margin="normal"
 
                             />
@@ -120,7 +121,7 @@ class LoginScreen extends Component {
     }
 }
 
-const withStyle = connect(mapStateToProps, mapDispatchToProps)(withStyles(style)(LoginScreen));
+const withStyle = connect(mapStateToProps, mapDispatchToProps)(withStyles(style, { withTheme: true })(LoginScreen));
 
 withStyle.displayName = "LoginScreen"
 

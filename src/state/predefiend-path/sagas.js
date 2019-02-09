@@ -11,7 +11,7 @@ function* fetchPaths(action) {
 
     try {
         const response = yield call(ApiClient.fetchPredefiendPaths);
-        const data = normalize(response.data, [predefiendPaths]);
+        const data = normalize(response.data.predefiendPaths, predefiendPaths);
 
         yield put(addEntities(data.entities));
     } catch (e) {

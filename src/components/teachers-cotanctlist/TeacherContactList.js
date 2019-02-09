@@ -26,8 +26,7 @@ class TeacherContactList extends React.Component {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Name</TableCell>
-                                <TableCell>Phone</TableCell>
-                                <TableCell >Actions</TableCell>
+                                <TableCell>Email</TableCell>
 
                             </TableRow>
                         </TableHead>
@@ -36,8 +35,7 @@ class TeacherContactList extends React.Component {
                                 return (
                                     <TableRow key={teacher._id}>
                                         <TableCell >{teacher.name}</TableCell>
-                                        <TableCell >{teacher.phone}</TableCell>
-                                        <TableCell >call</TableCell>
+                                        <TableCell >{teacher.email}</TableCell>
                                     </TableRow>
                                 );
                             })}

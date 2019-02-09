@@ -44,7 +44,7 @@ class PathStat extends React.PureComponent {
                     <Item>
                         <div>
                             <div><Typography variant="subtitle1"><strong>Current Course:</strong>{lastCourse.header}</Typography></div>
-                            <Button color="primary" variant="raised" component={Link} to={`/incourse/${lastCourse._id}/${lastStage._id}`}>Resume</Button>
+                            <Button color="primary" variant="raised" component={Link} to={`/incourse/${lastCourse.slug}/${lastStage.slug}`}>Resume</Button>
                         </div>
                     </Item>
                 </Container>

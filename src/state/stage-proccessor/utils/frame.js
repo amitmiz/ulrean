@@ -123,7 +123,6 @@ const buildProxyConsole = proxyLogger => ctx => {
 
 const writeTestDepsToDocument = frameReady => ctx => {
   const { sources, checkStagePayload } = ctx;
-  debugger;
   // add enzyme
   // TODO: do programatically
   // TODO: webpack lazyload this

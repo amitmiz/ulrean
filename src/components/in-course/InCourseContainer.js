@@ -44,7 +44,7 @@ const mapStateToProps = (state, ownProps) => {
 
     ], (course, stage, files, tests, output, progress, mountedStage, submissions) => {
 
-        const currentStageIndex = course.stages.findIndex(stageId => stageId === stage._id)
+        const currentStageIndex = course.stages.findIndex(stageId => stageId === stage.slug)
         const courseLength = course.stages.length;
         const canAccessNextExercise = (progress.stagesCompleted >= currentStageIndex + 1) && (course.stages.length > currentStageIndex + 1);
         return {
@@ -101,7 +101,7 @@ class InCourseContainer extends Component {
         const nextStage = course.stages[currentStageIndex + 1]
 
         if (nextStage) {
-            history.push(`/incourse/${course._id}/${nextStage}`)
+            history.push(`/incourse/${course.slug}/${nextStage}`)
         }
     }
 
@@ -109,7 +109,7 @@ class InCourseContainer extends Component {
         const { currentStageIndex, history, course } = this.props;
         const prevStage = course.stages[currentStageIndex - 1]
         if (prevStage) {
-            history.push(`/incourse/${course._id}/${prevStage}`)
+            history.push(`/incourse/${course.slug}/${prevStage}`)
         }
     }
 
