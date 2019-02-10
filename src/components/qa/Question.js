@@ -44,8 +44,8 @@ class Question extends React.Component {
         this.setState({ replyModalOpen: false })
     }
 
-    reply(reply) {
-        this.props.postReply({ questionId: this.props.question._id, content: reply.content })
+    reply(comment) {
+        this.props.postComment({ questionSlug: this.props.question.slug, content: comment.content })
         this.closeModel()
     }
 
@@ -91,7 +91,7 @@ class Question extends React.Component {
 
                 <Typography variant="h4"> Replies</Typography>
 
-                <Replies classes={classes} replies={question.replies} />
+                <Comments classes={classes} comments={question.comments} />
 
                 <ReplyDialog open={this.state.replyModalOpen} onClose={this.closeModel} onPost={this.reply} />
 
@@ -108,24 +108,24 @@ class Question extends React.Component {
 
 
 
-function Replies({ replies, classes }) {
+function Comments({ comments, classes }) {
     return (
-        replies.map((reply) => <Reply classes={classes} reply={reply} />)
+        comments.map((comment) => <Comment classes={classes} comment={comment} />)
     )
 }
 
 
 
-function Reply({ reply, classes }) {
+function Comment({ comment, classes }) {
     return (
         <Card className={classes.card}>
             <CardContent>
                 <div className={classes.cardContent} >
-                    <UserAvater user={reply.author} />
+                    <UserAvater user={comment.author} />
 
                     <div className={classes.questionContent} >
-                        <Typography>{`${reply.author.name} ${reply.author.lastname}`}</Typography>
-                        <div dangerouslySetInnerHTML={{ __html: reply.content }} ></div>
+                        <Typography>{`${comment.author.name} ${comment.author.lastname}`}</Typography>
+                        <div dangerouslySetInnerHTML={{ __html: comment.content }} ></div>
                     </div>
 
                 </div>

@@ -4,7 +4,7 @@ import { handleActions } from 'redux-actions';
 import { types } from './actions'
 import { ADD_ENTITIES } from '../../redux/actions';
 
-const ns = "questions"
+const ns = "comments"
 
 const initialState = {
 
@@ -14,11 +14,15 @@ const initialState = {
 }
 
 
+export const commentsSelector = state => Object.keys(state[ns].models).map(key => state[ns].models[key]);
+
+
+export const questionCommentsSelector = questionId => state => commentsSelector(state).filter(comment => comment.question === questionId);
 
 export const makeQuestionSelector = id => state => state[ns].models[id];
 export const questionsSelector = state => Object.keys(state[ns].models).map(key => state[ns].models[key])
 
-const addReply = (models, reply, questionId) => ({ ...models, [questionId]: { ...models[questionId], replies: [...models[questionId].replies, reply] } })
+const addComment = (models, reply, questionId) => ({ ...models, [questionId]: { ...models[questionId], replies: [...models[questionId].replies, reply] } })
 
 
 const reducerMap = {
@@ -28,17 +32,16 @@ const reducerMap = {
     [ADD_ENTITIES]: (state, { payload }) => ({
         ...state, models: {
             ...state.models,
-            ...payload.questions
+            ...payload.comments
         }
     }),
-
-    [types.postQuestion]: (state) => ({
+    [types.postComment]: (state) => ({
         ...state, api: { isLoading: true, error: null }
     }),
-    [types.postQuestionSuccess]: (state, { payload }) => ({
+    [types.postCommentSuccess]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: null }
     }),
-    [types.postQuestionError]: (state, { payload }) => ({
+    [types.postCommentError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }
     })
 

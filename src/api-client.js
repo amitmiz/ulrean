@@ -28,13 +28,28 @@ export class ApiClient {
         return Axios.post(`http://${location.hostname}:8000/api/predefiend-pathes`, { predefiendPath: path }, { withCredentials: true });
     }
 
-    static fetchQuestions(path) {
+    static fetchQuestions() {
         return Axios.get(`http://${location.hostname}:8000/api/questions`)
     }
 
-    static updateProgress({ courseSlug, stage }) {
-        return Axios.put(`http://${location.hostname}:8000/api/progress/${courseSlug}`, { courseProgress : {stagesCompleted: stage} },{withCredentials : true})
+    static fetchQuestion(slug) {
+        return Axios.get(`http://${location.hostname}:8000/api/questions/${slug}`)
     }
+
+
+    static postQuestion(question) {
+        return Axios.post(`http://${location.hostname}:8000/api/questions`, { question: question }, { withCredentials: true })
+    }
+
+    static postComment(questionSlug, reply) {
+        return Axios.post(`http://${location.hostname}:8000/api/questions/${questionSlug}/comments`, { comment: reply }, { withCredentials: true })
+    }
+
+    static updateProgress({ courseSlug, stage }) {
+        return Axios.put(`http://${location.hostname}:8000/api/progress/${courseSlug}`, { courseProgress: { stagesCompleted: stage } }, { withCredentials: true })
+    }
+
+
 
 
     static getAllUsers() {

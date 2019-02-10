@@ -1,12 +1,11 @@
-import { all, select, put, call, takeLatest } from 'redux-saga/effects'
-import { loggedInUserSelector } from '../users/reducer';
-import { postQuestionSuccess, postQuestionError, postReplySuccess, postReplyError } from './actions';
-
-import { types } from './actions';
-import { ApiClient } from '../../api-client';
-import { addEntities } from '../../redux/actions';
 import { normalize } from 'normalizr';
-import { questions } from '../../api/schema';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
+import { ApiClient } from '../../api-client';
+import { question, questions } from '../../api/schema';
+import { addEntities } from '../../redux/actions';
+import { loggedInUserSelector } from '../users/reducer';
+import { postQuestionError, postQuestionSuccess, postReplyError, postReplySuccess, types } from './actions';
+
 
 
 export function* fetchQuestions() {
@@ -22,61 +21,29 @@ export function* fetchQuestions() {
     }
 }
 
+export function* fetchQuestion(action) {
+    try {
+        const response = yield call(ApiClient.fetchQuestion, action.payload.slug)
+        const data = normalize(response.data, questions);
+        yield put(addEntities(data.entities));
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 export function* postQuestion(action) {
-    const currentUser = yield select(loggedInUserSelector);
     const { content, tags, header } = action.payload
 
     try {
-        const newQuestion = yield call(serverMockNewQuestion, { content, tags, header, userId: currentUser._id })
-        yield put(postQuestionSuccess(newQuestion))
+        const newQuestion = yield call(ApiClient.postQuestion, { content, tags, header })
+
+        let { entities } = normalize(newQuestion.data.question, question)
+        yield put(postQuestionSuccess())
+        yield put(addEntities(entities))
     } catch (error) {
         yield put(postQuestionError(error))
     }
 
-}
-
-export function* postReply(action) {
-    const currentUser = yield select(loggedInUserSelector);
-    const { content, questionId } = action.payload
-
-    try {
-        const reply = yield call(serverMockNewReply, { questionId, content, userId: currentUser._id })
-        yield put(postReplySuccess({ reply, questionId }))
-    } catch (error) {
-        yield put(postReplyError(error))
-    }
-
-}
-
-function serverMockNewReply({ content, userId, questionId }) {
-
-    const newR = {
-        content,
-        author: userId,
-        date: new Date().toISOString(),
-    }
-
-    return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(newR), 500)
-    })
-}
-
-
-function serverMockNewQuestion({ content, header, tags, userId }) {
-
-    const newQ = {
-        _id: `${Math.random() * 1000000}`,
-        header,
-        content,
-        tags: tags,
-        author: userId,
-        replies: [],
-        date: new Date().toISOString(),
-    }
-
-    return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(newQ), 500)
-    })
 }
 
 
@@ -85,6 +52,6 @@ export default function* rootSaga() {
     yield all([
         takeLatest(types.fetchQuestions, fetchQuestions),
         takeLatest(types.postQuestion, postQuestion),
-        takeLatest(types.postReply, postReply)
+        takeLatest(types.fetchQuestion, fetchQuestion)
     ])
 }

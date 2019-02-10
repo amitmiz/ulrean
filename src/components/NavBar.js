@@ -92,8 +92,8 @@ class NavBar extends Component {
                 <AppBar className={classes.appBar} position="fixed">
                     <Toolbar>
                         <div className={classes.grow}>
-                            <IconButton className={classnames(classes.menuIcon, isSideBarOpen && classes.menuIconRotated)}>
-                                <MenuIcon onClick={() => setSideBarOpen(!isSideBarOpen)} />
+                            <IconButton onClick={() => setSideBarOpen(!isSideBarOpen)} className={classnames(classes.menuIcon, isSideBarOpen && classes.menuIconRotated)}>
+                                <MenuIcon  />
                             </IconButton>
                             <Logo />
                             {/* <Link to="/"><img alt="ulrean" className={classes.logo} src="/logo.png"></img></Link> */}

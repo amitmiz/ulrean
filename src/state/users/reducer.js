@@ -99,7 +99,7 @@ const reducerMap = {
         { ...state, api: { isLoading: false, error: payload } }),
     //types.fetchUsersSuccess
     [ADD_ENTITIES]: (state, { payload }) => ({
-        ...state, models: { ...state.models, ...payload.users }
+        ...state, models: {  ...payload.users , ...state.models }
     }),
     [types.fetchUsersError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }

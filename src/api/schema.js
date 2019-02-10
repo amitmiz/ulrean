@@ -22,15 +22,21 @@ export const predefiendPath = new schema.Entity("predefiendPaths", {
 
 export const predefiendPaths = [predefiendPath]
 
-export const user = new schema.Entity('users', { path: predefiendPath, progress : [progress] }, { idAttribute: "_id" });
+export const user = new schema.Entity('users', { path: predefiendPath, progress: [progress] }, { idAttribute: "_id" });
 
 export const usersList = [user];
 
+export const comment = new schema.Entity("comments", { author: user }, { idAttribute: "_id" });
+
+export const comments = [comment]
+
 export const question = new schema.Entity("questions", {
-    author: user
+    author: user,
+    comments
 }, { idAttribute: "slug" })
 
 export const questions = [question]
+
 
 // export const label = new schema.Entity('labels');
 
