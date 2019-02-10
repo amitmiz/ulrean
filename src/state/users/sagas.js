@@ -44,7 +44,7 @@ function* authorize({ payload }) {
 
 
         console.log(user);
-      //  yield put(authRequestSuccess(user.data.user))
+        //  yield put(authRequestSuccess(user.data.user))
 
         yield put(fetchCurrentUser())
 
@@ -64,8 +64,11 @@ function* addPath(action) {
 
     try {
 
+        const x = yield call(ApiClient.updatePath, { userId, pathId: path })
+        debugger;
+
         yield put(addPathSuccess({ userId, path }))
-        
+
     } catch (error) {
         yield put(addPathError(error))
     }

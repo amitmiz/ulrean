@@ -49,6 +49,9 @@ export class ApiClient {
         return Axios.put(`http://${location.hostname}:8000/api/progress/${courseSlug}`, { courseProgress: { stagesCompleted: stage } }, { withCredentials: true })
     }
 
+    static updatePath({ userId, pathId }) {
+        return Axios.put(`http://${location.hostname}:8000/api/user/${userId}`, { user: { path: pathId } }, { withCredentials: true })
+    }
 
 
 
