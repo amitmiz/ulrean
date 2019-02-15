@@ -89,7 +89,7 @@ const reducerMap = {
     [types.authRequest]: (state) => ({
         ...state, api: { isLoading: true, error: null }
     }),
-    "FETCH_USER": (state) => ({
+    [types.fetchUser]: (state) => ({
         ...state, api: { isLoading: true, error: null }
     }),
     [types.authRequestSuccess]: (state, { payload }) => ({
@@ -99,7 +99,7 @@ const reducerMap = {
         { ...state, api: { isLoading: false, error: payload } }),
     //types.fetchUsersSuccess
     [ADD_ENTITIES]: (state, { payload }) => ({
-        ...state, models: {  ...payload.users , ...state.models }
+        ...state, models: { ...payload.users, ...state.models }
     }),
     [types.fetchUsersError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }
@@ -113,6 +113,9 @@ const reducerMap = {
     [types.addPathError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }
     }),
+    [types.logoutSuccess]: (state, { payload }) => ({
+        ...state, loggedInUser: null, token: null
+    })
 
 
 

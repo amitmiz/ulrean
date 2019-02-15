@@ -1,7 +1,12 @@
 import { withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Route, Router, Switch ,Redirect} from "react-router-dom";
+import { Redirect, Route, Router, Switch } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import CheckSubmissionContainer from "./components/check-submission/CheckSubmissionContainer";
+import CourseContainer from "./components/coureses/CourseContainer";
+import CoursesContainer from "./components/coureses/CoursesContainer";
+import StageContainer from "./components/coureses/StageContainer";
 import CoursersPathContainer from "./components/coursers-path/CoursersPathContainer";
 import InCourseContainer from "./components/in-course/InCourseContainer";
 import LoginScreen from "./components/LoginScreen";
@@ -9,23 +14,19 @@ import NavBar from "./components/NavBar";
 import PathCreationContainer from "./components/pathless-users/PathCreationContainer";
 import PathLessStudentsContainer from "./components/pathless-users/PathLessStudentsContainer";
 import PrivateRoute from './components/PrivateRoute';
+import SubmittedProjectsContainer from "./components/project-submissions/SubmittedProjectsContainer";
 import QAPageContainer from "./components/qa/QAPageContainer";
+import QuestionContainer from "./components/qa/QuestionContainer";
 import SideMenu from "./components/SideMenu";
+import StudentDashboard from "./components/student-dashbaord/StudentDashboard";
 import TeacherDashbaord from "./components/teacher-dashbaord/TeacherDashbaord";
 import TeacherContactListContainer from "./components/teachers-cotanctlist/TeacherContactListContainer";
-import history from './history';
-import { loggedInUserSelector, usersApiSelector, loggedInUserIdSelector } from "./state/users/reducer";
-import { fetchCurrentUser } from "./state/users/actions";
-
-import QuestionContainer from "./components/qa/QuestionContainer";
+import RegisterContainer from "./components/user-profile/RegisterContainer";
 import UserInfoContainer from "./components/user-profile/UserInfoContainer";
-import StudentDashboard from "./components/student-dashbaord/StudentDashboard";
-import CoursesContainer from "./components/coureses/CoursesContainer"
-import StageContainer from "./components/coureses/StageContainer";
-import CourseContainer from "./components/coureses/CourseContainer";
-import SubmittedProjectsContainer from "./components/project-submissions/SubmittedProjectsContainer";
-import CheckSubmissionContainer from "./components/check-submission/CheckSubmissionContainer";
-import { bindActionCreators } from "redux";
+import history from './history';
+import { fetchCurrentUser } from "./state/users/actions";
+import { loggedInUserIdSelector, usersApiSelector } from "./state/users/reducer";
+
 
 
 
@@ -88,6 +89,7 @@ class App extends Component {
 
             <Switch>
               <Route path="/login" component={LoginScreen} />
+              <Route path="/register" component={RegisterContainer} />
               <PrivateRoute path="/incourse" authed={loggedInUser} component={this.CourseLayout.bind(this)} />
               <PrivateRoute path="/" authed={loggedInUser} component={this.MainLayout.bind(this)} />
 

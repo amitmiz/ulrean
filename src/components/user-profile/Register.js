@@ -1,8 +1,7 @@
-import { Button, Card, CardActions, CardContent, CardHeader, withStyles, Divider, MenuItem } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardHeader, Divider, MenuItem, withStyles } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
-import React, { Component } from 'react';
-import UserAvatar from '../UserAvatar';
 import { TextField } from 'formik-material-ui';
+import React, { Component } from 'react';
 import PageTitle from '../PageTitle';
 
 const styles = {
@@ -18,7 +17,7 @@ const styles = {
 }
 
 
-class UserInfo extends Component {
+class Register extends Component {
 
 
 
@@ -27,12 +26,12 @@ class UserInfo extends Component {
         const { classes, user, onSave } = this.props;
         return (
             <div className={classes.root}>
-                <PageTitle>User Info</PageTitle>
+                <PageTitle>Register</PageTitle>
 
                 <Formik
                     initialValues={{ ...user, path: undefined }}
                     onSubmit={(values, { setSubmitting }) => {
-                        onSave({ userId: user._id, update: values });
+                        onSave({ user: values });
                         setTimeout(() => setSubmitting(false), 400);
                     }}
 
@@ -42,10 +41,37 @@ class UserInfo extends Component {
 
 
                             <Card className={classes.card}>
-                                <CardHeader avatar={<UserAvatar user={user} />} title="edit info" titleTypographyProps={{ variant: "h5" }} />
+                                <CardHeader title="Register" titleTypographyProps={{ variant: "h5" }} />
                                 <Divider />
                                 <CardContent>
                                     <div className={classes.container} >
+                                        <Field
+                                            component={TextField}
+                                            name="username"
+                                            label="User Name"
+                                            className={classes.textField}
+                                            margin="normal"
+                                            variant="outlined"
+                                        />
+                                        <Field
+                                            component={TextField}
+                                            name="email"
+                                            label="Email"
+                                            className={classes.textField}
+                                            margin="normal"
+                                            variant="outlined"
+                                        />
+
+                                        <Field
+                                            component={TextField}
+                                            type="password"
+
+                                            name="password"
+                                            label="Password"
+                                            className={classes.textField}
+                                            margin="normal"
+                                            variant="outlined"
+                                        />
                                         <Field
                                             component={TextField}
                                             name="name"
@@ -131,7 +157,7 @@ class UserInfo extends Component {
 }
 
 
-export default withStyles(styles)(UserInfo);
+export default withStyles(styles)(Register);
 
 
 

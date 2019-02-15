@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authRequest } from '../state/users/actions';
 import { bindActionCreators } from 'redux';
+import {Link} from 'react-router-dom'
 
 const style = theme => ({
     root: {
@@ -17,7 +18,7 @@ const style = theme => ({
     },
     loginForm: {
         width: "20%",
-        height: "300px",
+        height: "350px",
         marginTop: "40px",
         padding: '20px',
         [theme.breakpoints.down('md')]: { width: "100%", height: "100%", marginTop: "0", }
@@ -112,6 +113,12 @@ class LoginScreen extends Component {
                             <Button type="submit" className={classes.loginButton} color="primary" variant="contained" fullWidth>
                                 Login
                             </Button>
+
+                            <Button component={Link} to="/register" className={classes.loginButton} color="secondary" variant="contained" fullWidth>
+                                Register
+                            </Button>
+
+
                         </form>
                     </Grid>
 

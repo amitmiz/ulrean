@@ -13,6 +13,7 @@ import { bindActionCreators } from 'redux';
 import { setSideBarOpen } from '../state/ui/actions';
 import { sideBarOpenSelector } from '../state/ui/reducer';
 import { loggedInUserSelector } from '../state/users/reducer';
+import { logout} from '../state/users/actions'
 import { Logo } from './Logo';
 import UserAvatar from './UserAvatar';
 
@@ -51,7 +52,7 @@ const mapStateToProps = state => ({
     isSideBarOpen: sideBarOpenSelector(state)
 })
 
-const mapDistpachToProps = (dispatch) => bindActionCreators({ setSideBarOpen }, dispatch)
+const mapDistpachToProps = (dispatch) => bindActionCreators({ setSideBarOpen,logout }, dispatch)
 
 
 
@@ -66,7 +67,6 @@ class NavBar extends Component {
 
         this.handleMenuClose = this.handleMenuClose.bind(this)
         this.handleMenuOpen = this.handleMenuOpen.bind(this)
-
 
     }
 
@@ -85,7 +85,7 @@ class NavBar extends Component {
 
 
     render() {
-        const { classes, currentUser, isSideBarOpen, setSideBarOpen } = this.props;
+        const { classes, currentUser, isSideBarOpen, setSideBarOpen,logout } = this.props;
 
         return (
             <div className={classes.root}>
@@ -112,7 +112,7 @@ class NavBar extends Component {
                     onClose={this.handleMenuClose}
                 >
                     <MenuItem component={Link} to="/user" onClick={this.handleMenuClose}>My account</MenuItem>
-                    <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+                    <MenuItem onClick={logout}>Logout</MenuItem>
                 </Menu>
             </div >
         );

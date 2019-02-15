@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import { sideBarOpenSelector } from '../state/ui/reducer';
 import { setSideBarOpen } from '../state/ui/actions'
 import { bindActionCreators } from 'redux';
+import { loggedInUserSelector } from '../state/users/reducer';
 
 const drawerWidth = 200
 
@@ -67,7 +68,7 @@ const styles = theme => ({
 
 });
 
-const mapStateToProps = state => ({ isSideBarOpen: sideBarOpenSelector(state) });
+const mapStateToProps = state => ({ currentUser: loggedInUserSelector(state), isSideBarOpen: sideBarOpenSelector(state) });
 const mapDistpachToProps = (dispatch) => bindActionCreators({ setSideBarOpen }, dispatch)
 
 @connect(mapStateToProps, mapDistpachToProps, null, { pure: false })
@@ -94,7 +95,8 @@ class SideMenuComponent extends Component {
 
 
     render() {
-        const { classes, isSideBarOpen } = this.props;
+        const { classes, isSideBarOpen, currentUser } = this.props;
+        debugger
         return (
 
 
@@ -111,11 +113,11 @@ class SideMenuComponent extends Component {
 
                 <Divider />
                 <List>
-                    <SideMenuLink text="Dashbaord" to="/dashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
-                    <SideMenuLink text="Course Path" to="/path" onClick={this.handleDrawerClose} icon={LibraryBooks} />
-                    <SideMenuLink text="TDashbaord" to="/tdashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
-                    <SideMenuLink text="Pathless" to="/pathless" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
-                    <SideMenuLink text="Submissions" to="/new-submissions" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
+                    <SideMenuLink disabled={currentUser.type === "student" ? false : true}  text="Dashbaord" to="/dashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
+                    <SideMenuLink disabled={currentUser.path ? false : true} text="Course Path" to="/path" onClick={this.handleDrawerClose} icon={LibraryBooks} />
+                    <SideMenuLink disabled={currentUser.type === "teacher" ? false : true} text="TDashbaord" to="/tdashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
+                    <SideMenuLink disabled={currentUser.type ==="teacher" ? false : true}  text="Pathless" to="/pathless" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
+                    <SideMenuLink disabled={currentUser.type ==="teacher" ? false : true}  text="Submissions" to="/new-submissions" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
                     <SideMenuLink text="QA" to="/qa" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
                     <SideMenuLink text="Courses" to="/courses" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
                     <SideMenuLink text="Teachers" to="/teacher-contact" onClick={this.handleDrawerClose} icon={ContactsIcon} />
@@ -160,9 +162,9 @@ class SideMenuComponent extends Component {
 
 }
 
-function SideMenuLink({ to, text, onClick, icon }) {
+function SideMenuLink({ to, text, onClick, icon, disabled = false }) {
     const LinkIcon = icon
-    return (<ListItem button component={NavLink} to={to} onClick={onClick} >
+    return (<ListItem button component={NavLink} to={to} onClick={onClick} disabled={disabled}>
         <ListItemIcon>
             <LinkIcon />
         </ListItemIcon>

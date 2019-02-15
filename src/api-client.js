@@ -4,6 +4,10 @@ import Axios from "axios";
 
 export class ApiClient {
 
+    static register(user) {
+        return Axios.post(`http://${location.hostname}:8000/api/users`, { "user": user });
+    }
+
     static login(email, password) {
         return Axios.post(`http://${location.hostname}:8000/api/users/login`, { "user": { email, password } }, { withCredentials: true });
     }
@@ -52,6 +56,17 @@ export class ApiClient {
     static updatePath({ userId, pathId }) {
         return Axios.put(`http://${location.hostname}:8000/api/user/${userId}`, { user: { path: pathId } }, { withCredentials: true })
     }
+
+
+    static updateUser({ userId, update }) {
+        return Axios.put(`http://${location.hostname}:8000/api/user/${userId}`, { user: update }, { withCredentials: true })
+    }
+
+    static logout() {
+        return Axios.post(`http://${location.hostname}:8000/api/users/logout`, null, { withCredentials: true })
+    }
+
+
 
 
 
