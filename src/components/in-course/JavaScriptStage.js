@@ -46,11 +46,11 @@ class JavaScriptStage extends Component {
         const { classes, output, course, tests } = this.props
         return (
             <div className={classes.root} >
-                <Grid style={{ height: 'calc(100vh - 128px)' }} container direction={"row"} spacing={8}>
+                <Grid style={{ height: 'calc(100vh - 128px)', position: "relative" }} container direction={"row"} spacing={8}>
 
 
                     {/* Left */}
-                    <Grid item xs={12} lg={6} style={{ overflow: 'auto' }}>
+                    <Grid item xs={12} lg={6} style={{ overflow: 'auto', maxHeight: "100%" }}>
                         <StageInstructions course={course} tests={tests} stage={this.props.stage} />
                     </Grid>
 

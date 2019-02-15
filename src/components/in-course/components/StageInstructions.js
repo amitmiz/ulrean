@@ -10,6 +10,9 @@ import PropTypes from "prop-types";
 const styles = {
     expandedRoot: {
         flexDirection: "column"
+    },
+    learnRoot : {
+   
     }
 }
 
@@ -32,7 +35,7 @@ function StageInstructions(props) {
             <ExpansionPanelDetails className={classes.expandedRoot}>
                 {course && <Typography variant="subtitle1">  {course.header}</Typography>}
                 <Typography variant="h4">  {stage.title}</Typography>
-                <Typography component="div"> {stage.learn.map((learn, index) => <p key={index} dangerouslySetInnerHTML={{ __html: learn }} />)} </Typography>
+                <Typography component="div" className={classes.learnRoot}> {stage.learn.map((learn, index) => <p key={index} dangerouslySetInnerHTML={{ __html: learn }} />)} </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>
 

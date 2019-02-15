@@ -124,7 +124,7 @@ class InCourseContainer extends Component {
             {mountedStage ?
                 <React.Fragment>
                     <InCourseNav {...this.props} />
-                    <Stage {...this.props} />
+                    <Stage  {...this.props} />
                     <BottomNavBar {...this.props} onPrev={() => this.prev()} onNext={() => this.next()} />
                 </React.Fragment>
                 :
