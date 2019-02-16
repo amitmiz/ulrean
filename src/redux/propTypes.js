@@ -28,7 +28,7 @@ export const StageNode = PropTypes.shape({
     indexjs: FileType
   }),
   fields: PropTypes.shape({
-    slug: PropTypes.string,
+    _id: PropTypes.string,
     blockName: PropTypes.string
   }),
   guideUrl: PropTypes.string,

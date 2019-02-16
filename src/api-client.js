@@ -36,8 +36,8 @@ export class ApiClient {
         return Axios.get(`http://${location.hostname}:8000/api/questions`)
     }
 
-    static fetchQuestion(slug) {
-        return Axios.get(`http://${location.hostname}:8000/api/questions/${slug}`)
+    static fetchQuestion(_id) {
+        return Axios.get(`http://${location.hostname}:8000/api/questions/${_id}`)
     }
 
 
@@ -45,12 +45,12 @@ export class ApiClient {
         return Axios.post(`http://${location.hostname}:8000/api/questions`, { question: question }, { withCredentials: true })
     }
 
-    static postComment(questionSlug, reply) {
-        return Axios.post(`http://${location.hostname}:8000/api/questions/${questionSlug}/comments`, { comment: reply }, { withCredentials: true })
+    static postComment(question_id, reply) {
+        return Axios.post(`http://${location.hostname}:8000/api/questions/${question_id}/comments`, { comment: reply }, { withCredentials: true })
     }
 
-    static updateProgress({ courseSlug, stage }) {
-        return Axios.put(`http://${location.hostname}:8000/api/progress/${courseSlug}`, { courseProgress: { stagesCompleted: stage } }, { withCredentials: true })
+    static updateProgress({ course_id, stage }) {
+        return Axios.put(`http://${location.hostname}:8000/api/progress/${course_id}`, { courseProgress: { stagesCompleted: stage } }, { withCredentials: true })
     }
 
     static updatePath({ userId, pathId }) {
@@ -64,6 +64,19 @@ export class ApiClient {
 
     static logout() {
         return Axios.post(`http://${location.hostname}:8000/api/users/logout`, null, { withCredentials: true })
+    }
+
+    static fetchSubmissions() {
+        return Axios.get(`http://${location.hostname}:8000/api/submissions`, { withCredentials: true })
+    }
+
+
+    static fetchStageSubmissions(stage) {
+        return Axios.get(`http://${location.hostname}:8000/api/submissions/stage/${stage}`, { withCredentials: true })
+    }
+
+    static postSubmission(submission) {
+        return Axios.post(`http://${location.hostname}:8000/api/submissions`, { submission }, { withCredentials: true })
     }
 
 

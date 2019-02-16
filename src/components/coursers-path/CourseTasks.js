@@ -14,7 +14,7 @@ const CourseTasks = ({ course, courseProgress }) => {
         <div>
             <List >
                 {
-                    course.stages.map((stage, index) => <Task key={stage.slug} course={course} stage={stage} index={index} disabled={completed < index } />)
+                    course.stages.map((stage, index) => <Task key={stage._id} course={course} stage={stage} index={index} disabled={completed < index } />)
                 }
             </List>
         </div>
@@ -32,7 +32,7 @@ function Task({ course, stage, index, disabled }) {
             </ListItemAvatar>
             <ListItemText primary={stage.title} />
             <ListItemSecondaryAction>
-                <IconButton disabled={disabled} component={Link} to={`/incourse/${course.slug}/${stage.slug}`} >
+                <IconButton disabled={disabled} component={Link} to={`/incourse/${course._id}/${stage._id}`} >
                     <PlayIcon></PlayIcon>
                 </IconButton>
             </ListItemSecondaryAction>

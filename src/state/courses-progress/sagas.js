@@ -12,24 +12,24 @@ import { ApiClient } from '../../api-client';
 
 function* updateCourseProgression() {
 
-    const { slug, courseId } = yield select(stageMetaSelector);
+    const { _id, courseId } = yield select(stageMetaSelector);
     const courseSelector = makeCourseSelector(courseId);
 
     const course = yield select(courseSelector)
 
-    const stageIndex = course.stages.findIndex(stageId => stageId === slug);
+    const stageIndex = course.stages.findIndex(stageId => stageId === _id);
 
 
     const courseCompletionProgressSelector = makeCourseCompletionProgressSelector(courseId);
     const progress = yield select(courseCompletionProgressSelector);
     if (progress.stagesCompleted < stageIndex + 1) {
 
-        yield put(updateCourseProgressRequested(course.slug));
+        yield put(updateCourseProgressRequested(course._id));
         try {
 
-            const {data} = yield call(ApiClient.updateProgress, { courseSlug: course.slug, stage: progress.stagesCompleted + 1 });
+            const {data} = yield call(ApiClient.updateProgress, { course_id: course._id, stage: progress.stagesCompleted + 1 });
 
-            yield put(updateCourseProgressSuccess({ course: course.slug, newProgress: { ...data.courseProgress } }))
+            yield put(updateCourseProgressSuccess({ course: course._id, newProgress: { ...data.courseProgress } }))
         } catch (error) {
 
             yield put(updateCourseProgressError(error));

@@ -12,11 +12,11 @@ import { postCommentError, postCommentSuccess, types } from './actions';
 
 export function* postComment(action) {
     const currentUser = yield select(loggedInUserSelector);
-    const { content, questionSlug } = action.payload
+    const { content, question_id } = action.payload
 
     try {
 
-        const {data} = yield call(ApiClient.postComment, questionSlug, { content })
+        const {data} = yield call(ApiClient.postComment, question_id, { content })
         let {entities} = normalize(data.comment,comment)
 
         yield put(addEntities({comments : entities.comments}));

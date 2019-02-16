@@ -29,7 +29,7 @@ function mapQuestion(state, props) {
 class QuestionContainer extends React.Component {
 
     componentDidMount() {
-        this.props.fetchQuestion({ slug: this.props.match.params.questionId })
+        this.props.fetchQuestion({ _id: this.props.match.params.questionId })
     }
 
     render() {

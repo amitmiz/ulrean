@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, ListItemAvatar, ListItem, Avatar, ListItemText, ListItemSecondaryAction, IconButton, List, Paper } from '@material-ui/core';
+import { withStyles, ListItemAvatar, ListItem, Avatar, ListItemText, ListItemSecondaryAction, IconButton, List, Paper, Card } from '@material-ui/core';
 import PageTitle from '../PageTitle';
 import CourseInfo from '../CourseInfo';
 import Info from '@material-ui/icons/Info'
@@ -22,14 +22,19 @@ class Courses extends React.Component {
             <div className={classes.root} >
                 <PageTitle> Courses </PageTitle>
 
-                <List>
-                    {courses.map((course, index) =>
-                        <CourseListItem key={course._id} course={course} index={index} />
-                    )}
+                <Card>
 
 
-                </List>
 
+                    <List>
+                        {courses.map((course, index) =>
+                            <CourseListItem key={course._id} course={course} index={index} />
+                        )}
+
+
+                    </List>
+
+                </Card>
 
 
 
@@ -50,7 +55,7 @@ function CourseListItem({ course, index }) {
             </ListItemAvatar>
             <ListItemText primary={course.header} />
             <ListItemSecondaryAction>
-                <IconButton component={Link} to={`/courses/${course.slug}`}>
+                <IconButton component={Link} to={`/courses/${course._id}`}>
                     <Info />
                 </IconButton>
             </ListItemSecondaryAction>

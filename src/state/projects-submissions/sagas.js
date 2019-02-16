@@ -3,19 +3,23 @@ import { put, all, takeLatest, select, call } from 'redux-saga/effects';
 import { loggedInUserSelector } from '../users/reducer';
 import { submitProjectSuccess, submitProjectError } from './actions';
 import { currentMountedStage } from '../stage-proccessor';
+import { ApiClient } from '../../api-client';
+import { normalize } from 'normalizr';
+import { submission, submissions } from '../../api/schema'
+import { addEntities } from '../../redux/actions';
 
 
 
 function* submitProject(action) {
 
     const { gitLink } = action.payload;
-    const currentUser = yield select(loggedInUserSelector)
-    const stageId = yield select(currentMountedStage)
+    const stage = yield select(currentMountedStage)
 
     try {
-
-        const submission = yield call(serverMock, { userId: currentUser._id, gitLink, stageId })
-        yield put(submitProjectSuccess(submission))
+        const result = yield call(ApiClient.postSubmission, { gitLink, stage })
+        const { entities } = normalize(result.data.submission, submission)
+        yield put(addEntities(entities));
+        yield put(submitProjectSuccess(result))
 
     } catch (error) {
         yield put(submitProjectError(error))
@@ -35,6 +39,33 @@ function* reviewSubmission({ type, payload }) {
     } catch (error) {
         yield put(submitProjectError(error))
     }
+}
+
+function* fetchStageSubmissions({ type, payload }) {
+
+    const stage = yield select(currentMountedStage)
+
+    debugger;
+
+    const result = yield call(ApiClient.fetchStageSubmissions, stage)
+    const { entities } = normalize(result.data.submissions, submissions)
+
+    yield put(addEntities(entities));
+
+
+
+}
+
+function* fetchSubmissions({ type, payload }) {
+
+
+    const result = yield call(ApiClient.fetchSubmissions)
+    const { entities } = normalize(result.data.submissions, submissions)
+
+    yield put(addEntities(entities));
+
+
+
 }
 
 
@@ -73,11 +104,15 @@ const serverMockReviewSubmit = ({ teacher, comments, pass }) => {
 
 
 
+
+
 export default function* rootSaga() {
     yield all(
         [
+            takeLatest(types.fetchStageSubmissions, fetchStageSubmissions),
             takeLatest(types.submitProject, submitProject),
-            takeLatest(types.reviewSubmission, reviewSubmission)
+            takeLatest(types.reviewSubmission, reviewSubmission),
+            takeLatest(types.fetchSubmissions, fetchSubmissions)
         ]
     )
 }

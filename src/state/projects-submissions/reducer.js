@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { filter, toArray } from 'lodash';
 import { types } from './actions';
+import { ADD_ENTITIES } from '../../redux/actions';
 
 
 const ns = "projectsSubmissions"
@@ -11,41 +12,6 @@ const initialState = {
         error: null
     },
     models: {
-        "123123123123": {
-            _id: "123123123123",
-            stage: "123212",
-            user: "123123434",
-            gitLink: "https://gitush.com",
-            dateSubmited: "2018-12-07T18:02:00.611Z",
-            testResult: {
-                teacher: "123123",
-                comments: "asdsad",
-                date: "2018-12-07T18:02:00.611Z",
-                pass: false
-            }
-
-
-        },
-        "1231231231a23": {
-            _id: "1231231231a23",
-            stage: "123212222",
-            user: "123123434",
-            gitLink: "https://gitush.com",
-            dateSubmited: "2018-12-07T18:02:00.611Z",
-            testResult: {
-                teacher: "12314342312312",
-                comments: "",
-                date: "2018-12-07T18:02:00.611Z",
-                pass: false
-            }
-        },
-        "1234331231a23": {
-            _id: "1234331231a23",
-            stage: "123212222",
-            user: "123123434",
-            gitLink: "https://gitush.com",
-            dateSubmited: "2018-12-07T18:02:00.611Z"
-        }
     }
 
 
@@ -67,14 +33,18 @@ const addTestResult = (state, submissionId, testResult) => ({
 })
 
 const reducerMap = {
-    ["ADD_ENTITIES"]: (state, { payload }) => ({
-        ...state, models: payload.projectSubmission
+    [ADD_ENTITIES]: (state, { payload }) => ({
+        ...state, models: {
+            ...state.models,
+            ...payload.submissions
+        }
     }),
+
     [types.submitProject]: (state, { payload }) => ({
         ...state, api: { isLoading: true, error: null }
     }),
     [types.submitProjectSuccess]: (state, { payload }) => ({
-        ...state, api: { isLoading: false, error: null }, models: { ...state.models, [payload._id]: payload }
+        ...state, api: { isLoading: false, error: null }
     }),
     [types.submitProjectError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }
@@ -83,7 +53,7 @@ const reducerMap = {
         ...state, api: { isLoading: true, error: null }
     }),
     [types.reviewSubmissionSuccess]: (state, { payload }) => ({
-        ...state, api: { isLoading: false, error: null }, models: { ...state.models, [payload._id]: addTestResult(state, payload._id, payload.result) }
+        ...state, api: { isLoading: false, error: null }
     }),
     [types.reviewSubmissionError]: (state, { payload }) => ({
         ...state, api: { isLoading: false, error: payload }

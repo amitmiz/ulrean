@@ -98,7 +98,7 @@ class QAPage extends Component {
                                         button
 
                                         component={Link}
-                                        to={`/question/${question.slug}`}
+                                        to={`/question/${question._id}`}
                                     >
                                         <QuestionCard question={question} />
                                     </ListItem>

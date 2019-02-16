@@ -96,7 +96,6 @@ class SideMenuComponent extends Component {
 
     render() {
         const { classes, isSideBarOpen, currentUser } = this.props;
-        debugger
         return (
 
 

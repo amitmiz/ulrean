@@ -29,6 +29,10 @@ const propTypes = {
 
 class ProjectStage extends Component {
 
+    componentDidMount() {
+        this.props.fetchStageSubmissions();
+    }
+
     render() {
         const { classes, submissions, course, submitProject } = this.props
         const canSubmit = submissions.length === 0 || (submissions[submissions.length - 1].testResult && !submissions[submissions.length - 1].testResult.pass)
@@ -36,7 +40,7 @@ class ProjectStage extends Component {
 
         return (
             <div className={classes.root} >
-                <Grid style={{ height: 'calc(100vh - 128px)', justifyContent: 'center' }} container direction={"row"} spacing={8}>
+                <Grid style={{ height: 'calc(100vh - 128px)', justifyContent: 'center', position: "relative" }} container direction={"row"} spacing={8}>
 
 
                     {/* Left */}
@@ -47,7 +51,7 @@ class ProjectStage extends Component {
                                 <StageInstructions course={course} stage={this.props.stage} />
                             </Grid>
 
-                            <Grid item>
+                            <Grid >
                                 <Card>
                                     <CardHeader title="submission"></CardHeader>
                                     <CardContent >
@@ -60,7 +64,7 @@ class ProjectStage extends Component {
                     </Grid>
 
                     {/*Right */}
-                    <Grid item lg={2} xs={12}>
+                    <Grid item lg={2} xs={12} item style={{ maxHeight: "100%", overflow: 'auto' }}>
                         {(submissions && submissions.length > 0) ? submissions.map((sub, index) => <div className={classes.submissionCard} ><SubmissionCard index={index} submission={sub} key={sub._id} /></div>) : "No submissions yet"}
                     </Grid>
                 </Grid >

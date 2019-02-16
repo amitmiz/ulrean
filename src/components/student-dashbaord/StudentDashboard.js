@@ -28,7 +28,6 @@ class StudentDashbaord extends React.Component {
 
     render() {
         const { classes, currentUser } = this.props;
-        debugger
         return (
             <div className={classes.root} >
 

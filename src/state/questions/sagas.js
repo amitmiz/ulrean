@@ -23,7 +23,7 @@ export function* fetchQuestions() {
 
 export function* fetchQuestion(action) {
     try {
-        const response = yield call(ApiClient.fetchQuestion, action.payload.slug)
+        const response = yield call(ApiClient.fetchQuestion, action.payload._id)
         const data = normalize(response.data, questions);
         yield put(addEntities(data.entities));
     } catch (error) {

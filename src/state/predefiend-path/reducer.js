@@ -29,7 +29,7 @@ const reducerMap = {
     }),
 
     [types.addNewPathSuccess]: (state, { payload }) => ({
-        ...state, models: { ...state.models, [payload.slug]: payload }
+        ...state, models: { ...state.models, [payload._id]: payload }
     }),
 
     [types.addNewPathError]: (state, { payload }) => ({

@@ -23,7 +23,7 @@ export const pathStatsSelector = createSelector(
 
         const lastCourse = path.courses[(maxCompletedCourseIndex + 1) % path.courses.length]
 
-        const lastStageIndex = progress[lastCourse.slug].stagesCompleted;
+        const lastStageIndex = progress[lastCourse._id].stagesCompleted;
 
         const lastStage = lastCourse.stages[lastStageIndex ];
 
@@ -79,6 +79,6 @@ function generatePathToView(state) {
 
 
 function lastCompletedCourse(courses, progress) {
-    let completedCourses = courses.map(course => progress[course.slug].completed);
+    let completedCourses = courses.map(course => progress[course._id].completed);
     return completedCourses.lastIndexOf(true)
 }

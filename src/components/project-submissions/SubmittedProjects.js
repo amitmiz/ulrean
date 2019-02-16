@@ -1,6 +1,6 @@
 import React from 'react'
 import PageTitle from '../PageTitle';
-import { List, ListItem, ListItemText, ListItemSecondaryAction, Button, withStyles } from '@material-ui/core';
+import { List, ListItem, ListItemText, ListItemSecondaryAction, Button, withStyles, Card } from '@material-ui/core';
 import UserAvatar from '../UserAvatar';
 import { Link } from 'react-router-dom'
 
@@ -28,21 +28,22 @@ class SubmittedProjects extends React.Component {
 
             {
                 submissions.length === 0 ? "No" :
+                    <Card>
+                        <List>
 
-                    <List>
-
-                        {submissions.map(submission => (
-                            <ListItem key={submission._id}>
-                                <UserAvatar user={submission.user} />
-                                <ListItemText>
-                                    {submission.user.name}  <strong>{submission.user.lastname}</strong>
-                                </ListItemText>
-                                <ListItemSecondaryAction>
-                                    <Button to={`/check-submission/${submission._id}`} component={Link} variant="outlined" color="primary">check</Button>
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        ))}
-                    </List>
+                            {submissions.map(submission => (
+                                <ListItem key={submission._id}>
+                                    <UserAvatar user={submission.user} />
+                                    <ListItemText>
+                                        {submission.user.name}  <strong>{submission.user.lastname}</strong>
+                                    </ListItemText>
+                                    <ListItemSecondaryAction>
+                                        <Button to={`/check-submission/${submission._id}`} component={Link} variant="outlined" color="primary">check</Button>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Card>
             }
         </div>)
     }

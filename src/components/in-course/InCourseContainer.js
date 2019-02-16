@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 import { makeCourseSelector } from '../../state/courses/reducer';
 import { stageFilesSelector, stageTestsSelector, consoleOutputSelector, executeStage, updateFile, mountStage, currentMountedStage } from '../../state/stage-proccessor';
-import { submitProject } from '../../state/projects-submissions/actions';
+import { submitProject, fetchStageSubmissions } from '../../state/projects-submissions/actions';
 import { makeStageSelector } from '../../state/stages/reducer';
 import BottomNavBar from './components/BottomNavBar';
 import { loggedInUserSelector } from '../../state/users/reducer';
@@ -28,7 +28,7 @@ const mapStateToProps = (state, ownProps) => {
 
     // TODO : SHOULD NOT BE HERE
     const user = loggedInUserSelector(state);
-    const submissionsSelector = makeUserStageSubmissionsSelector({ stageId: ownProps.match.params.stageId, userId: user._id })
+    const submissionsSelector = makeUserStageSubmissionsSelector({ stage: ownProps.match.params.stageId, user: user._id })
 
 
     return createSelector([
@@ -44,7 +44,7 @@ const mapStateToProps = (state, ownProps) => {
 
     ], (course, stage, files, tests, output, progress, mountedStage, submissions) => {
 
-        const currentStageIndex = course.stages.findIndex(stageId => stageId === stage.slug)
+        const currentStageIndex = course.stages.findIndex(stageId => stageId === stage._id)
         const courseLength = course.stages.length;
         const canAccessNextExercise = (progress.stagesCompleted >= currentStageIndex + 1) && (course.stages.length > currentStageIndex + 1);
         return {
@@ -65,7 +65,7 @@ const mapStateToProps = (state, ownProps) => {
 
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({ mountStage, executeStage, updateFile, submitProject }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ mountStage, executeStage, updateFile, submitProject, fetchStageSubmissions }, dispatch);
 
 
 
@@ -81,9 +81,9 @@ class InCourseContainer extends Component {
 
 
     componentDidMount() {
-       // const { stageId, courseId } = this.props.match.params;
+        // const { stageId, courseId } = this.props.match.params;
 
-       const {stage,course} = this.props;
+        const { stage, course } = this.props;
 
         this.props.mountStage({ stage, course });
     }
@@ -91,7 +91,7 @@ class InCourseContainer extends Component {
     componentDidUpdate(prevProps) {
         const { stageId, courseId } = this.props.match.params;
         if (prevProps.match.params.stageId !== stageId) {
-            const {stage,course} = this.props;
+            const { stage, course } = this.props;
             this.props.mountStage({ stage, course });
         }
     }
@@ -101,7 +101,7 @@ class InCourseContainer extends Component {
         const nextStage = course.stages[currentStageIndex + 1]
 
         if (nextStage) {
-            history.push(`/incourse/${course.slug}/${nextStage}`)
+            history.push(`/incourse/${course._id}/${nextStage}`)
         }
     }
 
@@ -109,7 +109,7 @@ class InCourseContainer extends Component {
         const { currentStageIndex, history, course } = this.props;
         const prevStage = course.stages[currentStageIndex - 1]
         if (prevStage) {
-            history.push(`/incourse/${course.slug}/${prevStage}`)
+            history.push(`/incourse/${course._id}/${prevStage}`)
         }
     }
 

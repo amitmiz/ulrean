@@ -1,14 +1,14 @@
 import { schema } from 'normalizr';
 
 
-export const stage = new schema.Entity('stages', {}, { idAttribute: "slug" });
+export const stage = new schema.Entity('stages', {}, { idAttribute: "_id" });
 
 export const courses = new schema.Entity(
     'courses',
     {
         stages: [stage]
     },
-    { idAttribute: "slug" }
+    { idAttribute: "_id" }
 );
 
 export const coursesList = [courses]
@@ -18,7 +18,7 @@ export const progress = new schema.Entity("coursesProgress", {}, { idAttribute: 
 
 export const predefiendPath = new schema.Entity("predefiendPaths", {
     courses: [courses],
-}, { idAttribute: "slug" })
+}, { idAttribute: "_id" })
 
 export const predefiendPaths = [predefiendPath]
 
@@ -33,9 +33,16 @@ export const comments = [comment]
 export const question = new schema.Entity("questions", {
     author: user,
     comments
-}, { idAttribute: "slug" })
+}, { idAttribute: "_id" })
 
 export const questions = [question]
+
+export const submission = new schema.Entity("submissions", {
+    user,
+    stage
+}, { idAttribute: "_id" })
+
+export const submissions = [submission]
 
 
 // export const label = new schema.Entity('labels');

@@ -8,6 +8,9 @@ import Info from '@material-ui/icons/Info'
 const styles = {
     root: {
         flex: 1
+    },
+    cardRoot : {
+        padding: "10px"
     }
 }
 
@@ -22,26 +25,27 @@ class Course extends React.Component {
             <div className={classes.root} >
                 <PageTitle>{`Courses >  ${course.header}`}</PageTitle>
 
-                <Grid container direction="column" spacing="16">
+                <Card className={classes.cardRoot}>
+                    <Grid container direction="column" spacing="16">
 
-                    <Grid item>
-                        <Typography variant={"subtitle2"}>description</Typography>
-                        <p>{course.subheader}</p>
+                        <Grid item>
+                            <Typography variant={"subtitle2"}>description</Typography>
+                            <p>{course.subheader}</p>
 
+                        </Grid>
+
+                        <Grid item>
+
+                            <Typography variant={"subtitle2"}>stages</Typography>
+                            <List>
+                                {course.stages.map((stage, index) => <StageListItem stage={stage} index={index} />)}
+
+                            </List>
+
+
+                        </Grid>
                     </Grid>
-
-                    <Grid item>
-
-                        <Typography variant={"subtitle2"}>stages</Typography>
-                        <List>
-                            {course.stages.map((stage, index) => <StageListItem stage={stage} index={index} />)}
-
-                        </List>
-
-
-                    </Grid>
-                </Grid>
-
+                </Card>
 
             </div>)
 
@@ -60,7 +64,7 @@ function StageListItem({ stage, index }) {
             </ListItemAvatar>
             <ListItemText primary={stage.title} />
             <ListItemSecondaryAction>
-                <IconButton component={Link} to={`/stages/${stage.slug}`} >
+                <IconButton component={Link} to={`/stages/${stage._id}`} >
                     <Info />
                 </IconButton>
             </ListItemSecondaryAction>

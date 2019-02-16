@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import { unhandledSubmissionsSelector } from '../../state/projects-submissions/reducer';
 import { mapSubmission } from '../../state/selectors';
 import SubmittedProjects from './SubmittedProjects';
+import { bindActionCreators } from 'redux';
+
+import { fetchSubmissions } from '../../state/projects-submissions/actions'
+
 
 
 
@@ -18,8 +22,14 @@ const mapSubmissions = (state) => {
 
 };
 
-@connect(mapStateToProps)
+const mapDistachToProps = dispatch => bindActionCreators({ fetchSubmissions }, dispatch)
+
+@connect(mapStateToProps, mapDistachToProps)
 class SubmittedProjectsContainer extends React.Component {
+
+    componentDidMount() {
+        this.props.fetchSubmissions();
+    }
 
     render() {
         const { submissions } = this.props;

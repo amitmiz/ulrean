@@ -34,7 +34,7 @@ const SubmissionCard = ({ index = 0, classes, submission, extraSection }) => (
             <Typography component="div">
                 <section className={classes.row}>
                     <span className={classes.rowLabel}><strong>Date:</strong> </span>
-                    <span>{submission.dateSubmited}</span>
+                    <span>{new Date(submission.dateSubmitted).toLocaleString()}</span>
                 </section>
 
                 <section className={classes.row}>

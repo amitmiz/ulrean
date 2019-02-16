@@ -45,7 +45,7 @@ class Question extends React.Component {
     }
 
     reply(comment) {
-        this.props.postComment({ questionSlug: this.props.question.slug, content: comment.content })
+        this.props.postComment({ question_id: this.props.question._id, content: comment.content })
         this.closeModel()
     }
 

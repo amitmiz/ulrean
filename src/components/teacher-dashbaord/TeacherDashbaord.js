@@ -12,6 +12,7 @@ import { pathlessUsersSelector } from '../../state/users/reducer';
 import DashboardCard from '../DashboardCard';
 import PageTitle from '../PageTitle';
 import QuestionCard from '../qa/QuestionCard';
+import { fetchSubmissions } from '../../state/projects-submissions/actions'
 
 
 
@@ -25,11 +26,11 @@ const styles = theme => ({
 
 const mapStateToProps = (state) => ({
     pathless: pathlessUsersSelector(state),
-    submissions: unhandledSubmissionsSelector,
+    submissions: unhandledSubmissionsSelector(state),
     questions: questionsWithAutorSelector(state)
 })
 
-const mapDispatchToProps = dispath => bindActionCreators({ fetchUsers, fetchQuestions }, dispath)
+const mapDispatchToProps = dispath => bindActionCreators({ fetchUsers, fetchQuestions, fetchSubmissions }, dispath)
 
 @connect(mapStateToProps, mapDispatchToProps)
 class TeacherDashbaord extends React.Component {
@@ -38,6 +39,8 @@ class TeacherDashbaord extends React.Component {
     componentDidMount() {
         this.props.fetchUsers()
         this.props.fetchQuestions()
+        this.props.fetchSubmissions()
+
     }
 
     render() {
@@ -70,7 +73,7 @@ class TeacherDashbaord extends React.Component {
                         </Grid>
                         <Grid item lg={3} xs={12}>
                             <DashboardCard title="unanwserd questions" >
-                                <Typography variant="h3">{pathless.length}</Typography>
+                                <Typography variant="h3">{questions.length}</Typography>
                             </DashboardCard>
                         </Grid>
                     </DashboardRow>
@@ -102,7 +105,7 @@ class TeacherDashbaord extends React.Component {
 
                         <Grid item lg={6} xs={12}>
                             <DashboardCard title="recent question" >
-                               {questions.length > 0 ? <QuestionCard question={questions[0]} /> : "None"} 
+                                {questions.length > 0 ? <QuestionCard question={questions[0]} /> : "None"}
                             </DashboardCard>
 
                         </Grid>

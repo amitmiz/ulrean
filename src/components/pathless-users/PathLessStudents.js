@@ -1,4 +1,4 @@
-import { Button, List, ListItem, ListItemSecondaryAction, ListItemText, Typography, withStyles } from "@material-ui/core";
+import { Button, List, ListItem, ListItemSecondaryAction, ListItemText, Typography, withStyles, Card } from "@material-ui/core";
 import PropTypes from 'prop-types';
 import React from "react";
 import { Link } from 'react-router-dom';
@@ -30,21 +30,24 @@ class PathLessStudents extends React.Component {
                 {
                     users.length === 0 ? "No" :
 
-                        <List>
+                        <Card>
 
-                            {users.map(user => (
-                                <ListItem key={user._id}>
-                                    <UserAvatar user={user} />
-                                    <ListItemText>
-                                        {user.name}  <strong>{user.lastname}</strong>
-                                    </ListItemText>
-                                    <ListItemSecondaryAction>
-                                        {console.log(`/path-creation/${user._id}`)}
-                                        <Button to={`/path-creation/${user._id}`} component={Link} variant="outlined" color="primary">create</Button>
-                                    </ListItemSecondaryAction>
-                                </ListItem>
-                            ))}
-                        </List>
+                            <List>
+
+                                {users.map(user => (
+                                    <ListItem key={user._id}>
+                                        <UserAvatar user={user} />
+                                        <ListItemText>
+                                            {user.name}  <strong>{user.lastname}</strong>
+                                        </ListItemText>
+                                        <ListItemSecondaryAction>
+                                            {console.log(`/path-creation/${user._id}`)}
+                                            <Button to={`/path-creation/${user._id}`} component={Link} variant="outlined" color="primary">create</Button>
+                                        </ListItemSecondaryAction>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Card>
                 }
             </div>)
     }
