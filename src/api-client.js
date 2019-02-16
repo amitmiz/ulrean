@@ -79,6 +79,9 @@ export class ApiClient {
         return Axios.post(`http://${location.hostname}:8000/api/submissions`, { submission }, { withCredentials: true })
     }
 
+    static reviewSubmission(submissionsId, review) {
+        return Axios.put(`http://${location.hostname}:8000/api/submissions/${submissionsId}`, { submission: { testResult: review } },{withCredentials : true})
+    }
 
 
 

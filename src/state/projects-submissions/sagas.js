@@ -34,7 +34,9 @@ function* reviewSubmission({ type, payload }) {
     const currentUser = yield select(loggedInUserSelector)
     const submissionId = payload.submissionId
     try {
-        const result = yield call(serverMockReviewSubmit, { teacher: currentUser._id, comments: payload.comments, pass: payload.pass })
+        const result = yield call(ApiClient.reviewSubmission, submissionId, { teacher: currentUser._id, comments: payload.comments, pass: payload.pass })
+        const { entities } = normalize(result.data.submission, submission)
+        yield put(addEntities(entities));
         yield put(reviewSubmissionSuccess({ _id: submissionId, result }))
     } catch (error) {
         yield put(submitProjectError(error))

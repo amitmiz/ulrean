@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 import { makeCourseSelector } from '../../state/courses/reducer';
-import { stageFilesSelector, stageTestsSelector, consoleOutputSelector, executeStage, updateFile, mountStage, currentMountedStage } from '../../state/stage-proccessor';
+import { stageFilesSelector, stageTestsSelector, consoleOutputSelector, executeStage, updateFile, mountStage, currentMountedStage, stageComplete } from '../../state/stage-proccessor';
 import { submitProject, fetchStageSubmissions } from '../../state/projects-submissions/actions';
 import { makeStageSelector } from '../../state/stages/reducer';
 import BottomNavBar from './components/BottomNavBar';
@@ -45,8 +45,9 @@ const mapStateToProps = (state, ownProps) => {
     ], (course, stage, files, tests, output, progress, mountedStage, submissions) => {
 
         const currentStageIndex = course.stages.findIndex(stageId => stageId === stage._id)
+        const passed = submissions.findIndex(sub => sub.testResult.pass === true) != -1;
         const courseLength = course.stages.length;
-        const canAccessNextExercise = (progress.stagesCompleted >= currentStageIndex + 1) && (course.stages.length > currentStageIndex + 1);
+        const canAccessNextExercise = (progress.stagesCompleted >= currentStageIndex + 1) && (course.stages.length > currentStageIndex + 1) || passed;
         return {
             course,
             stage,
@@ -65,7 +66,7 @@ const mapStateToProps = (state, ownProps) => {
 
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({ mountStage, executeStage, updateFile, submitProject, fetchStageSubmissions }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ mountStage, executeStage, updateFile, submitProject, fetchStageSubmissions, stageComplete }, dispatch);
 
 
 
@@ -98,10 +99,14 @@ class InCourseContainer extends Component {
 
     next() {
         const { currentStageIndex, history, course } = this.props;
+
         const nextStage = course.stages[currentStageIndex + 1]
 
         if (nextStage) {
             history.push(`/incourse/${course._id}/${nextStage}`)
+        } else {
+            this.props.stageComplete();
+            history.push(`/path`)
         }
     }
 
