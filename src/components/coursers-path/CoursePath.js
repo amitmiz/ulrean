@@ -65,22 +65,18 @@ class CoursePath extends React.Component {
         const { courses } = userPath;
         const currentCourse = courses[this.state.currentStep];
 
-        const expandButton = <IconButton onClick={this.handleExpandClick} className={classnames(classes.expand, {
-            [classes.expandOpen]: this.state.expanded,
-        })} >
-            <ExpandMoreIcon />
-        </IconButton>
+        const expandButton =
+            <IconButton onClick={this.handleExpandClick} className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded,
+            })} >
+                <ExpandMoreIcon />
+            </IconButton>
 
         return (
-            <div  >
-
+            <div>
                 <Container direction={"column"} wrap="nowrap" spacing={16}>
-
                     <Item>
-
                         <PageTitle>{`The ${userPath.name} Path`}</PageTitle>
-
-
                     </Item>
 
                     <Item>
@@ -100,14 +96,10 @@ class CoursePath extends React.Component {
                                     <Item>
                                         <Card>
                                             <CourseInfo course={currentCourse} />
-
-
                                             <CardActions className={classes.actions} disableActionSpacing>
                                                 {expandButton}
                                             </CardActions>
-
                                             <Divider />
-
                                             <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                                                 <CardContent>
                                                     <CourseTasks course={currentCourse} courseProgress={progress[currentCourse._id]} />

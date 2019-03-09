@@ -87,11 +87,12 @@ export function buildBackendStage(state) {
   const {
     solution: { value: url }
   } = backendFormValuesSelector(state);
-  return combineLatest(of(frameRunner), of(jQuery)).pipe(
-    map(([frameRunner, jQuery]) => ({
-      build: jQuery + frameRunner,
-      sources: { url },
-      checkStagePayload: { solution: url }
-    }))
-  );
+  return combineLatest(of(frameRunner), of(jQuery))
+    .pipe(
+      map(([frameRunner, jQuery]) => ({
+        build: jQuery + frameRunner,
+        sources: { url },
+        checkStagePayload: { solution: url }
+      }))
+    );
 }

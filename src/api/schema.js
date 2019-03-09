@@ -1,5 +1,9 @@
 import { schema } from 'normalizr';
 
+/*
+    Declare normalizr schemas for correct data nornalization
+*/
+
 
 export const stage = new schema.Entity('stages', {}, { idAttribute: "_id" });
 

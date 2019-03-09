@@ -9,7 +9,7 @@ router.use('/tags', require('./tags'));
 router.use('/predefiend-pathes', require('./predefiendPathes'));
 router.use('/progress', require('./progress'));
 router.use('/submissions', require('./submissions'));
-
+router.use('/stats', require('./statistics'));
 
 router.use(function (err, req, res, next) {
   if (err.name === 'ValidationError') {

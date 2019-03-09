@@ -5,11 +5,9 @@ import { makeCourseCompletionProgressSelector, updateCourseProgressError, update
 import { makeCourseSelector } from '../courses/reducer'
 import { ApiClient } from '../../api-client';
 
-
-
-
-
-
+/**
+ * Called when user finish a stage (stageComplete action)
+ */
 function* updateCourseProgression() {
 
     const { _id, courseId } = yield select(stageMetaSelector);
@@ -27,7 +25,7 @@ function* updateCourseProgression() {
         yield put(updateCourseProgressRequested(course._id));
         try {
 
-            const {data} = yield call(ApiClient.updateProgress, { course_id: course._id, stage: progress.stagesCompleted + 1 });
+            const { data } = yield call(ApiClient.updateProgress, { course_id: course._id, stage: progress.stagesCompleted + 1 });
 
             yield put(updateCourseProgressSuccess({ course: course._id, newProgress: { ...data.courseProgress } }))
         } catch (error) {
@@ -36,13 +34,6 @@ function* updateCourseProgression() {
         }
     }
 }
-
-const mockServerSide = (course, progress, stageIndex) => {
-    let completed = (course.stages.length === stageIndex + 1) ? true : false
-
-    return { ...progress, stagesCompleted: stageIndex + 1, completed }
-}
-
 
 
 export default function* rootSaga() {

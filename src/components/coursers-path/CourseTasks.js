@@ -14,14 +14,14 @@ const CourseTasks = ({ course, courseProgress }) => {
         <div>
             <List >
                 {
-                    course.stages.map((stage, index) => <Task key={stage._id} course={course} stage={stage} index={index} disabled={completed < index } />)
+                    course.stages.map((stage, index) => <Task key={stage._id} course={course} stage={stage} index={index} completed={completed > index} disabled={completed < index} />)
                 }
             </List>
         </div>
     );
 }
 
-function Task({ course, stage, index, disabled }) {
+function Task({ course, stage, index, disabled, completed }) {
 
     return (
         <ListItem >
@@ -32,7 +32,7 @@ function Task({ course, stage, index, disabled }) {
             </ListItemAvatar>
             <ListItemText primary={stage.title} />
             <ListItemSecondaryAction>
-                <IconButton disabled={disabled} component={Link} to={`/incourse/${course._id}/${stage._id}`} >
+                <IconButton style={completed ? { color: "green" } : {}} disabled={disabled} component={Link} to={`/incourse/${course._id}/${stage._id}`} >
                     <PlayIcon></PlayIcon>
                 </IconButton>
             </ListItemSecondaryAction>

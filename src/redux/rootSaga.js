@@ -21,8 +21,6 @@ export default function* rootSaga() {
       questionsSaga(),
       coursesSaga(),
       commmentsSaga()
-
-
     ]
   );
 }

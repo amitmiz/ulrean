@@ -18,74 +18,32 @@ import JavaScriptStage from './JavaScriptStage';
 import "./components/test-frame.css"
 
 
-
 const mapStateToProps = (state, ownProps) => {
 
     const courseSelector = makeCourseSelector(ownProps.match.params.courseId)
     const stageSelector = makeStageSelector(ownProps.match.params.stageId)
     const courseProgressSelector = makeCourseCompletionProgressSelector(ownProps.match.params.courseId);
 
-
-    // TODO : SHOULD NOT BE HERE
     const user = loggedInUserSelector(state);
     const submissionsSelector = makeUserStageSubmissionsSelector({ stage: ownProps.match.params.stageId, user: user._id })
 
-
-    return createSelector([
-        courseSelector,
-        stageSelector,
-        stageFilesSelector,
-        stageTestsSelector,
-        consoleOutputSelector,
-        courseProgressSelector,
-        currentMountedStage,
-        submissionsSelector
-
-
-    ], (course, stage, files, tests, output, progress, mountedStage, submissions) => {
-
+    return createSelector([courseSelector, stageSelector, stageFilesSelector, stageTestsSelector, consoleOutputSelector, courseProgressSelector, currentMountedStage, submissionsSelector], (course, stage, files, tests, output, progress, mountedStage, submissions) => {
         const currentStageIndex = course.stages.findIndex(stageId => stageId === stage._id)
         const passed = submissions.findIndex(sub => sub.testResult.pass === true) != -1;
         const courseLength = course.stages.length;
         const canAccessNextExercise = (progress.stagesCompleted >= currentStageIndex + 1) && (course.stages.length > currentStageIndex + 1) || passed;
-        return {
-            course,
-            stage,
-            files,
-            tests,
-            output,
-            currentStageIndex,
-            courseLength,
-            canAccessNextExercise,
-            mountedStage,
-            submissions
-        }
+        return { course, stage, files, tests, output, currentStageIndex, courseLength, canAccessNextExercise, mountedStage, submissions }
 
     })(state)
 }
 
-
-
 const mapDispatchToProps = dispatch => bindActionCreators({ mountStage, executeStage, updateFile, submitProject, fetchStageSubmissions, stageComplete }, dispatch);
-
-
-
-
 
 class InCourseContainer extends Component {
 
-
-    constructor(props) {
-        super(props)
-    }
-
-
-
     componentDidMount() {
         // const { stageId, courseId } = this.props.match.params;
-
         const { stage, course } = this.props;
-
         this.props.mountStage({ stage, course });
     }
 
@@ -119,11 +77,9 @@ class InCourseContainer extends Component {
     }
 
 
-
     render() {
         const { tests, output, stage, course, mountedStage, submissions } = this.props;
         const Stage = getStageComponent(stage.stageType);
-
 
         return (<React.Fragment >
             {mountedStage ?
@@ -137,11 +93,7 @@ class InCourseContainer extends Component {
             }
 
         </React.Fragment>)
-
-
     }
-
-
 }
 
 const getStageComponent = (type) => {

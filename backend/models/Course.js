@@ -6,11 +6,10 @@ var User = mongoose.model('User');
 var CourseSchema = new mongoose.Schema({
   slug: { type: String, lowercase: true, unique: true },
   header: String,
-
+  recomendedTimeToFinish: { type: Number, required: true, default: 7 },
   subheader: String,
-  favoritesCount: { type: Number, default: 0 },
   tags: [{ type: String }],
-  stages:[ { type: mongoose.Schema.Types.ObjectId, ref: 'Stage' }]
+  stages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stage' }]
 
 }, { timestamps: true });
 
@@ -29,7 +28,7 @@ CourseSchema.methods.slugify = function () {
 };
 
 
-CourseSchema.methods.toJSONFor = function(user){
+CourseSchema.methods.toJSONFor = function (user) {
   return {
     _id: this._id,
     slug: this.slug,

@@ -43,17 +43,23 @@ class VerticalLinearStepper extends React.Component {
         this.generateStep = this.generateStep.bind(this)
     }
 
+    componentDidMount() {
+        const { max } = this.props;
+        this.setState({ activeStep: max })
+    }
+
     render() {
         const { classes, courses } = this.props;
         const steps = courses
         const { activeStep } = this.state;
+
 
         return (
             <div className={classes.root}>
                 <Stepper activeStep={activeStep} orientation="vertical">
                     {steps.map(this.generateStep.bind(this))}
                 </Stepper>
-                {activeStep === steps.length && this.generateFinishSection(classes)}
+                {/* {activeStep === steps.length - 1 && this.generateFinishSection(classes)} */}
             </div>
         );
     }
@@ -86,6 +92,7 @@ class VerticalLinearStepper extends React.Component {
         const steps = courses;
         const { activeStep } = this.state;
 
+
         const canGoToNextCourse = activeStep <= max
 
 
@@ -102,9 +109,15 @@ class VerticalLinearStepper extends React.Component {
                             <Button disabled={activeStep === 0} onClick={this.handleBack} className={classes.button} >
                                 Back
                             </Button>
-                            <Button disabled={!canGoToNextCourse} variant="contained" color="primary" onClick={this.handleNext} className={classes.button} >
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
+                            {activeStep !== steps.length - 1 ?
+                                <Button disabled={!canGoToNextCourse} variant="contained" color="primary" onClick={this.handleNext} className={classes.button} >
+                                    Next
+                                </Button>
+                                :
+                                <Button disabled variant="contained" color="primary" onClick={() => alert("Yay")} className={classes.button} >
+                                    Finished!
+                                </Button>
+                            }
                         </div>
                     </div>
                 </StepContent>
@@ -130,6 +143,7 @@ class VerticalLinearStepper extends React.Component {
 
 VerticalLinearStepper.propTypes = {
     classes: PropTypes.object,
+    max: PropTypes.number,
     onStepChanged: PropTypes.func,
     courses: PropTypes.array
 };

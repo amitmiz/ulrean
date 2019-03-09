@@ -3,22 +3,14 @@ import { createFiles, initTests, updateStageMeta } from '.';
 import { mountStageError, mountStageSuccess, stageComplete, types } from './';
 import { types as stageProccessorTypes } from './index';
 
-
+/**
+ * When User Enters a stage
+ */
 function* mountStage(action) {
     const { stage, course } = action.payload;
 
     try {
-      
-        const {
-            _id,
-            files,
-            title,
-            tests,
-            stageType,
-            template,
-            required
-        } = stage;
-
+        const { _id, files, title, tests, stageType, template, required } = stage;
 
         // should only dispatch one action!
         const mountingProccess = [
@@ -33,11 +25,7 @@ function* mountStage(action) {
         if (tests) {
             mountingProccess.unshift(put(initTests(tests)))
         }
-
-
         yield all(mountingProccess);
-
-
 
     } catch (error) {
         yield put(mountStageError(error));
@@ -45,7 +33,9 @@ function* mountStage(action) {
 }
 
 
-
+/**
+ * Called when user click on 'Run'
+ */
 function* checkStageTestsResults(action) {
     const tests = action.payload;
 
@@ -56,13 +46,12 @@ function* checkStageTestsResults(action) {
     }
 }
 
-function* submitStage(action) {
-
-}
-
 
 function* rootSaga() {
-    yield all[yield takeLatest(types.mountStage, mountStage), yield takeLatest(stageProccessorTypes.updateTests, checkStageTestsResults)];
+    yield all[
+        yield takeLatest(types.mountStage, mountStage),
+        yield takeLatest(stageProccessorTypes.updateTests, checkStageTestsResults)
+    ];
 }
 
 export default rootSaga;

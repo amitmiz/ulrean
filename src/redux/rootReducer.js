@@ -12,7 +12,7 @@ import coursesProgressReducer from '../state/courses-progress/reducer';
 import projectSubmissionsReducer from '../state/projects-submissions/reducer';
 import uiRedcuer from '../state/ui/reducer';
 
-
+// key = state slice name!
 export default combineReducers({
   stage,
   user: userReducer,
