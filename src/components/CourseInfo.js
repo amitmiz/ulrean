@@ -7,6 +7,7 @@ import React from 'react';
 const styles = theme => ({
     root: {
         display: 'flex',
+        alignItems: 'flex-start',
         padding: '5px',
         [theme.breakpoints.down('sm')]: { flexDirection: 'column', },
     },
@@ -34,24 +35,32 @@ const styles = theme => ({
 });
 
 
-function MediaControlCard({ classes, course }) {
+function MediaControlCard({ classes, course, courseProgress }) {
 
-    const courseTags = <div className={classes.tags}>
-        {course.tags.map((tag, index) => <Chip className={classes.chip} label={tag} key={index} />
-        )}
-    </div>
+
 
     return (
         <div className={classes.root}  >
             <img src="/test.svg" />
+
             <div className={classes.details}>
 
                 <div className={classes.content}>
                     <Typography component="h6" variant="h6"> {course.header} </Typography>
-                    <Typography variant="subtitle1" color="textSecondary"> {course.subheader}</Typography>
+                    <Typography variant="subheading" color="textSecondary"> {course.subheader}</Typography>
+                    {/* <div> <strong>Completed: </strong> {courseProgress && courseProgress.completed ? "Yes" : "Not yet"}</div> */}
+                    <div> <strong>Recomended Time To Finish: </strong>  {course.recomendedTimeToFinish && course.recomendedTimeToFinish}</div>
+                    <div><strong>Started :</strong> {courseProgress && courseProgress.started ? new Date(courseProgress.started).toLocaleDateString() : "Not yet"}</div>
+                    <div><strong>Due Date: </strong>  {courseProgress && courseProgress.dueDate ? new Date(courseProgress.dueDate).toLocaleDateString() : "Not yet"}</div>
+
+
+                    <div className={classes.tags}>
+                        {course.tags.map((tag, index) => <Chip className={classes.chip} label={tag} key={index} />
+                        )}
+                    </div>
+
                 </div>
 
-                {courseTags}
             </div>
         </div>
     );
@@ -64,7 +73,8 @@ MediaControlCard.propTypes = {
     theme: PropTypes.object.isRequired,
     header: PropTypes.string.isRequired,
     subheader: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(String).isRequired
+    tags: PropTypes.arrayOf(String).isRequired,
+    courseProgress: PropTypes.object
 };
 
 const CourseInfo = withStyles(styles, { withTheme: true })(MediaControlCard);

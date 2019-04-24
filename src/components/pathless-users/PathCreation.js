@@ -2,7 +2,7 @@ import { Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, Icon
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import React from 'react';
-import CourseSelectionDialog from './CourseSelectionDialog';
+import CourseSelectionDialog from '../content-creation/StageSelectionDialog';
 import PathCreationDialog from './PathCreationDialog';
 import PageTitle from '../PageTitle'
 
@@ -136,7 +136,7 @@ class PathCreation extends React.Component {
                                     <CardHeader title="Course Path Preview" titleTypographyProps={{ variant: "h6" }} />
                                     <Divider variant="middle" />
                                     <CardContent>
-                                        <this.PathPreview />
+                                        <this.PathPrev iew />
                                     </CardContent>
                                     <CardActions>
                                         <Button

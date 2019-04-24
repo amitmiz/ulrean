@@ -1,8 +1,7 @@
-import { Avatar, Card, CardContent, CardHeader, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, withStyles, Divider, Grid, Typography, Paper } from '@material-ui/core';
+import { Card, Grid, List, Typography, withStyles } from '@material-ui/core';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PageTitle from '../PageTitle';
-import Info from '@material-ui/icons/Info'
+import { StageListItem } from './StageListItem';
 
 
 const styles = {
@@ -51,25 +50,6 @@ class Course extends React.Component {
 
     }
 
-}
-
-function StageListItem({ stage, index }) {
-
-    return (
-        <ListItem >
-            <ListItemAvatar>
-                <Avatar>
-                    {++index}
-                </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={stage.title} />
-            <ListItemSecondaryAction>
-                <IconButton component={Link} to={`/stages/${stage._id}`} >
-                    <Info />
-                </IconButton>
-            </ListItemSecondaryAction>
-        </ListItem>
-    )
 }
 
 export default withStyles(styles)(Course)

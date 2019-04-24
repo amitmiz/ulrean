@@ -1,18 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { mappedCoursesSelector } from '../../state/selectors';
-import { fetchCourses } from '../../state/courses/reducer'
+import { fetchCourses,  } from '../../state/courses/reducer';
+import { fetchStages  } from '../../state/stages/reducer';
 import Courses from './Courses';
+
 import { bindActionCreators } from 'redux';
+import { stagesSelector } from '../../state/stages/reducer';
+import { loggedInUserSelector } from '../../state/users/reducer';
 
 
 
 const mapStateToProps = state => ({
-    courses: mappedCoursesSelector(state)
+    courses: mappedCoursesSelector(state),
+    stages: stagesSelector(state),
+    currentUser: loggedInUserSelector(state)
 })
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({ fetchCourses }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchCourses,fetchStages }, dispatch);
 
 
 
@@ -23,11 +29,12 @@ class CoursesContainer extends React.Component {
 
 
     componentDidMount() {
-        this.props.fetchCourses()
+        this.props.fetchCourses();
+        this.props.fetchStages();
     }
 
     render() {
-        return (<Courses courses={this.props.courses} />)
+        return (<Courses {...this.props} />)
     }
 
 }

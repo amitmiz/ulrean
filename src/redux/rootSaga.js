@@ -9,6 +9,7 @@ import submissionSaga from '../state/projects-submissions/sagas';
 import questionsSaga from '../state/questions/sagas';
 import coursesSaga from '../state/courses/sagas';
 import commmentsSaga from '../state/comments/sagas';
+import stagesSaga from '../state/stages/sagas';
 
 export default function* rootSaga() {
   yield all(
@@ -20,7 +21,8 @@ export default function* rootSaga() {
       submissionSaga(),
       questionsSaga(),
       coursesSaga(),
-      commmentsSaga()
+      commmentsSaga(),
+      stagesSaga()
     ]
   );
 }

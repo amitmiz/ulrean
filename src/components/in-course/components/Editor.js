@@ -13,7 +13,7 @@ const propTypes = {
   ext: PropTypes.string,
   fileKey: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  darkTheme :  PropTypes.bool
+  darkTheme: PropTypes.bool
 };
 
 
@@ -120,7 +120,8 @@ class Editor extends PureComponent {
   }
 
   render() {
-    const { contents, ext, fileKey,darkTheme } = this.props;
+    const { contents, ext, fileKey, darkTheme } = this.props;
+
     const editorTheme = darkTheme ? 'vs-dark' : 'vs-custom'
     return (
       <div className='classic-editor editor'>

@@ -40,36 +40,29 @@ router.get('/', auth.optional, function (req, res, next) {
     query.tags = { "$in": [req.query.tag] };
   }
 
-  Promise.all([
-    req.query.author ? User.findOne({ username: req.query.author }) : null,
+  return Promise.all([
+    PredefiendPath.find(query)
+      .populate({
+        path: 'courses', populate: {
+          path: 'stages',
+          model: 'Stage'
+        }
+      })
+      .limit(Number(limit))
+      .skip(Number(offset))
+      .sort({ createdAt: 'desc' })
+      .exec(),
+    PredefiendPath.count(query).exec(),
+    req.payload ? User.findById(req.payload.id) : null,
   ]).then(function (results) {
-    var author = results[0];
-    return Promise.all([
-      PredefiendPath.find(query)
-        .populate({
-          path: 'courses', populate: {
-            path: 'stages',
-            model: 'Stage'
-          }
-        })
-        .limit(Number(limit))
-        .skip(Number(offset))
-        .sort({ createdAt: 'desc' })
-        .exec(),
-      PredefiendPath.count(query).exec(),
-      req.payload ? User.findById(req.payload.id) : null,
-    ]).then(function (results) {
-      var PredefiendPaths = results[0];
-      var PredefiendPathsCount = results[1];
-      var user = results[2];
+    var PredefiendPaths = results[0];
+    var PredefiendPathsCount = results[1];
+    var user = results[2];
 
-      return res.json({
-        predefiendPaths: PredefiendPaths.map(function (predefiendPath) {
-          return predefiendPath.toJSONFor(user);
-        }),
-        predefiendPathsCount: PredefiendPathsCount
-      });
-    });
+    return res.json({
+      predefiendPaths: PredefiendPaths.map((x) => x.toJSONFor(user)),
+      predefiendPathsCount: PredefiendPathsCount
+    })
   }).catch(next);
 });
 

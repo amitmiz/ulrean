@@ -48,7 +48,7 @@ StageSchema.methods.toJSONFor = function (user) {
     slug: this.slug,
     title: this.title,
     stageType: this.stageType,
-    test: this.test,
+    tests: this.tests,
     template: this.template,
     required: this.required,
     files: this.files,

@@ -24,6 +24,18 @@ export class ApiClient {
         return Axios.get(`http://${location.hostname}:8000/api/courses`);
     }
 
+    static addCourse(course) {
+        return Axios.post(`http://${location.hostname}:8000/api/courses`, { course }, { withCredentials: true });
+    }
+
+    static fetchStages() {
+        return Axios.get(`http://${location.hostname}:8000/api/stages`);
+    }
+
+    static addStage(stage) {
+        return Axios.post(`http://${location.hostname}:8000/api/stages`, { stage }, { withCredentials: true });
+    }
+
     static fetchPredefiendPaths() {
         return Axios.get(`http://${location.hostname}:8000/api/predefiend-pathes`);
     }
@@ -80,63 +92,31 @@ export class ApiClient {
     }
 
     static reviewSubmission(submissionsId, review) {
-        return Axios.put(`http://${location.hostname}:8000/api/submissions/${submissionsId}`, { submission: { testResult: review } },{withCredentials : true})
+        return Axios.put(`http://${location.hostname}:8000/api/submissions/${submissionsId}`, { submission: { testResult: review } }, { withCredentials: true })
     }
 
 
 
 
-    static getAllUsers() {
-        return users;
+    /** Statistics */
+
+
+    static usersPastDueDate() {
+        return Axios.get(`http://${location.hostname}:8000/api/stats/usersPastDueDate`).then(x => x.data)
     }
 
 
-
-    static getAllCourses() {
-        return staticCoureses;
+    static unfinishedPathUsers() {
+        return Axios.get(`http://${location.hostname}:8000/api/stats/unfinishedPathUsers`).then(x => x.data)
     }
 
-    static getCourseById(id) {
-        return staticCoureses.filter(course => course._id == id)[0]
+
+    static finishedPathUsers() {
+        return Axios.get(`http://${location.hostname}:8000/api/stats/finishedPathUsers`).then(x => x.data)
     }
 
-    static getUserById(id) {
-        return users.filter(user => user._id == id)[0]
-    }
-
-    static getUserPath(id) {
-        return ApiClient.getUserById(id).path
-    }
-
-    // should be in a store
-    static updateUsersPath(userId, path) {
-        ApiClient.getUserById(userId).path = path;
-
-
-    }
-
-    static getPathlessStudents() {
-        return ApiClient.getStudents().filter(user => !user.path)
-    }
-
-    static getPredefiendPaths() {
-        return predefinedPaths;
-    }
-
-    static getTeachers() {
-        return ApiClient.getAllUsers().filter(user => user.type === "teacher")
-    }
-
-    static getStudents() {
-        return ApiClient.getAllUsers().filter(user => user.type === "student")
-    }
-
-    static getRecentQuestions() {
-        return questions;
-    }
-
-    static getStageById(id) {
-        return stages.filter(stage => stage.id == id)[0];
+    static teacherStundentsCount() {
+        return Axios.get(`http://${location.hostname}:8000/api/stats/teacherStundentsCount`).then(x => x.data)
     }
 }
 

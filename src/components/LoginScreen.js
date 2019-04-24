@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authRequest } from '../state/users/actions';
 import { bindActionCreators } from 'redux';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const style = theme => ({
     root: {
@@ -103,6 +103,7 @@ class LoginScreen extends Component {
                             <TextField fullWidth
                                 id="password"
                                 label="Password"
+                                type="password"
                                 // className={classes.textField}
                                 value={this.state.password}
                                 onChange={this.handleChange('password')}

@@ -6,6 +6,7 @@ import { schema } from 'normalizr';
 
 
 export const stage = new schema.Entity('stages', {}, { idAttribute: "_id" });
+export const stages = [stage];
 
 export const courses = new schema.Entity(
     'courses',

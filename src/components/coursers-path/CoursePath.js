@@ -50,10 +50,14 @@ class CoursePath extends React.Component {
 
     }
     render() {
-        const { classes, userPath } = this.props;
-        return (
-            userPath ? this.rednerCoursePath() : this.renderNoCoursePath()
-        )
+        const {  userPath } = this.props;
+        const { courses } = userPath;
+        const currentCourse = courses[this.state.currentStep];
+        if (currentCourse) {
+            return (userPath ? this.rednerCoursePath() : this.renderNoCoursePath())
+        } else {
+            return "Yay finished path!"
+        }
     }
 
     handleExpandClick = () => this.setState(prevState => ({ expanded: !prevState.expanded }));
@@ -95,7 +99,7 @@ class CoursePath extends React.Component {
 
                                     <Item>
                                         <Card>
-                                            <CourseInfo course={currentCourse} />
+                                            <CourseInfo course={currentCourse} courseProgress={progress[currentCourse._id]} />
                                             <CardActions className={classes.actions} disableActionSpacing>
                                                 {expandButton}
                                             </CardActions>
@@ -108,6 +112,7 @@ class CoursePath extends React.Component {
 
                                         </Card>
                                     </Item>
+
 
 
                                 </Container>

@@ -23,7 +23,10 @@ import TeacherDashbaord from "./components/teacher-dashbaord/TeacherDashbaord";
 import TeacherContactListContainer from "./components/teachers-cotanctlist/TeacherContactListContainer";
 import RegisterContainer from "./components/user-profile/RegisterContainer";
 import UserInfoContainer from "./components/user-profile/UserInfoContainer";
+import CourseCreationContainer from './components/content-creation/CourseCreationContainer';
+import StageCreationContainer from './components/content-creation/StageCreationContainer';
 import history from './history';
+
 import { fetchCurrentUser } from "./state/users/actions";
 import { loggedInUserIdSelector, usersApiSelector } from "./state/users/reducer";
 
@@ -127,6 +130,8 @@ class App extends Component {
             <Route path="/course" component={InCourseContainer} />
             <Route path="/pathless" component={PathLessStudentsContainer} />
             <Route path="/path-creation/:id" component={PathCreationContainer} />
+            <Route path="/course-creation" component={CourseCreationContainer} />
+            <Route path="/stage-creation" component={StageCreationContainer} />
             <Route path="/tdashboard" component={TeacherDashbaord} />
             <Route path="/dashboard" component={StudentDashboard} />
             <Route path="/new-submissions" component={SubmittedProjectsContainer} />

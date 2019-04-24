@@ -7,6 +7,52 @@ let auth = require('../auth');
 const moment = require('moment')
 
 
+
+router.get('/usersPastDueDate', async (req, res) => {
+
+  User.aggregate([
+
+    { $match: { type: 'student' } },
+    { $lookup: { from: 'courseprogresses', localField: '_id', foreignField: 'user', as: 'progress' } },
+    { $match: { "progress.1": { $exists: 1 } } }
+  ]).then(async (users) => {
+    if (!users) res.status(500).send();
+
+
+    const passedUsers = users.filter(user => user.progress.some(x => !x.completed && moment(x.dueDate).isBefore(new moment())))
+      .map(user => {
+        let passedDueDate = user.progress.find(x => {
+          return moment(x.dueDate).isBefore(new moment())
+        });
+
+
+        return { ...user, passedDueDate }
+
+      });
+
+    if (passedUsers.length !== 0) {
+
+      Promise.all(passedUsers.map(x => CourseProgress.findById(x.passedDueDate._id).populate("course").exec())).then(x => {
+        passedUsers.forEach((user, index) => {
+          user.passedDueDate = x[index].toJSON()
+        })
+        res.json(passedUsers)
+
+      })
+
+
+
+
+
+
+    } else {
+      res.json([])
+    }
+  })
+
+})
+
+
 router.get('/unfinishedPathUsers', (req, res) => {
 
 
@@ -60,6 +106,14 @@ router.get('/finishedPathUsers', (req, res) => {
 
     res.json(finishedUsers);
   })
+})
+
+router.get('/teacherStundentsCount', (req, res) => {
+
+  User.aggregate([{ $group: { _id: "$type", count: { "$sum": 1 } } }]).then(sums => {
+    res.json(sums)
+  })
+
 })
 
 

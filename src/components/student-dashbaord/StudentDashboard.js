@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { loggedInUserSelector } from '../../state/users/reducer';
 import DashboardCard from '../DashboardCard';
 import PageTitle from '../PageTitle';
-import PathStat from '../PathStat';
+import PathStat from './PathStat';
 
 
 

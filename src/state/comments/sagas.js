@@ -1,6 +1,6 @@
 import { normalize } from 'normalizr';
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
-import { ApiClient } from '../../api-client';
+import { ApiClient } from '../../ApiClient';
 import { comment } from '../../api/schema';
 import { addEntities } from '../../redux/actions';
 import { loggedInUserSelector } from '../users/reducer';

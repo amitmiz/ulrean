@@ -45,7 +45,8 @@ class VerticalLinearStepper extends React.Component {
 
     componentDidMount() {
         const { max } = this.props;
-        this.setState({ activeStep: max })
+        this.setState({ activeStep: max + 1 })
+        this.props.onStepChanged(max + 1);
     }
 
     render() {

@@ -52,6 +52,7 @@ class TextEditor extends React.Component {
 const styles = {
     editor: {
         border: '1px solid gray',
+        borderRadius: '8px',
         minHeight: '6em'
     }
 };

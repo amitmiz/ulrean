@@ -3,7 +3,7 @@ import { put, all, takeLatest, select, call } from 'redux-saga/effects';
 import { loggedInUserSelector } from '../users/reducer';
 import { submitProjectSuccess, submitProjectError } from './actions';
 import { currentMountedStage } from '../stage-proccessor';
-import { ApiClient } from '../../api-client';
+import { ApiClient } from '../../ApiClient';
 import { normalize } from 'normalizr';
 import { submission, submissions } from '../../api/schema'
 import { addEntities } from '../../redux/actions';

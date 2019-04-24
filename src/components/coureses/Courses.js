@@ -1,9 +1,12 @@
+import { Button, Card, Grid, List, Typography, withStyles } from '@material-ui/core';
+import Add from '@material-ui/icons/Add';
 import React from 'react';
-import { withStyles, ListItemAvatar, ListItem, Avatar, ListItemText, ListItemSecondaryAction, IconButton, List, Paper, Card } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import PageTitle from '../PageTitle';
-import CourseInfo from '../CourseInfo';
-import Info from '@material-ui/icons/Info'
-import { Link } from 'react-router-dom'
+import { CourseListItem } from './CourseListItem';
+import { StageListItem } from './StageListItem';
+
+
 
 const styles = {
     root: {
@@ -17,52 +20,56 @@ class Courses extends React.Component {
 
 
     render() {
-        const { classes, courses } = this.props;
+        const { classes, courses, stages, currentUser } = this.props;
         return (
             <div className={classes.root} >
-                <PageTitle> Courses </PageTitle>
+                <PageTitle> Cotent </PageTitle>
+                <Grid container>
+                    <Grid item xs>
+                        <Typography variant="h4" > Courses</Typography>
+                    </Grid>
 
+                    <Grid item>
+                        {currentUser.type === "teacher" && <Button component={Link} to={"/course-creation"} variant=" flat" color="default" >
+                            New
+                            <Add></Add>
+                        </Button>}
+                    </Grid>
+                </Grid>
                 <Card>
-
-
-
                     <List>
                         {courses.map((course, index) =>
                             <CourseListItem key={course._id} course={course} index={index} />
                         )}
-
-
                     </List>
-
                 </Card>
 
+                <Grid container>
+                    <Grid item xs>
+                        <Typography variant="h4" > Stages</Typography>
+                    </Grid>
+                    <Grid item>
+                        {currentUser.type === "teacher" && <Button variant="flat" color="default" component={Link} to={"/stage-creation"} >
+                            New
+                          <Add></Add>
+                        </Button>}
+                    </Grid>
+                </Grid>
 
+                <Card>
+                    <List>
+                        {stages.map((stage, index) =>
+                            <StageListItem key={stages._id} stage={stage} index={index} />
+                        )}
 
-            </div>)
+                    </List>
+                </Card>
+
+            </div >
+        )
 
     }
 
-}
-
-function CourseListItem({ course, index }) {
-    return (
-
-        <ListItem button >
-            <ListItemAvatar>
-                <Avatar>
-                    {++index}
-                </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={course.header} />
-            <ListItemSecondaryAction>
-                <IconButton component={Link} to={`/courses/${course._id}`}>
-                    <Info />
-                </IconButton>
-            </ListItemSecondaryAction>
-        </ListItem>
-
-        // <Link <CourseInfo key={course._id} course={course} />  </Link>
-    )
 }
 
 export default withStyles(styles)(Courses)

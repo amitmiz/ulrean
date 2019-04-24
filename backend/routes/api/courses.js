@@ -35,47 +35,31 @@ router.get('/', auth.optional, function (req, res, next) {
     query.tagList = { "$in": [req.query.tag] };
   }
 
-  Promise.all([
-    req.query.author ? User.findOne({ username: req.query.author }) : null,
-    req.query.favorited ? User.findOne({ username: req.query.favorited }) : null
+
+  return Promise.all([
+    Course.find(query)
+      .populate("stages")
+      .limit(Number(limit))
+      .skip(Number(offset))
+      .sort({ createdAt: 'desc' })
+      .populate('author')
+      .exec(),
+    Course.count(query).exec(),
+    req.payload ? User.findById(req.payload.id) : null,
   ]).then(function (results) {
-    var author = results[0];
-    var favoriter = results[1];
+    var courses = results[0];
+    var coursesCount = results[1];
+    var user = results[2];
 
-    if (author) {
-      query.author = author._id;
-    }
-
-    if (favoriter) {
-      query._id = { $in: favoriter.favorites };
-    } else if (req.query.favorited) {
-      query._id = { $in: [] };
-    }
-
-    return Promise.all([
-      Course.find(query)
-        .populate("stages")
-        .limit(Number(limit))
-        .skip(Number(offset))
-        .sort({ createdAt: 'desc' })
-        .populate('author')
-        .exec(),
-      Course.count(query).exec(),
-      req.payload ? User.findById(req.payload.id) : null,
-    ]).then(function (results) {
-      var courses = results[0];
-      var coursesCount = results[1];
-      var user = results[2];
-
-      return res.json({
-        courses: courses.map(function (course) {
-          return course.toJSONFor(user);
-        }),
-        coursesCount: coursesCount
-      });
+    return res.json({
+      courses: courses.map(function (course) {
+        return course.toJSONFor(user);
+      }),
+      coursesCount: coursesCount
     });
   }).catch(next);
-});
+})
+
 
 
 

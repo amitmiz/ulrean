@@ -3,7 +3,7 @@ import { stageMetaSelector } from '../stage-proccessor';
 import { types as stageTypes } from '../stage-proccessor';
 import { makeCourseCompletionProgressSelector, updateCourseProgressError, updateCourseProgressRequested, updateCourseProgressSuccess } from './reducer';
 import { makeCourseSelector } from '../courses/reducer'
-import { ApiClient } from '../../api-client';
+import { ApiClient } from '../../ApiClient';
 
 /**
  * Called when user finish a stage (stageComplete action)

@@ -2,7 +2,8 @@ import { handleActions, createAction } from "redux-actions";
 import { toArray } from 'lodash'
 
 
-export const fetchCourses = createAction("FETCH_COURSES")
+export const fetchCourses = createAction("FETCH_COURSES");
+export const addNewCourse = createAction("COURSES/ADD_NEW");
 
 const ns = "courses"
 

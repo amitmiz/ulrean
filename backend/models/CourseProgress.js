@@ -5,10 +5,12 @@ var User = mongoose.model('User');
 
 var CourseProgressSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  stagesCompleted : Number,
+  stagesCompleted: { type: Number, default: 0 },
   course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
-  date: Date,
-  completed: Boolean,
+  started: Date,
+  recomendedTimeToFinish: Number,
+  dueDate: Date,
+  completed: { type: Boolean, default: false },
 
 }, { timestamps: true });
 

@@ -112,13 +112,13 @@ class SideMenuComponent extends Component {
 
                 <Divider />
                 <List>
-                    <SideMenuLink disabled={currentUser.type === "student" ? false : true}  text="Dashbaord" to="/dashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
+                    {currentUser.type === "student" && <SideMenuLink text="Dashbaord" to="/dashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />}
+                    {currentUser.type === "teacher" && <SideMenuLink text="Dashbaord" to="/tdashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />}
                     <SideMenuLink disabled={currentUser.path ? false : true} text="Course Path" to="/path" onClick={this.handleDrawerClose} icon={LibraryBooks} />
-                    <SideMenuLink disabled={currentUser.type === "teacher" ? false : true} text="TDashbaord" to="/tdashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />
-                    <SideMenuLink disabled={currentUser.type ==="teacher" ? false : true}  text="Pathless" to="/pathless" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
-                    <SideMenuLink disabled={currentUser.type ==="teacher" ? false : true}  text="Submissions" to="/new-submissions" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />
+                    {currentUser.type === "student" && <SideMenuLink text="Pathless" to="/pathless" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />}
+                    {currentUser.type === "student" && <SideMenuLink text="Submissions" to="/new-submissions" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />}
                     <SideMenuLink text="QA" to="/qa" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
-                    <SideMenuLink text="Courses" to="/courses" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
+                    <SideMenuLink text="Content" to="/courses" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
                     <SideMenuLink text="Teachers" to="/teacher-contact" onClick={this.handleDrawerClose} icon={ContactsIcon} />
 
                 </List>

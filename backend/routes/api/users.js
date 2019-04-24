@@ -4,9 +4,10 @@ var router = require('express').Router();
 var passport = require('passport');
 var User = mongoose.model('User');
 var CourseProgress = mongoose.model('CourseProgress');
+var Course = mongoose.model('Course');
+const moment = require('moment');
 var auth = require('../auth');
-var status = require("http-status");
-
+var PredefiendPath = mongoose.model('PredefiendPath');
 
 router.get('/user', auth.required, function (req, res, next) {
 
@@ -22,16 +23,17 @@ router.get('/user', auth.required, function (req, res, next) {
       }
 
     }),
-    CourseProgress.find({ user: ObjectId(req.payload.id) })
+    CourseProgress.find({ user: ObjectId(req.payload.id) }),
+    Course.find()
 
 
   ])
 
-    .then(function ([user, progress]) {
+    .then(function ([user, progress, courses]) {
       if (!user) { return res.sendStatus(401); }
 
-      var userToReturn = user.toAuthJSON();
-      userToReturn.progress = progress;
+
+      let userToReturn = { ...user.toAuthJSON(), progress };
 
       return res.json({ user: userToReturn });
     }).catch(next);
@@ -80,8 +82,8 @@ router.get('/', auth.optional, (req, res, next) => {
 
 
 
-router.put('/user/:id', auth.required, function (req, res, next) {
-  User.findById(req.params.id || req.payload.id).then(function (user) {
+router.put('/user/:id', auth.required, async function (req, res, next) {
+  User.findById(req.params.id || req.payload.id).then(async (user) => {
     if (!user) { return res.sendStatus(401); }
 
     // only update fields that were actually passed...
@@ -89,7 +91,7 @@ router.put('/user/:id', auth.required, function (req, res, next) {
       user.username = req.body.user.username;
     }
 
-    
+
     if (typeof req.body.user.name !== 'undefined') {
       user.name = req.body.user.name;
     }
@@ -118,6 +120,11 @@ router.put('/user/:id', auth.required, function (req, res, next) {
     }
     if (typeof req.body.user.path !== 'undefined') {
       user.path = req.body.user.path;
+
+      const path = await PredefiendPath.findOne({ _id: user.path }).exec()
+
+      const progress = path.courses.map(x => new CourseProgress({ user: user, course: x }))
+      await CourseProgress.insertMany(progress);
     }
     if (typeof req.body.user.image !== 'undefined') {
       user.image = req.body.user.image;

@@ -7,7 +7,7 @@
             "type": "npm",
             "script": "dev",
             "problemMatcher": [
-                "$eslint-compact"
+            
             ]
         }
     ]
