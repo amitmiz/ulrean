@@ -13,7 +13,9 @@ const styles = theme => ({
     },
     cardRoot : {
         backgroundColor:  theme.palette.grey['300'],
-        minHeight: '100px'
+        minHeight: '100px',
+        display: 'flex',
+        justifyContent: 'center',
     }
 })
 

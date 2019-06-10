@@ -29,7 +29,7 @@ QuestionSchema.methods.slugify = function () {
 };
 
 
-QuestionSchema.methods.toJSONFor = function (user) {
+QuestionSchema.methods.toJSONFor = function () {
   return {
     _id: this._id,
     slug: this.slug,
@@ -38,7 +38,8 @@ QuestionSchema.methods.toJSONFor = function (user) {
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
     tags: this.tags,
-    author: this.author.toJSON()
+    author: this.author.toJSON(),
+    comments: this.comments
   };
 };
 

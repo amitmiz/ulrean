@@ -8,6 +8,8 @@ import { withStyles } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ContactsIcon from "@material-ui/icons/Contacts";
+import PeopleIcon from "@material-ui/icons/People";
+
 import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
 import LibraryBooks from '@material-ui/icons/LibraryBooksRounded';
 import NewReleaseIcon from '@material-ui/icons/NewReleases';
@@ -113,12 +115,13 @@ class SideMenuComponent extends Component {
                 <Divider />
                 <List>
                     {currentUser.type === "student" && <SideMenuLink text="Dashbaord" to="/dashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />}
-                    {currentUser.type === "teacher" && <SideMenuLink text="Dashbaord" to="/tdashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />}
-                    <SideMenuLink disabled={currentUser.path ? false : true} text="Course Path" to="/path" onClick={this.handleDrawerClose} icon={LibraryBooks} />
-                    {currentUser.type === "student" && <SideMenuLink text="Pathless" to="/pathless" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />}
-                    {currentUser.type === "student" && <SideMenuLink text="Submissions" to="/new-submissions" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />}
-                    <SideMenuLink text="QA" to="/qa" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
-                    <SideMenuLink text="Content" to="/courses" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
+                    {currentUser.type === "teacher" && <SideMenuLink text="Info Panel" to="/tdashboard" onClick={this.handleDrawerClose} icon={DashboardRoundedIcon} />}
+                    {currentUser.type === "student" && <SideMenuLink disabled={currentUser.path ? false : true} text="Course Path" to="/path" onClick={this.handleDrawerClose} icon={LibraryBooks} />}
+                    {currentUser.type === "teacher" && <SideMenuLink title="Studetns without learing path" text="Pathless Students" to="/pathless" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />}
+                    {currentUser.type === "teacher" && <SideMenuLink title="Registered students list" text="Students" to="/students" onClick={this.handleDrawerClose} icon={PeopleIcon} />}
+                    {currentUser.type === "teacher" && <SideMenuLink title="New project submissions" text="Submissions" to="/new-submissions" onClick={this.handleDrawerClose} icon={NewReleaseIcon} />}
+                    <SideMenuLink text="Q & A" to="/qa" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />
+                    {currentUser.type === "teacher" && <SideMenuLink title="Courses and Stages" text="Content" to="/courses" onClick={this.handleDrawerClose} icon={QuestionAnswerIcon} />}
                     <SideMenuLink text="Teachers" to="/teacher-contact" onClick={this.handleDrawerClose} icon={ContactsIcon} />
 
                 </List>
@@ -161,9 +164,9 @@ class SideMenuComponent extends Component {
 
 }
 
-function SideMenuLink({ to, text, onClick, icon, disabled = false }) {
+function SideMenuLink({ to, text, onClick, icon, disabled = false, title }) {
     const LinkIcon = icon
-    return (<ListItem button component={NavLink} to={to} onClick={onClick} disabled={disabled}>
+    return (<ListItem title={title} button component={NavLink} to={to} onClick={onClick} disabled={disabled}>
         <ListItemIcon>
             <LinkIcon />
         </ListItemIcon>
@@ -182,3 +185,4 @@ SideMenuComponent.propTypes = {
 const SideMenu = withStyles(styles, { withTheme: true })(SideMenuComponent);
 SideMenu.displayName = "StyledSideMenu";
 export default SideMenu;
+

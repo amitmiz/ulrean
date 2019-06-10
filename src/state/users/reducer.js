@@ -22,6 +22,8 @@ export const userSelector = (state, id) => {
 
 export const pathlessUsersSelector = state => usersSelector(state).filter(user => !user.path && user.type === "student")
 
+export const studentsSelector = state => usersSelector(state).filter(user => user.type === "student")
+
 export const teachersSelector = state => usersSelector(state).filter(user => user.type === "teacher");
 
 export const usersApiSelector = state => state[ns].api;

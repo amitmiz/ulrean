@@ -29,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
 
     return createSelector([courseSelector, stageSelector, stageFilesSelector, stageTestsSelector, consoleOutputSelector, courseProgressSelector, currentMountedStage, submissionsSelector], (course, stage, files, tests, output, progress, mountedStage, submissions) => {
         const currentStageIndex = course.stages.findIndex(stageId => stageId === stage._id)
-        const passed = submissions.findIndex(sub => sub.testResult.pass === true) != -1;
+        const passed = submissions.findIndex(sub => sub.testResult && sub.testResult.pass === true) != -1;
         const courseLength = course.stages.length;
         const canAccessNextExercise = (progress.stagesCompleted >= currentStageIndex + 1) && (course.stages.length > currentStageIndex + 1) || passed;
         return { course, stage, files, tests, output, currentStageIndex, courseLength, canAccessNextExercise, mountedStage, submissions }

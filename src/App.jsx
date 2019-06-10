@@ -25,6 +25,7 @@ import RegisterContainer from "./components/user-profile/RegisterContainer";
 import UserInfoContainer from "./components/user-profile/UserInfoContainer";
 import CourseCreationContainer from './components/content-creation/CourseCreationContainer';
 import StageCreationContainer from './components/content-creation/StageCreationContainer';
+import StudentsListContainer from './components/students/StudentsListContainer'
 import history from './history';
 
 import { fetchCurrentUser } from "./state/users/actions";
@@ -141,6 +142,7 @@ class App extends Component {
             <Route path="/stages/:id" component={StageContainer} />
             <Route path="/teacher-contact" component={TeacherContactListContainer} />
             <Route path="/question/:questionId" component={QuestionContainer} />
+            <Route path="/students" component={StudentsListContainer} />
             <Redirect to="/dashboard" />
           </Switch>
         </div>

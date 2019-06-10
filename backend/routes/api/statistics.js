@@ -22,7 +22,7 @@ router.get('/usersPastDueDate', async (req, res) => {
     const passedUsers = users.filter(user => user.progress.some(x => !x.completed && moment(x.dueDate).isBefore(new moment())))
       .map(user => {
         let passedDueDate = user.progress.find(x => {
-          return moment(x.dueDate).isBefore(new moment())
+          return !x.completed  && moment(x.dueDate).isBefore(new moment())
         });
 
 

@@ -3,6 +3,8 @@ import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';
 import React, { Component } from 'react';
 import PageTitle from '../PageTitle';
+import history from '../../history';
+
 
 const styles = {
     root: {
@@ -30,13 +32,40 @@ class Register extends Component {
 
                 <Formik
                     initialValues={{ ...user, path: undefined }}
+
+                    validate={values => {
+                        let errors = {};
+                        if (!values.username) {
+                            errors.username = 'Required';
+                        }
+                        if (!values.email) {
+                            errors.email = 'Required';
+                        }
+                        if (!values.password) {
+                            errors.password = 'Required';
+                        }
+                        if (!values.name) {
+                            errors.name = 'Required';
+                        }
+                        if (!values.type) {
+                            errors.type = 'Required';
+                        }
+                        if (!values.phone) {
+                            errors.phone = 'Required';
+                        }
+
+                        return errors;
+                    }}
+
+
                     onSubmit={(values, { setSubmitting }) => {
                         onSave({ user: values });
+                        history.push(`/login`)
                         setTimeout(() => setSubmitting(false), 400);
                     }}
 
                 >
-                    {({ values, isSubmitting }) => (
+                    {({ values, isSubmitting,isValid}) => (
                         <Form>
 
 
@@ -138,7 +167,10 @@ class Register extends Component {
                                 </CardContent>
                                 <Divider />
                                 <CardActions>
-                                    <Button type="submit" color="primary" size="small">Save</Button>
+                                    <Button type="submit" color="primary" size="small"
+                                        disabled={ !isValid ||isSubmitting}
+
+                                    >Save</Button>
                                 </CardActions>
                             </Card>
 

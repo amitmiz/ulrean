@@ -69,6 +69,7 @@ router.get('/', auth.optional, function (req, res, next) {
         .skip(Number(offset))
         .sort({ createdAt: 'desc' })
         .populate('author')
+        .populate("comments")
         .exec(),
       Question.count(query).exec(),
       req.payload ? User.findById(req.payload.id) : null,

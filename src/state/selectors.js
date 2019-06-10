@@ -1,14 +1,13 @@
 import { createSelector } from "reselect";
-import { loggedInUserSelector, userSelector } from "./users/reducer";
 import { userCoursesProgressSelector } from "./courses-progress/reducer";
-import { makePathSelector } from "./predefiend-path/reducer";
 import { courseSelector, coursesSelector, makeCourseSelector } from "./courses/reducer";
-import { stageSelector } from "./stages/reducer";
+import { makePathSelector } from "./predefiend-path/reducer";
 import { questionsSelector } from "./questions/reducer";
-import { unhandledSubmissionsSelector } from "./projects-submissions/reducer";
-import { normalize } from "normalizr";
+import { stageSelector } from "./stages/reducer";
+import { loggedInUserSelector, userSelector } from "./users/reducer";
+import { questionCommentsSelector } from './comments/reducer';
 
-import {predefiendPath } from "../api/schema"
+
 
 export const pathStatsSelector = createSelector(
     [
@@ -25,7 +24,7 @@ export const pathStatsSelector = createSelector(
 
         const lastStageIndex = progress[lastCourse._id].stagesCompleted;
 
-        const lastStage = lastCourse.stages[lastStageIndex ];
+        const lastStage = lastCourse.stages[lastStageIndex];
 
         return { currentUser, path, progress, maxCompletedCourseIndex, lastCourse, lastStage }
     }
@@ -41,7 +40,11 @@ export const makeMappedCourseSelector = id => state => mapCourse(state, makeCour
 
 export const questionsWithAutorSelector = (state) => {
     const questions = questionsSelector(state)
-    return questions.map(question => ({ ...question, author: userSelector(state, question.author) }))
+
+    const mapComment = (currentQuestion) => questionCommentsSelector(currentQuestion._id)(state) ? questionCommentsSelector(currentQuestion._id)(state).map(comment => ({ ...comment, author: userSelector(state, comment.author) })) : []
+
+
+    return questions.map(question => ({ ...question, author: userSelector(state, question.author), commentsNum: mapComment(question).length }))
 
 }
 
@@ -53,6 +56,7 @@ export const mapSubmission = (submission, state) => ({
     testResult: submission.testResult ? { ...submission.testResult, teacher: userSelector(state, submission.testResult.teacher) } : null
 
 })
+
 
 
 const mapCourse = (state, course) => ({ ...course, stages: course.stages.map(stageId => stageSelector(stageId, state)) });

@@ -2,7 +2,7 @@ import { Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, Icon
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import React from 'react';
-import CourseSelectionDialog from '../content-creation/StageSelectionDialog';
+import CourseSelectionDialog from './CourseSelectionDialog';
 import PathCreationDialog from './PathCreationDialog';
 import PageTitle from '../PageTitle'
 
@@ -68,6 +68,9 @@ const styles = theme => ({
     headerCard: {
         padding: "20px",
         textAlign: 'center'
+    },
+    nameCard : {
+        textAlign: 'center'
     }
 
 
@@ -114,17 +117,34 @@ class PathCreation extends React.Component {
                 <Grid container direction="column" spacing={24}>
 
                     <Grid item>
+
+                    <Card className={classes.nameCard}>
                         <div className={classes.headerCard}>
                             <Typography variant="h4">Create Path to {`${currentUser.name} ${currentUser.lastname}`}</Typography>
                         </div>
+
+
+
+                        <div >
+                            <Typography variant="h6">Heading to {`${currentUser.headingTo}`}</Typography>
+                        </div>
+
+
+                        <div >
+                            <Typography variant="h6">Prior knowledge includes {`${currentUser.priorKnowledge}`}</Typography>
+                        </div>
+
+                        </Card>
                     </Grid>
+
+
 
                     <Grid item>
                         <Grid container direction="row" spacing={24}>
                             <Grid item xs={12} lg={4}>
                                 <Card>
                                     <CardHeader title="Predefiend paths" titleTypographyProps={{ variant: "h6" }} />
-                                    <Divider variant="middle"/>
+                                    <Divider variant="middle" />
                                     <CardContent>
                                         <this.PredefiendList />
                                     </CardContent>
@@ -136,7 +156,7 @@ class PathCreation extends React.Component {
                                     <CardHeader title="Course Path Preview" titleTypographyProps={{ variant: "h6" }} />
                                     <Divider variant="middle" />
                                     <CardContent>
-                                        <this.PathPrev iew />
+                                        <this.PathPreview />
                                     </CardContent>
                                     <CardActions>
                                         <Button

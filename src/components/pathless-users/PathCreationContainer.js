@@ -5,7 +5,8 @@ import { courseSelector, coursesSelector } from '../../state/courses/reducer';
 import { addNewPath, fetchPaths } from '../../state/predefiend-path/actions';
 import { allPathsSelector } from '../../state/predefiend-path/reducer';
 import { userSelector } from '../../state/users/reducer';
-import { addPath } from '../../state/users/actions';
+import { addPath,fetchUsers } from '../../state/users/actions';
+
 import PathCreation from './PathCreation';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -14,7 +15,7 @@ const mapStateToProps = (state, ownProps) => ({
     paths: generatePredefiendPaths(state)
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ fetchPaths, addPath, addNewPath }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchPaths, addPath, addNewPath ,fetchUsers}, dispatch)
 
 const generatePredefiendPaths = (state) => {
     const allPaths = allPathsSelector(state);
@@ -25,12 +26,17 @@ class PathCreationContainer extends React.Component {
 
     componentDidMount() {
         this.props.fetchPaths();
+        this.props.fetchUsers();
     }
 
     render() {
+        if (this.props.currentUser) {
+            return (<PathCreation {...this.props} />)
 
+        } else {
+            return "loading"
+        }
 
-        return (<PathCreation {...this.props} />)
     }
 
 

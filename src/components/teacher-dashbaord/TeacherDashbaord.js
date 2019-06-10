@@ -26,6 +26,8 @@ const styles = theme => ({
     },
     clickable: {
         cursor: 'pointer',
+        textDecoration: 'none',
+        color: 'black'
     }
 });
 
@@ -83,10 +85,13 @@ class TeacherDashbaord extends React.Component {
 
     render() {
         const { classes, pathless, submissions, questions } = this.props;
+
+        const unansweredQuestions = questions.filter(q => q.commentsNum === 0);
+
         return (
             <div className={classes.root} >
 
-                <PageTitle>Dashboard</PageTitle>
+                <PageTitle>Information Panel</PageTitle>
 
                 <Grid container direction="column" spacing={8} justify={"space-between"}>
 
@@ -94,7 +99,7 @@ class TeacherDashbaord extends React.Component {
                     <DashboardRow >
 
                         <Grid item lg={4} xs={12}>
-                            <DashboardCard title="students waiting for path" >
+                            <DashboardCard title="number of students without learning path" >
 
                                 <Typography variant="h3">
                                     {pathless &&
@@ -105,13 +110,13 @@ class TeacherDashbaord extends React.Component {
 
                         </Grid>
                         <Grid item lg={4} xs={12}>
-                            <DashboardCard title="submissions waiting for input" >
-                                <Typography variant="h3">{submissions.length}</Typography>
+                            <DashboardCard title="number of new project submissions" >
+                                <Link className={classes.clickable} to={`/new-submissions/`}>    <Typography variant="h3">{submissions.length}</Typography></Link>
                             </DashboardCard>
                         </Grid>
                         <Grid item lg={4} xs={12}>
-                            <DashboardCard title="unanwserd questions" >
-                                <Typography variant="h3">{questions.length}</Typography>
+                            <DashboardCard title="number of unanswered questions" >
+                                <Link className={classes.clickable} to={`/qa?new=true`}>  <Typography variant="h3">{unansweredQuestions.length}</Typography> </Link>
                             </DashboardCard>
                         </Grid>
                     </DashboardRow>
@@ -126,14 +131,14 @@ class TeacherDashbaord extends React.Component {
 
                         <Grid item lg={6} xs={12}>
 
-                            <DashboardCard title="student/teachers ratio" >
+                            <DashboardCard title="registered students/teachers ratio" >
                                 {this.state.teacherStundentsCount && <RadialChart
                                     showLabels
                                     innerRadius='100'
                                     animation
                                     data={[
-                                        { angle: this.state.teacherStundentsCount[0].count, label: 'Teachers' },
-                                        { angle: this.state.teacherStundentsCount[1].count, label: 'Students' }]}
+                                        { angle: this.state.teacherStundentsCount[0].count, label: `Teachers (${this.state.teacherStundentsCount[0].count})` },
+                                        { angle: this.state.teacherStundentsCount[1].count, label: `Students (${this.state.teacherStundentsCount[1].count})` }]}
                                     width={200}
                                     height={200} />
 
@@ -145,8 +150,8 @@ class TeacherDashbaord extends React.Component {
                         </Grid>
 
                         <Grid item lg={6} xs={12}>
-                            <DashboardCard title="recent question" >
-                                {questions.length > 0 ? <Link to={`/question/${questions[0]._id}`}>   <QuestionCard question={questions[0]} /> </Link> : "None"}
+                            <DashboardCard title="recent question"  >
+                                {questions.length > 0 ? <Link className={classes.clickable} to={`/question/${questions[0]._id}`}>   <QuestionCard question={questions[0]} /> </Link> : "None"}
                             </DashboardCard>
 
                         </Grid>
@@ -157,7 +162,7 @@ class TeacherDashbaord extends React.Component {
                     <DashboardRow >
 
                         <Grid item lg={4} xs={12}>
-                            <DashboardCard title="passed course due date" >
+                            <DashboardCard title="number of studetns who passed a course due date" >
                                 <Typography variant="h3">
 
                                     {this.state.passedUsers &&
@@ -170,7 +175,7 @@ class TeacherDashbaord extends React.Component {
                         </Grid>
 
                         <Grid item lg={4} xs={12}>
-                            <DashboardCard title="finished their path" >
+                            <DashboardCard title="number of studetns who finished their learning path" >
                                 <Typography variant="h3">
                                     {this.state.finishedUsers &&
                                         <div className={classes.clickable} onClick={() => this.setDialogData(this.state.finishedUsers.map(x => x.user))}>{this.state.finishedUsers.length}</div>}
@@ -180,7 +185,7 @@ class TeacherDashbaord extends React.Component {
                         </Grid>
 
                         <Grid item lg={4} xs={12}>
-                            <DashboardCard title="didn't finished their path" >
+                            <DashboardCard title="number of studetns who didn't finished their learning path" >
                                 <Typography variant="h3">
                                     {this.state.unfinishedUsers &&
                                         <div className={classes.clickable} onClick={() => this.setDialogData(this.state.unfinishedUsers.map(x => x.user))}>{this.state.unfinishedUsers.length}</div>}
@@ -190,17 +195,7 @@ class TeacherDashbaord extends React.Component {
 
                     </DashboardRow>
 
-
-
-
-
-
-
-
-
-
                 </Grid>
-
 
                 <StudentDialog
                     students={this.state.students}

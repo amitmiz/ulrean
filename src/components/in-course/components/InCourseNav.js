@@ -9,6 +9,10 @@ import { Link } from "react-router-dom";
 import UserAvatar from '../../UserAvatar';
 import { loggedInUserSelector } from '../../../state/users/reducer';
 import { connect } from 'react-redux';
+import { logout } from '../../../state/users/actions'
+import { bindActionCreators } from 'redux';
+
+
 
 const styles = theme => ({
     root: {
@@ -32,6 +36,9 @@ const mapStateToProps = (state, ownProps) => {
     return { currentUser: loggedInUserSelector(state), course: ownProps.course };
 };
 
+const mapDistpachToProps = (dispatch) => bindActionCreators({ logout }, dispatch)
+
+
 class InCourseNav extends Component {
 
     constructor(props) {
@@ -50,7 +57,7 @@ class InCourseNav extends Component {
     }
 
     render() {
-        const { classes, currentUser, course } = this.props;
+        const { classes, currentUser, course ,logout} = this.props;
         return (
             <div className={classes.root}>
                 <AppBar elevation={0} className={classes.appBar} position="fixed">
@@ -75,7 +82,7 @@ class InCourseNav extends Component {
                     onClose={this.handleMenuClose}
                 >
                     <MenuItem component={Link} to="/user" onClick={this.handleMenuClose}>My account</MenuItem>
-                    <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+                    <MenuItem onClick={logout}>Logout</MenuItem>
                 </Menu>
             </div>
         );
@@ -91,4 +98,4 @@ InCourseNav.propTypes = {
 
 InCourseNav.displayName = "InCourseNav"
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(InCourseNav));
+export default connect(mapStateToProps,mapDistpachToProps)(withStyles(styles, { withTheme: true })(InCourseNav));
