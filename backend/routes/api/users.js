@@ -143,6 +143,8 @@ router.put('/user/:id', auth.required, async function (req, res, next) {
 
 
 router.post('/users/login', function (req, res, next) {
+  
+  
   if (!req.body.user.email) {
     return res.status(422).json({ errors: { email: "can't be blank" } });
   }

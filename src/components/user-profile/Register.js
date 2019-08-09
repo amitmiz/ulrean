@@ -43,7 +43,10 @@ class Register extends Component {
                         }
                         if (!values.password) {
                             errors.password = 'Required';
+                        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                            errors.email = 'Invalid email address';
                         }
+
                         if (!values.name) {
                             errors.name = 'Required';
                         }
@@ -59,13 +62,13 @@ class Register extends Component {
 
 
                     onSubmit={(values, { setSubmitting }) => {
-                        onSave({ user: values });
-                        history.push(`/login`)
+                        onSave({ ...values });
+
                         setTimeout(() => setSubmitting(false), 400);
                     }}
 
                 >
-                    {({ values, isSubmitting,isValid}) => (
+                    {({ values, isSubmitting, isValid }) => (
                         <Form>
 
 
@@ -86,6 +89,7 @@ class Register extends Component {
                                             component={TextField}
                                             name="email"
                                             label="Email"
+                                            type=""
                                             className={classes.textField}
                                             margin="normal"
                                             variant="outlined"
@@ -168,7 +172,7 @@ class Register extends Component {
                                 <Divider />
                                 <CardActions>
                                     <Button type="submit" color="primary" size="small"
-                                        disabled={ !isValid ||isSubmitting}
+                                        disabled={!isValid || isSubmitting}
 
                                     >Save</Button>
                                 </CardActions>

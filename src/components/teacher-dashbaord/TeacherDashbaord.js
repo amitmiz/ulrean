@@ -103,7 +103,16 @@ class TeacherDashbaord extends React.Component {
 
                                 <Typography variant="h3">
                                     {pathless &&
-                                        <div className={classes.clickable} onClick={() => this.setDialogData(pathless)}>{pathless.length}</div>}
+
+
+                                        <Link className={classes.clickable} to={`/pathless/`}>    <Typography variant="h3">{pathless.length}</Typography></Link>
+
+
+
+                                    }
+
+
+
 
                                 </Typography>
                             </DashboardCard>
@@ -166,8 +175,14 @@ class TeacherDashbaord extends React.Component {
                                 <Typography variant="h3">
 
                                     {this.state.passedUsers &&
-                                        <div className={classes.clickable} onClick={() => this.setDialogData(this.state.passedUsers)}>{this.state.passedUsers.length}</div>}
+                                       
+                                       <Link className={classes.clickable} to={`/students/`}>    <Typography variant="h3">{this.state.passedUsers.length}</Typography></Link>}
+                                       
+                                        {/* <div className={classes.clickable} onClick={() => this.setDialogData(this.state.passedUsers)}>{this.state.passedUsers.length}</div>} */}
 
+
+
+                                    
 
                                 </Typography>
                             </DashboardCard>
@@ -178,7 +193,11 @@ class TeacherDashbaord extends React.Component {
                             <DashboardCard title="number of studetns who finished their learning path" >
                                 <Typography variant="h3">
                                     {this.state.finishedUsers &&
-                                        <div className={classes.clickable} onClick={() => this.setDialogData(this.state.finishedUsers.map(x => x.user))}>{this.state.finishedUsers.length}</div>}
+                                        
+                                    <Link className={classes.clickable} to={`/students/`}>    <Typography variant="h3">{this.state.finishedUsers.length}</Typography></Link> }
+                                        
+                                        
+                                        {/* <div className={classes.clickable} onClick={() => this.setDialogData(this.state.finishedUsers.map(x => x.user))}>{this.state.finishedUsers.length}</div>} */}
 
                                 </Typography>
                             </DashboardCard>
@@ -188,7 +207,11 @@ class TeacherDashbaord extends React.Component {
                             <DashboardCard title="number of studetns who didn't finished their learning path" >
                                 <Typography variant="h3">
                                     {this.state.unfinishedUsers &&
-                                        <div className={classes.clickable} onClick={() => this.setDialogData(this.state.unfinishedUsers.map(x => x.user))}>{this.state.unfinishedUsers.length}</div>}
+                                        
+                                        <Link className={classes.clickable} to={`/students/`}>    <Typography variant="h3">{this.state.unfinishedUsers.length}</Typography></Link> }
+
+                                        
+                                         {/* <div className={classes.clickable} onClick={() => this.setDialogData(this.state.unfinishedUsers.map(x => x.user))}>{this.state.unfinishedUsers.length}</div>} */}
                                 </Typography>
                             </DashboardCard>
                         </Grid>

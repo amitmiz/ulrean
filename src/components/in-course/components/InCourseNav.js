@@ -69,7 +69,7 @@ class InCourseNav extends Component {
                                 </Typography>
                             </Link>
                         </div>
-                        <div className={classes.courseName}>{course.header}</div>
+                        <div className={classes.courseName}>Current Course: {course.header}</div>
                         <Typography variant="button" color="inherit" >{currentUser.type}</Typography>
                         <UserAvatar ref={this.userAvaterRef} onClick={this.handleMenuOpen} user={currentUser} />
                     </Toolbar>
