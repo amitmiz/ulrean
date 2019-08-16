@@ -204,7 +204,7 @@ class TeacherDashbaord extends React.Component {
                         </Grid>
 
                         <Grid item lg={4} xs={12}>
-                            <DashboardCard title="number of studetns who didn't finished their learning path" >
+                            <DashboardCard title="number of studetns who didn't finish their learning path" >
                                 <Typography variant="h3">
                                     {this.state.unfinishedUsers &&
                                         
