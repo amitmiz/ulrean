@@ -115,7 +115,7 @@
     "@types/react-helmet": "^5.0.7",
     "@types/redux-actions": "^2.3.1",
     "redux": "^4.0.1",
-    "standard-version": "^4.4.0"
+    "standard-version": "^8.0.1"
   },
   "jest": {
     "collectCoverageFrom": [
